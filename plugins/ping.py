@@ -2,7 +2,7 @@ import time
 from pyrogram import Client, filters
 
 @bot.on_message(filters.private & filters.command("p2"))
-async def ping_command(client, message):
+async def p2_command(client, message):
     start_time = time.time()
     sent_message = await message.reply("Pinging...")
     end_time = time.time()
