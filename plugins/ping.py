@@ -1,6 +1,5 @@
 import time
 from pyrogram import Client, filters
-from bot import bot
 
 @bot.on_message(filters.private & filters.command("p2"))
 async def p2_command(client, message):
