@@ -1,8 +1,10 @@
 import time
 from pyrogram import Client, filters
+from bot import ubot
 
-@bot.on_message(filters.private & filters.command("p2"))
+@ubot.on_message(filters.private & filters.command("p2"))
 async def p2_command(client, message):
+    print("Working")
     start_time = time.time()
     sent_message = await message.reply("Pinging...")
     end_time = time.time()
