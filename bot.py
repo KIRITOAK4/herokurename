@@ -11,7 +11,7 @@ import sys
 ubot = None
 # Define the function to create the 4GB RAM-supporting bot
 def create_ubot(session_string):
-    if session_string !=None:
+    if session_string !="None":
         print(session_string)
         print("Invalid session string.")
         return None
