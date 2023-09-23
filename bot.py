@@ -11,22 +11,23 @@ import sys
 ubot = None
 # Define the function to create the 4GB RAM-supporting bot
 def create_ubot(session_string):
-    if session_string is None or not isinstance(session_string, str) or session_string.strip() != "":
-        print("Invalid or missing session string. Creating bot without session string.")
+    if session_string !=None:
+        print(session_string)
+        print("Invalid session string.")
         return None
     try:
         global ubot
         ubot = Client(
-        session_string=session_string,
+        name="renamer",
         api_id=Config.API_ID,
-        api_hash=Config.API_HASH,        
-        workers=200,
-        plugins={"root": "plugins"},
-        sleep_threshold=15,
-        name="renamebot",
-    )
+        session_string=session_string,
+        api_hash=Config.API_HASH,            
+        plugins={"root": "plugins"}
+        )
+        print("❤️ UBot Connected")
         return ubot
     except Exception as e:
+        print('😞 Error While Connecting To Bot')  
         print(e)
         sys.exit()    
 class Bot(Client):
