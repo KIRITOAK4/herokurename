@@ -65,9 +65,10 @@ class Bot(Client):
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
 if __name__ == "__main__":
-    ubot = None
-    global ubot
+    # ubot = None
+    # global ubot
     ubot = create_ubot(Config.SESSION_STRING)
+    print(ubot)
     if ubot:
         ubot.run()
     else:
