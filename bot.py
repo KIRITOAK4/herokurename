@@ -8,7 +8,7 @@ from route import web_server
 
 import sys 
 
-ubot = None
+#ubot = None
 # Define the function to create the 4GB RAM-supporting bot
 def create_ubot(session_string):
     if session_string == "None":
@@ -16,7 +16,7 @@ def create_ubot(session_string):
         print("Invalid session string.")
         return None
     try:
-        global ubot
+        #global ubot
         ubot = Client(
         name="renamer",
         api_id=Config.API_ID,
