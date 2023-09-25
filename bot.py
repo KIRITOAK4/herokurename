@@ -5,7 +5,7 @@ from pyrogram.raw.all import layer
 from config import Config
 from aiohttp import web
 from route import web_server
-from plugins.make import create_ubot
+from make import create_ubot
 
 class Bot(Client):
 
