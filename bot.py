@@ -46,3 +46,10 @@ if __name__ == "__main__":
     print("Bot creation failed. Creating bot using the Bot class.")
     bot = Bot()
     bot.run()
+    ubot = create_ubot(Config.SESSION_STRING)  # Create the ubot instance
+    print("UBOT CREATED")
+    ubot.run()
+    print("UBOT Running")
+    
+
+
