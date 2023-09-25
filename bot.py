@@ -1,5 +1,3 @@
-# bot.py
-
 from datetime import datetime
 from pytz import timezone
 from pyrogram import Client, __version__
@@ -8,13 +6,8 @@ from config import Config
 from aiohttp import web
 from route import web_server
 
-import sys 
-
-
-
-  # Create the ubot instance
-
 class Bot(Client):
+
     def __init__(self):
         super().__init__(
             name="renamer",
@@ -50,5 +43,3 @@ class Bot(Client):
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
 Bot().run()
- 
-   
