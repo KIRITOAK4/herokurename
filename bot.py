@@ -78,7 +78,12 @@ if __name__ == "__main__":
     except Exception as e:
        print(e)
     if ubot:
-        ubot.run()
+        try:
+            ubot.run()
+            loop = asyncio.get_event_loop()
+            loop.run_forever()    
+        except Exception as e:
+            print(e)
    
 
    
