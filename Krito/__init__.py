@@ -35,7 +35,7 @@ plugins = dict(root="plugins")
 #------------------------------CONNECTION------------------------------------
 if BOT_TOKEN is not None:
     try:
-        pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH, plugins=plugins,max_concurrent_transmissions =30)
+        pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
         LOGS.info("❤️ Bot Connected")
     except Exception as e:
         LOGS.info('😞 Error While Connecting To Bot')    
@@ -45,7 +45,7 @@ if BOT_TOKEN is not None:
 
 if SESSION_STRING is not None:
     try:
-        ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins,max_concurrent_transmissions = 10)
+        ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
         LOGS.info("❤️ UBot Connected")
     except:
         LOGS.info('😞 Error While Connecting To UBot')    
