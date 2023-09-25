@@ -12,7 +12,7 @@ from helper.database import db
 from asyncio import sleep
 from PIL import Image
 import os, time
-
+from bot import ubot
 
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def rename_start(client, message):
@@ -117,17 +117,18 @@ async def doc(bot, update):
     await ms.edit("Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....")
     type = update.data.split("_")[1]
     try:
+        fupload = int(-1001682783965)
         if type == "document":
-            await bot.send_document(
-                update.message.chat.id,
+            suc = await ubot.send_document(
+                chat_id = fupload,
                 document=file_path,
                 thumb=ph_path, 
                 caption=caption, 
                 progress=progress_for_pyrogram,
                 progress_args=("Uᴩʟᴏᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
         elif type == "video": 
-            await bot.send_video(
-		update.message.chat.id,
+            suc = await ubot.send_video(
+            chat_id = fupload,
 	        video=file_path,
 	        caption=caption,
 		thumb=ph_path,
@@ -135,14 +136,15 @@ async def doc(bot, update):
 	        progress=progress_for_pyrogram,
 		progress_args=("Uᴩʟᴏᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
         elif type == "audio": 
-            await bot.send_audio(
-		update.message.chat.id,
+            suc = await bot.send_audio(
+		chat_id = fupload,
 		audio=file_path,
 		caption=caption,
 		thumb=ph_path,
 		duration=duration,
 	        progress=progress_for_pyrogram,
 	        progress_args=("Uᴩʟᴏᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
+        suc.copy(update.message.chat.id)
     except Exception as e:          
         os.remove(file_path)
         if ph_path:
