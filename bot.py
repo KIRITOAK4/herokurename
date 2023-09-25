@@ -64,4 +64,6 @@ async def main():
 async def hello():
     await asyncio.run(main())
 
-hello()
+if __name__ == "__main__":
+    print("Bot creation failed. Creating bot using the Bot class.")
+    asyncio.run(hello())
