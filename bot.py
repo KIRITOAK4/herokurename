@@ -12,7 +12,7 @@ import sys
 
 
 
-ubot = create_ubot(Config.SESSION_STRING)  # Create the ubot instance
+  # Create the ubot instance
 
 class Bot(Client):
     def __init__(self):
@@ -49,20 +49,7 @@ class Bot(Client):
             except:
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
-if __name__ == "__main__":
-    print(ubot)
-    try:
-       bot = Bot()
-       bot.run()
-    except Exception as e:
-       print(e)
-    if ubot:
-        try:
-            ubot.run()
-            loop = asyncio.get_event_loop()
-            loop.run_forever()    
-        except Exception as e:
-            print(e)
-   
-
+bot = Bot()
+bot.run()
+ 
    
