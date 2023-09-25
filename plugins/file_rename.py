@@ -12,9 +12,9 @@ from helper.database import db
 from asyncio import sleep
 from PIL import Image
 import os, time
-from Krito import ubot
+from Krito import ubot,pbot
 
-@Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
+@pbot.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def rename_start(client, message):
     file = getattr(message, message.media.value)
     filename = file.file_name  
@@ -40,7 +40,7 @@ async def rename_start(client, message):
 
 
 
-@Client.on_message(filters.private & filters.reply)
+@pbot.on_message(filters.private & filters.reply)
 async def refunc(client, message):
     reply_message = message.reply_to_message
     if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
@@ -70,7 +70,7 @@ async def refunc(client, message):
 
 
 
-@Client.on_callback_query(filters.regex("upload"))
+@pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):    
     new_name = update.message.text
     new_filename = new_name.split(":-")[1]
