@@ -44,6 +44,6 @@ class Bot(Client):
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
 Bot().run()
-ubot = create_ubot(Config.SESSION_STRING) 
-ubot.run()
-print("Running Ubot")
+# ubot = create_ubot(Config.SESSION_STRING) 
+# ubot.run()
+# print("Running Ubot")
