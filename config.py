@@ -17,7 +17,7 @@ class Config(object):
     SESSION_STRING = os.environ.get("SESSION_STRING", "BQGBULgAiW4wQDzETBV_EZLNF_RCeijAf4APdW_HgvvxdKMCEuYVuRTmPlYcor85blc9vcOr3P_8UtLzrSlTe1emlXiyRH7WIPzPJwU5ovFa_WAb_gOrHvmpPG6BJgqIg0BiLcBpkJxLy_1BqW6kv1emin_MFIWEEqPUvY7cdNj2UU07JqP6kcJuwzy41x5Rgtxr12YLWvjdVvS7MeWPDaKjKYmuiFQpEhUMAD4ilklL-PheyIO-Du46ueq-Z5Mqrurx44eLdE5Z0wjr91fMjMz_H5ZjoHoB4W9rWgaxszlBClzkHFVZocB6UwY2-CC6TuYiRdq-q088Mi2nI-cfVSObuOVXDAAAAAFF4ZRqAA")
     START_PIC   = os.environ.get("START_PIC", "https://graph.org/file/859726fc9db3131cdf956.jpg")
     ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
-    FORCE_SUB   = os.environ.get("FORCE_SUB", "-1001582946609") 
+    FORCE_SUB   = os.environ.get("FORCE_SUB", "0") 
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
 
     # wes response configuration     
