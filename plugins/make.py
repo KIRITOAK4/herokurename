@@ -33,8 +33,8 @@ def create_ubot(session_string):
         print(e)
         sys.exit()
 
-if __name__ == "__main__":
-    ubot = create_ubot(Config.SESSION_STRING) 
+# if __name__ == "__main__":
+#     ubot = create_ubot(Config.SESSION_STRING) 
     # print(ubot)
     # if ubot:
     #     try:
