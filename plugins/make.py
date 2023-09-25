@@ -35,9 +35,9 @@ def create_ubot(session_string):
 
 if __name__ == "__main__":
     ubot = create_ubot(Config.SESSION_STRING) 
-    print(ubot)
-    if ubot:
-        try:
-            ubot.run()   
-        except Exception as e:
-            print(e)
+    # print(ubot)
+    # if ubot:
+    #     try:
+    #         ubot.run()   
+    #     except Exception as e:
+    #         print(e)
