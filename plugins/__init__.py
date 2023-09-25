@@ -31,8 +31,15 @@ def create_ubot(session_string):
     except Exception as e:
         print('😞 Error While Connecting To Bot')  
         print(e)
-        sys.exit(
+        sys.exit()
 
-
-  
-        )
+if __name__ == "__main__":
+    ubot = create_ubot(Config.SESSION_STRING) 
+    print(ubot)
+    if ubot:
+        try:
+            ubot.run()
+            loop = asyncio.get_event_loop()
+            loop.run_forever()    
+        except Exception as e:
+            print(e)
