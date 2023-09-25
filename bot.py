@@ -1,6 +1,6 @@
 from datetime import datetime
 from pytz import timezone
-from pyrogram import Client, __version__
+from pyrogram import Client, __version__ , compose
 from pyrogram.raw.all import layer
 from config import Config
 from aiohttp import web
@@ -42,14 +42,20 @@ class Bot(Client):
             except:
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
-if __name__ == "__main__":
-    print("Bot creation failed. Creating bot using the Bot class.")
-    bot = Bot()
-    bot.run()
-    ubot = create_ubot(Config.SESSION_STRING)  # Create the ubot instance
-    print("UBOT CREATED")
-    ubot.run()
-    print("UBOT Running")
+# if __name__ == "__main__":
+#     print("Bot creation failed. Creating bot using the Bot class.")
+#     bot = Bot()
+#     bot.run()
+#     ubot = create_ubot(Config.SESSION_STRING)  # Create the ubot instance
+#     print("UBOT CREATED")
+#     ubot.run()
+#     print("UBOT Running")
     
 
+async def main():
+    bot = Bot()
+    ubot = create_ubot(Config.SESSION_STRING)
+    apps = [bot,ubot]
+    await compose(apps)
 
+asyncio.run(main())
