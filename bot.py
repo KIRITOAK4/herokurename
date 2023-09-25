@@ -6,6 +6,7 @@ from config import Config
 from aiohttp import web
 from route import web_server
 from make import create_ubot
+import asyncio
 
 class Bot(Client):
     def __init__(self):
