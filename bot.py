@@ -74,6 +74,8 @@ if __name__ == "__main__":
     print(ubot)
     if ubot:
         ubot.run()
+        bot = Bot()
+        bot.run()
     else:
         print("Bot creation failed. Creating bot using the Bot class.")
         bot = Bot()
