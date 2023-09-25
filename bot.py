@@ -59,4 +59,9 @@ async def main():
     apps = [bot,ubot]
     await compose(apps)
 
-asyncio.run(main())
+
+
+async def hello():
+    await asyncio.run(main())
+
+hello()
