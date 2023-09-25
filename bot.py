@@ -72,11 +72,13 @@ class Bot(Client):
 
 if __name__ == "__main__":
     print(ubot)
+    try:
+       bot = Bot()
+       bot.run()
+    except Exception as e:
+       print(e)
     if ubot:
         ubot.run()
-        bot = Bot()
-        bot.run()
-    else:
-        print("Bot creation failed. Creating bot using the Bot class.")
-        bot = Bot()
-        bot.run()
+   
+
+   
