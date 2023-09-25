@@ -5,7 +5,7 @@ from pyrogram.raw.all import layer
 from config import Config
 from aiohttp import web
 from route import web_server
-from plugins.make import ubot
+from plugins.make import create_ubot
 
 class Bot(Client):
 
@@ -44,5 +44,6 @@ class Bot(Client):
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
 Bot().run()
+ubot = create_ubot(Config.SESSION_STRING) 
 ubot.run()
 print("Running Ubot")
