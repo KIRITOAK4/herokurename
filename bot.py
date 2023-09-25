@@ -8,7 +8,6 @@ from route import web_server
 from make import create_ubot
 
 class Bot(Client):
-
     def __init__(self):
         super().__init__(
             name="renamer",
@@ -43,7 +42,7 @@ class Bot(Client):
             except:
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
-Bot().run()
-# ubot = create_ubot(Config.SESSION_STRING) 
-# ubot.run()
-# print("Running Ubot")
+if __name__ == "__main__":
+    print("Bot creation failed. Creating bot using the Bot class.")
+    bot = Bot()
+    bot.run()
