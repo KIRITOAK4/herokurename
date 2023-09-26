@@ -144,7 +144,6 @@ async def doc(bot, update):
 		duration=duration,
 	        progress=progress_for_pyrogram,
 	        progress_args=("Uᴩʟᴏᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
-        
 	await pbot.copy_message(chat_id=update.message.chat.id, from_chat_id=suc.chat.id, message_id=suc.id)
     except Exception as e:          
         os.remove(file_path)
