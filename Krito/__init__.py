@@ -13,6 +13,10 @@ from route import web_server
 from make import create_ubot
 import asyncio
 
+# Define the LOGS variable here
+LOGS = logging.getLogger("RenameBot")
+LOGS.setLevel(level=logging.INFO)
+
 # -------------------------------LIST----------------------------------------
 # -------------------------------USER----------------------------------------
 SESSION_STRING = os.environ.get("SESSION_STRING", Config.SESSION_STRING)
