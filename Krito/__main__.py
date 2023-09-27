@@ -8,8 +8,10 @@ import asyncio
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
+async def main():
+    await pbot.start()
+    await ubot.start()
+    await asyncio.gather(pbot.idle(), ubot.idle())
 
-pbot.start()
-ubot.start()
-loop = asyncio.get_event_loop()
-loop.run_forever()    
+if __name__ == "__main__":
+    asyncio.run(main())
