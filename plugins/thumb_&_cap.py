@@ -6,7 +6,7 @@ from Krito import pbot
 from time import time
 import asyncio
 
-@ubot.on_message(filters.private & filters.command("ping"))
+@pbot.on_message(filters.private & filters.command("ping"))
 async def ping(client, message):
     try:
         none_admin_msg, error_buttons = await none_admin_utils(message)
