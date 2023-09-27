@@ -15,6 +15,12 @@
 🤖 <a href="https://t.me/Pyro_Rename_Bot"><img title="Telegram" src="https://img.shields.io/static/v1?label=PYRO+RENAME&message=BOT&color=blue-green"></a> 🤖
 </p>
 
+## Deploy To VPS
+
+* `cd Repo_Name`
+* `pip3 install -r requirements.txt`
+* `python3 -m Krito`
+  
 
 ## Deploy To Koyeb
 
