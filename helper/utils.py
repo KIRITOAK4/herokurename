@@ -4,7 +4,6 @@ from pytz import timezone
 from config import Config, Txt 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-
 async def progress_for_pyrogram(current, total, ud_type, message, start):
     now = time.time()
     diff = now - start
@@ -19,8 +18,8 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
 
         progress = "{0}{1}".format(
-            ''.join(["⬢" for i in range(math.floor(percentage / 5))]),
-            ''.join(["⬡" for i in range(20 - math.floor(percentage / 5))])
+            ''.join(["⚕️" for i in range(math.floor(percentage / 5))]),
+            ''.join(["👨‍💻" for i in range(20 - math.floor(percentage / 5))])
         )            
         tmp = progress + Txt.PROGRESS_BAR.format( 
             round(percentage, 2),
@@ -47,7 +46,6 @@ def humanbytes(size):
         size /= power
         n += 1
     return str(round(size, 2)) + " " + Dic_powerN[n] + 'ʙ'
-
 
 def TimeFormatter(milliseconds: int) -> str:
     seconds, milliseconds = divmod(int(milliseconds), 1000)
@@ -78,7 +76,3 @@ async def send_log(b, u):
             Config.LOG_CHANNEL,
             f"**--Nᴇᴡ Uꜱᴇʀ Sᴛᴀʀᴛᴇᴅ Tʜᴇ Bᴏᴛ--**\n\nUꜱᴇʀ: {u.mention}\nIᴅ: `{u.id}`\nUɴ: @{u.username}\n\nDᴀᴛᴇ: {date}\nTɪᴍᴇ: {time}\n\nBy: {b.mention}"
         )
-        
-
-
-
