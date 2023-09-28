@@ -30,7 +30,7 @@ async def start(client, message):
             )
             return
         
-        if 'token' not in data or userid in Config.ADMIN: 
+        if userid in Config.ADMIN: 
             caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id)
             inline_keyboard = get_inline_keyboard(page_number[0])
             reply_markup = InlineKeyboardMarkup(inline_keyboard)
@@ -43,7 +43,7 @@ async def start(client, message):
             )
             return
 
-        if data['token'] != input_token:
+        if 'token' not in data or data['token'] != input_token:
             gif_url = 'https://graph.org/file/f6e6beb62a16a46642fb4.mp4'
             caption = '**Token is either used or invalid.**'
             await message.reply_video(
