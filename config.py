@@ -9,10 +9,10 @@ id_pattern = re.compile(r'^.\d+$')
 
 class Config(object):
     # pyro client config
-    API_ID = os.environ.get("API_ID", "15356238")
-    API_HASH = os.environ.get("API_HASH", "9af2a934037de907d317abc8ad049c36")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "5472720417:AAHs8hmEQVS94cqAQuLSXcdJShv8Qk4jUoU")
-    BOT_NAME = os.environ.get("BOT_NAME", "Req_feature_bot")
+    API_ID = os.environ.get("API_ID", "14712540")
+    API_HASH = os.environ.get("API_HASH", "e61b996dc037d969a4f8cf6411bb6165")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "6202042878:AAEyVJeHHOgc5-s6h3IArLUOoS7kIBRl-xU")
+    BOT_NAME = os.environ.get("BOT_NAME", "ya_typobot")
     TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
     SESSION_STRING = os.environ.get("SESSION_STRING","BQGBULgAiW4wQDzETBV_EZLNF_RCeijAf4APdW_HgvvxdKMCEuYVuRTmPlYcor85blc9vcOr3P_8UtLzrSlTe1emlXiyRH7WIPzPJwU5ovFa_WAb_gOrHvmpPG6BJgqIg0BiLcBpkJxLy_1BqW6kv1emin_MFIWEEqPUvY7cdNj2UU07JqP6kcJuwzy41x5Rgtxr12YLWvjdVvS7MeWPDaKjKYmuiFQpEhUMAD4ilklL-PheyIO-Du46ueq-Z5Mqrurx44eLdE5Z0wjr91fMjMz_H5ZjoHoB4W9rWgaxszlBClzkHFVZocB6UwY2-CC6TuYiRdq-q088Mi2nI-cfVSObuOVXDAAAAAFF4ZRqAA") # either give session string or let it be None value 
     # database config
