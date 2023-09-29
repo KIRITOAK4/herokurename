@@ -8,4 +8,3 @@ aiohttp==3.8.4
 pytz==2023.3
 urllib3
 cloudscraper
-pdbpp==0.10.3
