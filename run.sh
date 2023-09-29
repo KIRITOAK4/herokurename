@@ -1,1 +1,1 @@
-python3-m Krito
+python3 -m Krito
