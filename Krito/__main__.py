@@ -1,7 +1,7 @@
 import glob
 from pathlib import Path
 import logging
-from Krito import pbot, ubot, Config
+from Krito import pbot, ubot, WEBHOOK, BOT_UPTIME, ADMIN, LOG_CHANNEL,
 import random
 import asyncio
 from pyrogram.raw.all import layer
@@ -26,20 +26,20 @@ if __name__ == "__main__":
     me = await pbot.get_me()
     pbot.mention = me.mention
     pbot.username = me.username  
-    pbot.uptime = Config.BOT_UPTIME     
-    if Config.WEBHOOK:
+    pbot.uptime = BOT_UPTIME     
+    if WEBHOOK:
         app = web.AppRunner(await web_server())
         await app.setup()       
         await web.TCPSite(app, "0.0.0.0", 8080).start()     
     print(f"{me.first_name} Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️")
-    for id in Config.ADMIN:
+    for id in ADMIN:
         try: await pbot.send_message(id, f"**__{me.first_name}  Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**")                                
         except: pass
-    if Config.LOG_CHANNEL:
+    if LOG_CHANNEL:
         try:
             curr = datetime.now(timezone("Asia/Kolkata"))
             date = curr.strftime('%d %B, %Y')
             time = curr.strftime('%I:%M:%S %p')
-            await pbot.send_message(Config.LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__} (Layer {layer})`</b>")                                
+            await pbot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__} (Layer {layer})`</b>")                                
         except:
             print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
