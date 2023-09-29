@@ -1,16 +1,15 @@
-import math, time
+import math
+import time
 from datetime import datetime
 from pytz import timezone
-from config import Txt 
+from config import Txt
 from Krito import LOG_CHANNEL
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-import pdb  # Import the pdb module for debugging
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
-    pdb.set_trace()  # Add debugger here
     now = time.time()
     diff = now - start
-    if round(diff % 5.00) == 0 or current == total:        
+    if round(diff % 5.00) == 0 or current == total:
         percentage = current * 100 / total
         speed = current / diff
         elapsed_time = round(diff) * 1000
@@ -23,26 +22,26 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         progress = "{0}{1}".format(
             ''.join(["⬢" for i in range(math.floor(percentage / 5))]),
             ''.join(["⬡" for i in range(20 - math.floor(percentage / 5))])
-        )            
-        tmp = progress + Txt.PROGRESS_BAR.format( 
+        )
+        tmp = progress + Txt.PROGRESS_BAR.format(
             round(percentage, 2),
             humanbytes(current),
             humanbytes(total),
-            humanbytes(speed),            
+            humanbytes(speed),
             estimated_total_time if estimated_total_time != '' else "0 s"
         )
         try:
             await message.edit(
-                text=f"{ud_type}\n\n{tmp}",               
-                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("✖️ 𝙲𝙰𝙽𝙲𝙴𝙻 ✖️", callback_data="close")]])                                               
+                text=f"{ud_type}\n\n{tmp}",
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("✖️ 𝙲𝙰𝙽𝙲𝙴𝙻 ✖️", callback_data="close")]])
             )
         except:
             pass
 
-def humanbytes(size):    
+def humanbytes(size):
     if not size:
         return ""
-    power = 2**10
+    power = 2 ** 10
     n = 0
     Dic_powerN = {0: ' ', 1: 'K', 2: 'M', 3: 'G', 4: 'T'}
     while size > power:
@@ -56,22 +55,21 @@ def TimeFormatter(milliseconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = ((str(days) + "ᴅ, ") if days else "") + \
-        ((str(hours) + "ʜ, ") if hours else "") + \
-        ((str(minutes) + "ᴍ, ") if minutes else "") + \
-        ((str(seconds) + "ꜱ, ") if seconds else "") + \
-        ((str(milliseconds) + "ᴍꜱ, ") if milliseconds else "")
-    return tmp[:-2] 
+          ((str(hours) + "ʜ, ") if hours else "") + \
+          ((str(minutes) + "ᴍ, ") if minutes else "") + \
+          ((str(seconds) + "ꜱ, ") if seconds else "") + \
+          ((str(milliseconds) + "ᴍꜱ, ") if milliseconds else "")
+    return tmp[:-2]
 
 def convert(seconds):
     seconds = seconds % (24 * 3600)
     hour = seconds // 3600
     seconds %= 3600
     minutes = seconds // 60
-    seconds %= 60      
+    seconds %= 60
     return "%d:%02d:%02d" % (hour, minutes, seconds)
 
 async def send_log(b, u):
-    pdb.set_trace()  # Add debugger here
     if LOG_CHANNEL is not None:
         curr = datetime.now(timezone("Asia/Kolkata"))
         date = curr.strftime('%d %B, %Y')
