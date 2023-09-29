@@ -6,7 +6,7 @@ from aiohttp import web
 from Krito import pbot, ubot, WEBHOOK, BOT_UPTIME, ADMIN, LOG_CHANNEL
 from route import web_server
 from pyrogram.raw.all import layer
-from pyrogram import __version__ , compose
+from pyrogram import __version__, compose
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)  # Changed logging level to INFO
@@ -44,4 +44,5 @@ async def main():
         print(f"An error occurred during startup: {e}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.get_event_loop().run_until_complete(main())
+
