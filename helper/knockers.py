@@ -1,8 +1,9 @@
-import asyncio, os
+import asyncio, os, pdb
 from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaAnimation, InputMediaVideo, User
 from helper.lameda import get_page_caption, get_inline_keyboard, get_page_gif 
 
 async def handle_callback(callback_query: CallbackQuery, page_number, user: User):
+    pdb.set_trace()  # Add debugger here
     data = callback_query.data
 
     if data == "previous":
@@ -37,4 +38,5 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
             )
 
     except Exception as e:
+        pdb.set_trace()  # Add debugger here
         print(f"An error occurred in knocker: {e}")
