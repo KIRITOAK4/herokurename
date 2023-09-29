@@ -1,7 +1,7 @@
 import glob
 from pathlib import Path
 import logging
-from Krito import pbot, ubot, WEBHOOK, BOT_UPTIME, ADMIN, LOG_CHANNEL,
+from Krito import pbot, ubot, WEBHOOK, BOT_UPTIME, ADMIN, LOG_CHANNEL
 import random
 import asyncio
 from pyrogram.raw.all import layer
