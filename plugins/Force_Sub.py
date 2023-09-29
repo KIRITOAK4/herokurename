@@ -3,7 +3,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserNotParticipant
 
 from helper.database import db
-from Krito import pbot, FORCE_SUB, 
+from Krito import pbot, FORCE_SUB
 
 async def not_subscribed(_, client, message):
     await db.add_user(client, message)
