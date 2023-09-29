@@ -4,8 +4,10 @@ from pytz import timezone
 from config import Txt 
 from Krito import LOG_CHANNEL
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+import pdb  # Import the pdb module for debugging
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
+    pdb.set_trace()  # Add debugger here
     now = time.time()
     diff = now - start
     if round(diff % 5.00) == 0 or current == total:        
@@ -69,6 +71,7 @@ def convert(seconds):
     return "%d:%02d:%02d" % (hour, minutes, seconds)
 
 async def send_log(b, u):
+    pdb.set_trace()  # Add debugger here
     if LOG_CHANNEL is not None:
         curr = datetime.now(timezone("Asia/Kolkata"))
         date = curr.strftime('%d %B, %Y')
