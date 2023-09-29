@@ -4,7 +4,7 @@ from time import sleep
 from urllib.parse import quote
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
-from __init__ import RenameBot
+from Krito.__init__ import RenameBot
 
 shorteners_list = RenameBot.shorteners_list
 
