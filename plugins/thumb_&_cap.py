@@ -1,6 +1,3 @@
-import math
-import time
-import traceback
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup
 from helper.database import db
@@ -8,6 +5,8 @@ from helper.token import none_admin_utils
 from Krito import pbot
 from time import time
 import asyncio
+import traceback
+import math
 
 @pbot.on_message(filters.private & filters.command("ping"))
 async def ping(client, message):
@@ -51,11 +50,11 @@ async def add_caption(client, message):
         return
 
     if len(message.command) == 1:
-        return await message.reply_text("**__Give The Caption__\n\nExample: `/set_caption {filename}\n\n💾 Size: {filesize}\n\n⏰ Duration: {duration}`**")
+        return await message.reply_text("**__Gɪᴠᴇ Tʜᴇ Cᴀᴩᴛɪᴏɴ__\n\nExᴀᴍᴩʟᴇ: `/set_caption {filename}\n\n💾 Sɪᴢᴇ: {filesize}\n\n⏰ Dᴜʀᴀᴛɪᴏɴ: {duration}`**")
 
     caption = message.text.split(" ", 1)[1]
     await db.set_caption(message.from_user.id, caption=caption)
-    await message.reply_text("__**✅ Caption Saved**__")
+    await message.reply_text("__**✅ Cᴀᴩᴛɪᴏɴ Sᴀᴠᴇᴅ**__")
 
 @pbot.on_message(filters.private & filters.command('del_caption'))
 async def delete_caption(client, message):
