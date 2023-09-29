@@ -20,9 +20,6 @@ async def start_clients():
 
 async def main():
     await start_clients()
-
-if __name__ == "__main__":
-    asyncio.run(main())
     me = await pbot.get_me()
     pbot.mention = me.mention
     pbot.username = me.username  
@@ -43,3 +40,6 @@ if __name__ == "__main__":
             await pbot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__} (Layer {layer})`</b>")                                
         except:
             print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
+
+if __name__ == "__main__":
+    asyncio.run(main())
