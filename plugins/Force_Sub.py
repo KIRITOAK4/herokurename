@@ -1,16 +1,16 @@
 from pyrogram import Client, filters, enums 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserNotParticipant
-from config import Config
+
 from helper.database import db
-from Krito import pbot
+from Krito import pbot, FORCE_SUB, 
 
 async def not_subscribed(_, client, message):
     await db.add_user(client, message)
-    if not Config.FORCE_SUB:
+    if not FORCE_SUB:
         return False
     try:             
-        user = await client.get_chat_member(Config.FORCE_SUB, message.from_user.id) 
+        user = await client.get_chat_member(FORCE_SUB, message.from_user.id) 
         if user.status == enums.ChatMemberStatus.BANNED:
             return True 
         else:
@@ -22,7 +22,7 @@ async def not_subscribed(_, client, message):
 
 @pbot.on_message(filters.private & filters.create(not_subscribed))
 async def forces_sub(client, message):
-    buttons = [[InlineKeyboardButton(text="📢 Join Update Channel 📢", url=f"https://t.me/{Config.FORCE_SUB}") ]]
+    buttons = [[InlineKeyboardButton(text="📢 Join Update Channel 📢", url=f"https://t.me/{FORCE_SUB}") ]]
     text = "**Sᴏʀʀy Dᴜᴅᴇ Yᴏᴜ'ʀᴇ Nᴏᴛ Jᴏɪɴᴇᴅ My Cʜᴀɴɴᴇʟ 😐. Sᴏ Pʟᴇᴀꜱᴇ Jᴏɪɴ Oᴜʀ Uᴩᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Tᴏ Cᴄᴏɴᴛɪɴᴜᴇ**"
     try:
         user = await client.get_chat_member(Config.FORCE_SUB, message.from_user.id)    
