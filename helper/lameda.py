@@ -1,15 +1,17 @@
-import os, random, re
+import os, random, re, pdb
 from gif import *
 from Krito import Text, Text1, Text2, Text3
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def get_page_gif(page_number):
+    pdb.set_trace()  # Add debugger here
     gif = os.listdir('./gif')
     selected_gif = random.choice(gif)
     gif_path = f'./gif/{selected_gif}'
     return gif_path
 
 def get_page_caption(page_number, first_name, last_name, mention, username, id):
+    pdb.set_trace()  # Add debugger here
     if page_number == 0:
         page_text = Text
     elif page_number == 1:
@@ -26,6 +28,7 @@ def get_page_caption(page_number, first_name, last_name, mention, username, id):
     return caption
 
 def get_inline_keyboard(page_number):
+    pdb.set_trace()  # Add debugger here
     inline_keyboard = []
 
     row = []
