@@ -2,7 +2,7 @@ import os, asyncio, uuid
 from time import time
 from pyrogram.types import InlineKeyboardButton
 from helper.database import db
-from config import Config
+from Krito import BOT_NAME, TOKEN_TIMEOUT, ADMIN
 from shortener import shorten_url
 
 async def none_admin_utils(message):
@@ -20,14 +20,14 @@ async def none_admin_utils(message):
  
 async def validate_user(message, button=None):
     try:
-        if not Config.TOKEN_TIMEOUT:
+        if not TOKEN_TIMEOUT:
             return None, button
         userid = message.from_user.id
-        if userid in Config.ADMIN:
+        if userid in ADMIN:
             return None, button
         data = await db.get_user_data(userid)
         expire = data.get('time')
-        is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)
+        is_expired = (expire is None or (time() - expire) > TOKEN_TIMEOUT)
         if is_expired:
             token = data.get('token') if expire is None and 'token' in data else str(uuid.uuid4())
             if expire is not None:
@@ -37,7 +37,7 @@ async def validate_user(message, button=None):
             if button is None:
                 buttons = [
                     [
-                        InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}')),
+                        InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{BOT_NAME}?start={token}')),
                         InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_caps/3')
                     ],
                     [
