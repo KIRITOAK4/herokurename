@@ -1,4 +1,6 @@
-import os, asyncio, uuid, pdb
+import os
+import asyncio
+import uuid
 from time import time
 from pyrogram.types import InlineKeyboardButton
 from helper.database import db
@@ -7,7 +9,6 @@ from shortener import shorten_url
 
 async def none_admin_utils(message):
     try:
-        pdb.set_trace()  # Add debugger here
         error_msg = []
         error_buttons = None
         token_msg, buttons = await validate_user(message)
@@ -17,12 +18,10 @@ async def none_admin_utils(message):
         return error_msg, error_buttons
     
     except Exception as e:
-        pdb.set_trace()  # Add debugger here
         print(f"An error occurred in none_admin_utils: {e}")
  
 async def validate_user(message, button=None):
     try:
-        pdb.set_trace()  # Add debugger here
         if not TOKEN_TIMEOUT:
             return None, button
         userid = message.from_user.id
@@ -54,5 +53,4 @@ async def validate_user(message, button=None):
         return None, button
 
     except Exception as e:
-        pdb.set_trace()  # Add debugger here
         print(f"An error occurred in validate_user: {e}")
