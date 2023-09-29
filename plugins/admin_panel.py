@@ -4,7 +4,7 @@ from pyrogram.types import Message
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked, PeerIdInvalid
 import os, sys, time, asyncio, logging, datetime
-import pdb  # Import the pdb module for debugging
+import pdb  # Import the pdb module for 
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
