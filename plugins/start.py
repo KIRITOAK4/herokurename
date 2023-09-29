@@ -1,4 +1,4 @@
-import os, random, asyncio
+import os, random, asyncio, pdb
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply, CallbackQuery
 from helper.database import db
@@ -15,6 +15,7 @@ page_number = [0]
 @pbot.on_message(filters.private & filters.command("start"))
 async def start(client, message):
     try:
+        pdb.set_trace()  # Add debugger here
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         input_token = None
@@ -60,11 +61,14 @@ async def start(client, message):
         )
         
     except Exception as e:
+        pdb.set_trace()  # Add debugger here
         print(f"An error occurred while executing start: {e}")
 
 @pbot.on_callback_query()
 async def callback_query(client, callback_query):
     try:
+        pdb.set_trace()  # Add debugger here
         await handle_callback(callback_query, page_number, callback_query.from_user)
     except Exception as e:
+        pdb.set_trace()  # Add debugger here
         print(f"An error occurred while handling callback in start query: {e}")
