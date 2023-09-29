@@ -3,10 +3,10 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply, CallbackQuery
 from helper.database import db
 from Krito import pbot
+from Krito import ADMIN
 from helper.token import none_admin_utils
 from time import time
 from uuid import uuid4
-from config import Config
 from helper.lameda import get_page_gif, get_page_caption, get_inline_keyboard
 from helper.knockers import handle_callback
 
@@ -30,7 +30,7 @@ async def start(client, message):
             )
             return
         
-        if userid in Config.ADMIN: 
+        if userid in ADMIN: 
             caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id)
             inline_keyboard = get_inline_keyboard(page_number[0])
             reply_markup = InlineKeyboardMarkup(inline_keyboard)
