@@ -1,3 +1,4 @@
+from Krito import pbot, LOG_CHANNEL, ADMIN
 from helper.database import db
 from pyrogram.types import Message
 from pyrogram import Client, filters
