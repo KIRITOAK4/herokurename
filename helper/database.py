@@ -1,7 +1,7 @@
 import motor.motor_asyncio
 import time
 import uuid
-from config import Config
+from Krito import DB_URL, DB_NAME
 from .utils import send_log
 
 
@@ -71,4 +71,4 @@ class Database:
             {"user_id": user_id}, {"$set": {"data": data, "page": data.get("page", 0)}}, upsert=True
         )
 
-db = Database(Config.DB_URL, Config.DB_NAME)
+db = Database(DB_URL, DB_NAME)
