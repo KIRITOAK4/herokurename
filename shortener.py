@@ -4,10 +4,9 @@ from time import sleep
 from urllib.parse import quote
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
-from config import Config
+from __init__ import RenameBot
 
-LOGGER = Config.LOGGER
-shorteners_list = Config().shorteners_list
+shorteners_list = RenameBot.shorteners_list
 
 def shorten_url(longurl):
     if not shorteners_list:
