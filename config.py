@@ -11,17 +11,17 @@ class Config(object):
     # pyro client config
     API_ID = os.environ.get("API_ID", "14712540")
     API_HASH = os.environ.get("API_HASH", "e61b996dc037d969a4f8cf6411bb6165")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
-    BOT_NAME = os.environ.get("BOT_NAME", "ya_renamebot")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "6202042878:AAEyVJeHHOgc5-s6h3IArLUOoS7kIBRl-xU")
+    BOT_NAME = os.environ.get("BOT_NAME", "ya_typobot")
     TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
-    SESSION_STRING = os.environ.get("SESSION_STRING","None") # either give session string or let it be None value 
+    SESSION_STRING = os.environ.get("SESSION_STRING","BQGBULgAiW4wQDzETBV_EZLNF_RCeijAf4APdW_HgvvxdKMCEuYVuRTmPlYcor85blc9vcOr3P_8UtLzrSlTe1emlXiyRH7WIPzPJwU5ovFa_WAb_gOrHvmpPG6BJgqIg0BiLcBpkJxLy_1BqW6kv1emin_MFIWEEqPUvY7cdNj2UU07JqP6kcJuwzy41x5Rgtxr12YLWvjdVvS7MeWPDaKjKYmuiFQpEhUMAD4ilklL-PheyIO-Du46ueq-Z5Mqrurx44eLdE5Z0wjr91fMjMz_H5ZjoHoB4W9rWgaxszlBClzkHFVZocB6UwY2-CC6TuYiRdq-q088Mi2nI-cfVSObuOVXDAAAAAFF4ZRqAA") # either give session string or let it be None value 
     # database config
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")
-    DB_URL = os.environ.get("DB_URL","")
+    DB_URL = os.environ.get("DB_URL","mongodb+srv://Movieh:movieh@cluster0.0nyllpw.mongodb.net/?retryWrites=true&w=majority")
     # other configs
     BOT_UPTIME = time.time()
     ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
-    FORCE_SUB = os.environ.get("FORCE_SUB", "")
+    FORCE_SUB = os.environ.get("FORCE_SUB", "kirigayaakash")
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
     # wes response configuration
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
