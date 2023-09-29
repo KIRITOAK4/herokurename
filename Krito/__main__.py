@@ -5,6 +5,7 @@ from Krito import pbot, ubot, Config
 import random
 import asyncio
 from pyrogram.raw.all import layer
+from pyrogram import __version__ , compose
 from datetime import datetime
 from pytz import timezone
 from aiohttp import web
