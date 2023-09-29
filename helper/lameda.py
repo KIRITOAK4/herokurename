@@ -1,6 +1,6 @@
 import os, random, re
 from gif import *
-from config import Config
+from Krito import Text, Text1, Text2, Text3
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def get_page_gif(page_number):
@@ -11,13 +11,13 @@ def get_page_gif(page_number):
 
 def get_page_caption(page_number, first_name, last_name, mention, username, id):
     if page_number == 0:
-        page_text = Config.Text
+        page_text = Text
     elif page_number == 1:
-        page_text = Config.Text1
+        page_text = Text1
     elif page_number == 2:
-        page_text = Config.Text2
+        page_text = Text2
     elif page_number == 3:
-        page_text = Config.Text3
+        page_text = Text3
         
     username = f"@{username}" if username else None
     mention = f"[{first_name}](tg://user?id={id})"
@@ -31,7 +31,7 @@ def get_inline_keyboard(page_number):
     row = []
     if page_number > 0:
         row.append(InlineKeyboardButton("👈 Previous", callback_data="previous"))
-    if page_number < 3 and (page_number != 4 or Config.Text):
+    if page_number < 3 and (page_number != 4 or Text):
         row.append(InlineKeyboardButton("Next 👉", callback_data="next"))
     inline_keyboard.append(row)
 
