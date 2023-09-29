@@ -20,15 +20,6 @@ async def start(client, message):
         input_token = None
         if len(message.command) > 1:
             input_token = message.command[1]
-        if not await db.is_user_exist(userid):
-            gif_url = 'https://graph.org/file/a58b959cc11443ac4e70b.mp4'
-            caption = 'Who are you?'
-            await message.reply_video(
-                video=gif_url,
-                caption=caption,
-                supports_streaming=True
-            )
-            return
         
         if userid in ADMIN: 
             caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id)
