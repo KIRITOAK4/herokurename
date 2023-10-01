@@ -45,4 +45,5 @@ async def main():
         print(f"An error occurred during startup: {e}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    loop = asyncio.get_event_loop() 
+    loop.run_until_complete(main())
