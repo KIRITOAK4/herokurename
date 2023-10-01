@@ -107,7 +107,7 @@ if BOT_TOKEN is not None:
         print(e)
         sys.exit()
 
-    def create_ubot(self):
+    def create_ubot():
         global SESSION_STRING
         global ubot
         if SESSION_STRING != "None":
