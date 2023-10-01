@@ -19,12 +19,12 @@ LOGS.setLevel(level=logging.INFO)
 # -------------------------------USER----------------------------------------
 SESSION_STRING = os.environ.get("SESSION_STRING", Config.SESSION_STRING)
 # -------------------------------VARS-----------------------------------------
-ADMIN = os.environ.get("ADMIN", Config.ADMIN)
+ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
 API_ID = int(os.environ.get("API_ID", Config.API_ID))
 API_HASH = os.environ.get("API_HASH", Config.API_HASH)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", Config.BOT_TOKEN)
 BOT_NAME = os.environ.get("BOT_NAME", Config.BOT_NAME)
-BOT_UPTIME = os.environ.get("BOT_UPTIME", Config.BOT_UPTIME)
+BOT_UPTIME = time.time()
 DB_NAME = os.environ.get("DB_NAME", Config.DB_NAME)
 DB_URL = os.environ.get("DB_URL", Config.DB_URL)
 FORCE_SUB = os.environ.get("FORCE_SUB", Config.FORCE_SUB)
