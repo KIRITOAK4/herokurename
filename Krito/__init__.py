@@ -17,6 +17,7 @@ LOGS.setLevel(level=logging.INFO)
 # -------------------------------LIST----------------------------------------
 # -------------------------------USER----------------------------------------
 SESSION_STRING = os.environ.get("SESSION_STRING","BQGBULgAiW4wQDzETBV_EZLNF_RCeijAf4APdW_HgvvxdKMCEuYVuRTmPlYcor85blc9vcOr3P_8UtLzrSlTe1emlXiyRH7WIPzPJwU5ovFa_WAb_gOrHvmpPG6BJgqIg0BiLcBpkJxLy_1BqW6kv1emin_MFIWEEqPUvY7cdNj2UU07JqP6kcJuwzy41x5Rgtxr12YLWvjdVvS7MeWPDaKjKYmuiFQpEhUMAD4ilklL-PheyIO-Du46ueq-Z5Mqrurx44eLdE5Z0wjr91fMjMz_H5ZjoHoB4W9rWgaxszlBClzkHFVZocB6UwY2-CC6TuYiRdq-q088Mi2nI-cfVSObuOVXDAAAAAFF")
+ubot = None
 # -------------------------------VARS-----------------------------------------
 ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
 API_ID = int(os.environ.get("API_ID", 14712540))
@@ -105,14 +106,18 @@ if BOT_TOKEN is not None:
         LOGS.info('😞 Error While Connecting To Bot')
         print(e)
         sys.exit()
-
-if SESSION_STRING is not None:
+              
+def create_ubot():
+global SESSION_STRING
+global ubot
+if SESSION_STRING != "None":
     try:
         ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
         LOGS.info("❤️ UBot Connected")
     except:
         LOGS.info('😞 Error While Connecting To UBot')
         sys.exit()
+        return None    
 
 # -------------------------------RENAMEBOT CLASS--------------------------------
 class RenameBot:
