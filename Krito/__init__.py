@@ -106,29 +106,17 @@ if BOT_TOKEN is not None:
         LOGS.info('😞 Error While Connecting To Bot')
         print(e)
         sys.exit()
-              
-def create_ubot():
-global SESSION_STRING
-global ubot
-if SESSION_STRING != "None":
-    try:
-        ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
-        LOGS.info("❤️ UBot Connected")
-    except:
-        LOGS.info('😞 Error While Connecting To UBot')
-        sys.exit()
-        return None    
 
-# -------------------------------RENAMEBOT CLASS--------------------------------
-class RenameBot:
-    LOGGER = LOGS
-    shorteners_list = []
-
-    def __init__(self):
-        if os.path.exists('shorteners.txt'):
-            with open('shorteners.txt', 'r') as f:
-                lines = f.readlines()
-                for line in lines:
-                    temp = line.strip().split()
-                    if len(temp) == 2:
-                        self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
+    def create_ubot(self):
+        global SESSION_STRING
+        global ubot
+        if SESSION_STRING != "None":
+            try:
+                ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
+                LOGS.info("❤️ UBot Connected")
+            except Exception as e:
+                LOGS.info('😞 Error While Connecting To UBot')
+                print(e)
+                sys.exit()
+                return None
+                      
