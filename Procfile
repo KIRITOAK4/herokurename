@@ -1,2 +1,2 @@
-web: python -m Krito
-worker: python -m Krito
+web: python3 -m Krito
+worker: python3 -m Krito
