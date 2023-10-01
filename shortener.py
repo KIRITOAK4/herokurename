@@ -4,9 +4,10 @@ from time import sleep
 from urllib.parse import quote
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
-from Krito.__init__ import RenameBot
+from config import Config
 
-shorteners_list = RenameBot.shorteners_list
+LOGGER = Config.LOGGER
+shorteners_list = Config().shorteners_list
 
 def shorten_url(longurl):
     if not shorteners_list:
@@ -52,3 +53,4 @@ def shorten_url(longurl):
         LOGGER.error(e)
         sleep(1)
         return None
+        
