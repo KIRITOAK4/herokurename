@@ -34,6 +34,19 @@ async def rename_start(client, message):
 
         if file.file_size > 3.2 * 1024 * 1024 * 1024:
             await message.reply_text("Sorry, this bot doesn't support uploading files bigger than 3.2GB")
+            
+        elif file.file_size > 1.9 * 1024 * 1024 * 1024:
+            if ubot.is_connected:
+                # Process the file if ubot is active and file size is between 1.9GB and 3.2GB
+                await message.reply_text(
+                    text=f"**__Please Enter New File Name...__**\n\n**Old File Name** :- `{filename}`",
+                    reply_to_message_id=message.id,
+                    reply_markup=ForceReply(True)
+                )
+                await sleep(30)
+            else:
+                # Reply with a message if ubot is not active
+                await message.reply_text("Sorry, sir. +4gb not activ to process it.")
         else:
             await message.reply_text(
                 text=f"**__Please Enter New File Name...__**\n\n**Old File Name** :- `{filename}`",
