@@ -1,9 +1,5 @@
-import os, logging, time, sys, re
-from datetime import datetime
-from pytz import timezone
-from pyrogram import Client, __version__, compose
-from pyrogram.raw.all import layer
-from pyrogram.errors import FloodWait, RPCError
+import os, logging, sys, re, time
+from pyrogram import Client
 from aiohttp import web
 from route import web_server
 
