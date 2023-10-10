@@ -6,14 +6,8 @@ from route import web_server
 id_pattern = re.compile(r'^.\d+$')
 
 logging.basicConfig(level=logging.INFO, filename='error.log')
-# Define the LOGS variable here
 LOGS = logging.getLogger("RenameBot")
 LOGS.setLevel(level=logging.INFO)
-
-# -------------------------------LIST----------------------------------------
-# -------------------------------USER----------------------------------------
-SESSION_STRING = os.environ.get("SESSION_STRING","BQGBULgAiW4wQDzETBV_EZLNF_RCeijAf4APdW_HgvvxdKMCEuYVuRTmPlYcor85blc9vcOr3P_8UtLzrSlTe1emlXiyRH7WIPzPJwU5ovFa_WAb_gOrHvmpPG6BJgqIg0BiLcBpkJxLy_1BqW6kv1emin_MFIWEEqPUvY7cdNj2UU07JqP6kcJuwzy41x5Rgtxr12YLWvjdVvS7MeWPDaKjKYmuiFQpEhUMAD4ilklL-PheyIO-Du46ueq-Z5Mqrurx44eLdE5Z0wjr91fMjMz_H5ZjoHoB4W9rWgaxszlBClzkHFVZocB6UwY2-CC6TuYiRdq-q088Mi2nI-cfVSObuOVXDAAAAAFF")
-ubot = None
 # -------------------------------VARS-----------------------------------------
 ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
 API_ID = int(os.environ.get("API_ID", 14712540))
@@ -87,7 +81,9 @@ Text3 = os.environ.get("Text3", """ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://us
 🏷 ℂ𝕠𝕟𝕥𝕒𝕔𝕥 𝕥𝕠 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](tg://user?id={id})
 👨🏻‍💻 𝕆𝕨𝕟𝕖𝕣 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](http://t.me/devil_testing_bot)
 👨🏻‍🔧 𝕄𝕠𝕕𝕚𝕗𝕚𝕖𝕕 𝕓𝕪 [ℕ𝕆𝕆𝔹_𝕂𝔸ℕ𝔾𝔼ℝ](https://t.me/kirigayaakash)""")
-
+# -------------------------------USER----------------------------------------
+SESSION_STRING = os.environ.get("SESSION_STRING","BQGBULgAiW4wQDzETBV_EZLNF_RCeijAf4APdW_HgvvxdKMCEuYVuRTmPlYcor85blc9vcOr3P_8UtLzrSlTe1emlXiyRH7WIPzPJwU5ovFa_WAb_gOrHvmpPG6BJgqIg0BiLcBpkJxLy_1BqW6kv1emin_MFIWEEqPUvY7cdNj2UU07JqP6kcJuwzy41x5Rgtxr12YLWvjdVvS7MeWPDaKjKYmuiFQpEhUMAD4ilklL-PheyIO-Du46ueq-Z5Mqrurx44eLdE5Z0wjr91fMjMz_H5ZjoHoB4W9rWgaxszlBClzkHFVZocB6UwY2-CC6TuYiRdq-q088Mi2nI-cfVSObuOVXDAAAAAFF")
+ubot = None
 # -------------------------------DEFAULT---------------------------------------
 TRIGGERS = os.environ.get("TRIGGERS", "/ .").split()
 UTRIGGERS = os.environ.get("TRIGGERS", ".").split()
@@ -100,7 +96,7 @@ if BOT_TOKEN is not None:
         LOGS.info("❤️ Bot Connected")
     except Exception as e:
         LOGS.info('😞 Error While Connecting To Bot')
-        print(e)
+        LOGS.exception(e)
         sys.exit()
 
     def create_ubot():
@@ -112,7 +108,7 @@ if BOT_TOKEN is not None:
                 LOGS.info("❤️ UBot Connected")
             except Exception as e:
                 LOGS.info('😞 Error While Connecting To UBot')
-                print(e)
+                LOGS.exception(e)
                 sys.exit()
                 return None
                       
