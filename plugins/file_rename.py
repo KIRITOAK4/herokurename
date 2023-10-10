@@ -37,7 +37,6 @@ async def rename_start(client, message):
             
         elif file.file_size > 1.9 * 1024 * 1024 * 1024:
             if ubot.is_connected:
-                # Process the file if ubot is active and file size is between 1.9GB and 3.2GB
                 await message.reply_text(
                     text=f"**__Please Enter New File Name...__**\n\n**Old File Name** :- `{filename}`",
                     reply_to_message_id=message.id,
@@ -45,7 +44,6 @@ async def rename_start(client, message):
                 )
                 await sleep(30)
             else:
-                # Reply with a message if ubot is not active
                 await message.reply_text("Sorry, sir. +4gb not activ to process it.")
         else:
             await message.reply_text(
@@ -179,7 +177,7 @@ async def doc(bot, update):
                     progress_args=("Upload Started....", ms, time.time())
                 )
 
-            if client == pbot:
+            if client == ubot:
                 await pbot.copy_message(
                     chat_id=update.message.chat.id,
                     from_chat_id=suc.chat.id,
