@@ -1,6 +1,11 @@
 import asyncio
+import logging
 from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaAnimation, InputMediaVideo, User
-from helper.lameda import get_page_caption, get_inline_keyboard, get_page_gif 
+from helper.lameda import get_page_caption, get_inline_keyboard, get_page_gif
+
+logging.basicConfig(level=logging.INFO, filename='error.log')
+logger = logging.getLogger("CallbackHandler")
+logger.setLevel(level=logging.INFO)
 
 async def handle_callback(callback_query: CallbackQuery, page_number, user: User):
     data = callback_query.data
@@ -37,4 +42,4 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
             )
 
     except Exception as e:
-        print(f"An error occurred in knocker: {e}")
+        logger.error(f"An error occurred in handle_callback in knocker: {e}")
