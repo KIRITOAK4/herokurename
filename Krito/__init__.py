@@ -1,7 +1,5 @@
 import os, logging, sys, re, time
 from pyrogram import Client
-from aiohttp import web
-from route import web_server
 
 id_pattern = re.compile(r'^.\d+$')
 
@@ -20,7 +18,7 @@ DB_URL = os.environ.get("DB_URL", "mongodb+srv://Movieh:movieh@cluster0.0nyllpw.
 FORCE_SUB = os.environ.get("FORCE_SUB", "kirigayaakash")
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
 TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
-WEBHOOK = os.environ.get("WEBHOOK", True)
+WEBHOOK = bool(os.environ.get("WEBHOOK", True))
 Text = os.environ.get("Text", """●     °    •      ○    ●   •  ●    ○   •  ●
 
 ○       ●      °    ●    •     ○   ●   ○  •
