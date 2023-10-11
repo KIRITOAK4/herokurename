@@ -3,9 +3,9 @@ import asyncio
 from datetime import datetime
 from pytz import timezone
 from aiohttp import web
-from Krito import pbot, create_ubot, WEBHOOK, BOT_UPTIME, ADMIN, LOG_CHANNEL
 from route import web_server
 from pyrogram import __version__
+from Krito import pbot, create_ubot, WEBHOOK, BOT_UPTIME, ADMIN, LOG_CHANNEL
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)  
