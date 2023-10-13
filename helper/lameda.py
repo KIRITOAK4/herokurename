@@ -51,7 +51,7 @@ def get_inline_keyboard(page_number):
         row = []
         if page_number > 0:
             row.append(InlineKeyboardButton("👈", callback_data="previous"))
-        if page_number < 3 and (page_number != 4 or Text):
+        if page_number < 3:
             row.append(InlineKeyboardButton("👉", callback_data="next"))
         inline_keyboard.append(row)
 
