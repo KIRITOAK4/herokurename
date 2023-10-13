@@ -5,7 +5,7 @@ from pytz import timezone
 from aiohttp import web
 from route import web_server
 from pyrogram import __version__
-from Krito import pbot, create_ubot, WEBHOOK, BOT_UPTIME, ADMIN, LOG_CHANNEL
+from Krito import pbot, create_ubot, WEBHOOK, ADMIN, LOG_CHANNEL
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)  
@@ -15,9 +15,8 @@ async def main():
     try:
         await pbot.start()
 
-        success = create_ubot()  # Attempt to create ubot
-        if success is not None:
-            ubot = success
+        ubot = await create_ubot()  # Await the result of create_ubot() if it's asynchronous
+        if ubot:
             try:
                 await ubot.start()  # Start ubot with error handling
             except Exception as e:
