@@ -2,9 +2,9 @@ import re
 from Krito import Text, Text1, Text2, Text3
 
 def extract_message_id(link):
-    message_id_match = re.search(r'/(\d+)$', link)
+    message_id_match = re.search(r'https?://(www\.)?telegram\.me/(c/)?[^/]+/(\d+)', link)
     if message_id_match:
-        return message_id_match.group(1)
+        return message_id_match.group(3)
     else:
         return None
 
