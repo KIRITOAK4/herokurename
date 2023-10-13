@@ -1,4 +1,8 @@
-import os, logging, sys, re, time
+import os
+import logging
+import sys
+import re
+import time
 from pyrogram import Client
 
 id_pattern = re.compile(r'^.\d+$')
@@ -6,6 +10,7 @@ id_pattern = re.compile(r'^.\d+$')
 logging.basicConfig(level=logging.INFO, filename='error.log')
 LOGS = logging.getLogger("RenameBot")
 LOGS.setLevel(level=logging.INFO)
+
 # -------------------------------VARS-----------------------------------------
 ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
 API_ID = int(os.environ.get("API_ID", 14712540))
@@ -19,6 +24,7 @@ FORCE_SUB = os.environ.get("FORCE_SUB", "kirigayaakash")
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
 TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
 WEBHOOK = bool(os.environ.get("WEBHOOK", True))
+
 Text = os.environ.get("Text", """●     °    •      ○    ●   •  ●    ○   •  ●
 
 ○       ●      °    ●    •     ○   ●   ○  •
@@ -31,27 +37,27 @@ Text = os.environ.get("Text", """●     °    •      ○    ●   •  ●   
 Text1 = os.environ.get("Text1", """☞☞☞ ☞☞ 𝐻𝐸𝐿𝑃 𝑃𝐴𝐺𝐸 ☚☚ ☚☚
 
 ☞ ┃ /ping 𝗙ᴏʀ 𝗖ʜᴇᴄᴋɪɴɢ 𝗕ᴏᴛ 𝗔ʟɪᴠᴇ
-    ┏━━━━━━━━━━━━━━┓
-     🖼 𝗛ᴏᴡ 𝗧ᴏ 𝗦ᴇᴛ 𝗧ʜᴜᴍʙɴɪʟ
-    ┗━━━━━━━━━━━━━━┛
+    ┏━━━━━━━━━━━━━━┓
+     🖼 𝗛ᴏᴡ 𝗧ᴏ 𝗦ᴇᴛ 𝗧ʜᴜᴍʙɪɴɪʟ
+    ┗━━━━━━━━━━━━━━┛
 ☞ ┃ 📸 𝗦ᴇɴᴅ 𝗔ɴ𝘆 𝗣ʜᴏᴛᴏ 𝗧ᴏ 𝗔ᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟ𝘆 𝗦ᴇᴛ 𝗧ʜᴜᴍʙɴᴀʟᴇ.
 ☞ ┃ 🗑 /del_thumb 𝗧ᴏ 𝗗ᴇʟᴇᴛᴇ 𝗬ᴏᴜʀ 𝗢ʟᴅ 𝗧ʜᴜᴍʙɴɪʟᴇ.
 ☞ ┃ 👁 /view_thumb 𝗧ᴏ 𝗩ɪᴇᴡ 𝗬ᴏᴜʀ 𝗖ᴜʀʀᴇɴᴛ 𝗧ʜᴜᴍʙɴɪʟᴇ.
-    ┏━━━━━━━━━━━━━━━━━━━┓ 
-     📑 𝗛ᴏᴡ 𝗧ᴏ 𝗦ᴇᴛ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
-    ┗━━━━━━━━━━━━━━━━━━━┛
+    ┏━━━━━━━━━━━━━━━━━━━┓ 
+     📑 𝗛ᴏᴡ 𝗧ᴏ 𝗦ᴇᴛ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
+    ┗━━━━━━━━━━━━━━━━━━━┛
 ☞ ┃ 📝 /set_caption - 𝗧ᴏ 𝗦ᴇᴛ ᴀ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
 ☞ ┃ 👁‍🗨 /see_caption - 𝗧ᴏ 𝗩ɪᴇᴡ 𝗬ᴏᴜʀ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
 ☞ ┃ 🗑 /del_caption - 𝗧ᴏ 𝗗ᴇʟᴇᴛᴇ 𝗬ᴏᴜʀ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
-☞ ┃ 🏷 𝗡ᴏᴛᴇ:- /set_caption 𝗨𝘀ᴇ 𝗙ᴏʀ 𝗙ᴇᴡ 𝗣ʀᴇ_𝗗ᴇғɪɴᴇᴅ 𝗖ᴀᴘᴛɪᴏɴ𝘀.
+☞ ┃ 🏷 𝗡ᴏᴛᴇ:- /set_caption 𝗨𝘀ᴇ 𝗙𝴏ʀ 𝗙𝴇𝴡 𝗣ʀᴇ_𝗗ᴇғɪɴᴇᴅ 𝗖ᴀᴘᴛɪᴏɴ𝘀.
 
 ☞ ┃ ✏️ 𝗛ᴏᴡ 𝗧ᴏ 𝗥ᴇɴᴀᴍᴇ 𝗔 𝗙ɪʟᴇ
 📥 𝗦ᴇɴᴅ 𝗔ɴ𝘆 𝗙ɪʟᴇ 
-🏷 𝗧𝘆ᴩᴇ 𝗡ᴇᴡ 𝗙ɪʟᴇ 𝗡ᴀᴍᴇ 
+🏷 𝗧𝘆ᴘᴇ 𝗡ᴇᴡ 𝗙ɪʟᴇ 𝗡ᴀᴍᴇ 
 📤 𝗦ᴇʟᴇᴄᴛ 𝗧ʜᴇ 𝗙ᴏʀᴍᴀᴛ [ 𝗱𝗼𝗰𝘂𝗺𝗲𝗻𝘁, 𝘃𝗶𝗱𝗲𝗼, 𝗮𝘂𝗱𝗶𝗼 ].
-           ┏━━━━━━━━━━┓ 
-ㅤㅤ    ℹ️ 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽
-           ┗━━━━━━━━━━┛
+           ┏━━━━━━━━━━┓ 
+ㅤㅤ    ℹ️ 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽
+           ┗━━━━━━━━━━┛
 ☛┃ [𝗖𝗼𝗻𝘁𝗮𝗰𝘁](https://t.me/devil_testing_bot) 
 ☛┃ [𝗚𝗿𝗼𝘂𝗽](https://t.me/KIRIGAYA_ASUNA)
 ☛┃ [𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/kirigayaakash)""")
@@ -66,7 +72,7 @@ Text2 = os.environ.get("Text2", """👋 𝙺𝙾𝙽𝙸𝙲𝙷𝙸𝚆𝙰;  {
 4.》❌𝙸 𝙰𝙼 𝙽𝙾𝚃 𝙰 𝙿𝚁𝙾𝙵𝙴𝚂𝚂𝙸𝙾𝙽𝙰𝙻 𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 𝙱𝚄𝚃 𝙹𝚄𝚂𝚃 𝙻𝙸𝙺𝙴𝙳 𝚃𝙷𝙴 𝙾𝚃𝙷𝙴𝚁 𝙱𝙾𝚃 𝙵𝙴𝙰𝚃𝚄𝚁𝙴𝚂 𝚂𝙾 𝙸 𝙰𝙳𝙳𝙴𝙳 𝙸𝙽 𝙸𝚃...""")
 Text3 = os.environ.get("Text3", """ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://user?id={id})
 ㅤㅤㅤ  ●●●●●●●●●●●●●●●●ㅤㅤㅤ
-ㅤㅤㅤ    𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙾𝚏 𝙿𝚢𝚛𝚘-𝙱𝚘𝚝𝚣.
+ㅤㅤㅤ    𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙾𝚏 𝙿𝚢𝚛𝚘-𝙱𝚘𝚝𝚉.
           2gb+ credit to Shadow Blade....
 ㅤㅤ      ㅤ 𝙾𝚝𝚑𝚎𝚛 𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙸𝚍𝚎𝚊𝚜...ㅤㅤㅤ
 ㅤㅤ        ㅤ𝙰𝚗𝚍 𝙼𝚢𝚜𝚎𝚕𝚏ㅤㅤㅤㅤㅤㅤㅤ
@@ -82,6 +88,7 @@ Text3 = os.environ.get("Text3", """ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://us
 # -------------------------------USER----------------------------------------
 SESSION_STRING = os.environ.get("SESSION_STRING","BQGBULgAiW4wQDzETBV_EZLNF_RCeijAf4APdW_HgvvxdKMCEuYVuRTmPlYcor85blc9vcOr3P_8UtLzrSlTe1emlXiyRH7WIPzPJwU5ovFa_WAb_gOrHvmpPG6BJgqIg0BiLcBpkJxLy_1BqW6kv1emin_MFIWEEqPUvY7cdNj2UU07JqP6kcJuwzy41x5Rgtxr12YLWvjdVvS7MeWPDaKjKYmuiFQpEhUMAD4ilklL-PheyIO-Du46ueq-Z5Mqrurx44eLdE5Z0wjr91fMjMz_H5ZjoHoB4W9rWgaxszlBClzkHFVZocB6UwY2-CC6TuYiRdq-q088Mi2nI-cfVSObuOVXDAAAAAFF")
 ubot = None
+
 # -------------------------------DEFAULT---------------------------------------
 TRIGGERS = os.environ.get("TRIGGERS", "/ .").split()
 UTRIGGERS = os.environ.get("TRIGGERS", ".").split()
@@ -97,16 +104,15 @@ if BOT_TOKEN is not None:
         LOGS.exception(e)
         sys.exit()
 
-    def create_ubot():
-        global SESSION_STRING
-        global ubot
+    async def create_ubot():
         if SESSION_STRING != "None":
             try:
                 ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
+                await ubot.start()
                 LOGS.info("❤️ UBot Connected")
+                return ubot
             except Exception as e:
                 LOGS.info('😞 Error While Connecting To UBot')
                 LOGS.exception(e)
-                sys.exit()
                 return None
-                      
+                raise UBotConnectionError("Error while connecting to UBot") from e
