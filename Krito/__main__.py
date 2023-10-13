@@ -18,7 +18,10 @@ async def main():
         success = create_ubot()  # Attempt to create ubot
         if success is not None:
             ubot = success
-            await ubot.start()
+            try:
+                await ubot.start()  # Start ubot with error handling
+            except Exception as e:
+                logger.error(f"Failed to start ubot: {e}")
 
             me = await pbot.get_me()
             logger.info(f"{me.first_name} Is Started.....✨️")
