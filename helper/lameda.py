@@ -3,7 +3,7 @@ import random
 import re
 import logging
 from gif import *
-from Krito import Text, Text1, Text2, Text3
+from helper.extract import extracted_text
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 logging.basicConfig(level=logging.INFO, filename='error.log')
@@ -20,16 +20,16 @@ def get_page_gif(page_number):
         logger.error(f"An error occurred in get_page_gif: {e}")
         return None
 
-def get_page_caption(page_number, first_name, last_name, mention, username, id):
+def get_page_caption(page_number, first_name, last_name, mention, username, id, extracted_text):
     try:
         if page_number == 0:
-            page_text = Text
+            page_text = extracted_text.get('Text','')
         elif page_number == 1:
-            page_text = Text1
+            page_text = extracted_text.get('Text1','')
         elif page_number == 2:
-            page_text = Text2
+            page_text = extracted_text.get('Text2','')
         elif page_number == 3:
-            page_text = Text3
+            page_text = extracted_text.get('Text3','')
         
         mention = f"[{first_name}](tg://user?id={id})"
         if username:
@@ -37,8 +37,8 @@ def get_page_caption(page_number, first_name, last_name, mention, username, id):
         else:
             username_text = ""
         
-        cption = page_text.format(first_name=first_name, last_name=last_name, username=username_text, mention=mention, id=id)
-        caption = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'[\1](\2)', caption)
+        on = page_text.format(first_name=first_name, last_name=last_name, username=username_text, mention=mention, id=id)
+        caption = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'[\1](\2)', on)
         return caption
     except Exception as e:
         logger.error(f"An error occurred in get_page_caption: {e}")
