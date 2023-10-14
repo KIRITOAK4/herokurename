@@ -51,7 +51,9 @@ if BOT_TOKEN is not None:
 
     if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
         try:
+            LOGS.info("Before creating ubot")
             ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
+            LOGS.info("After creating ubot")
             LOGS.info("❤️ UBot Connected")
         except Exception as e:
             LOGS.error(f'Error occurred in connecting UBot: {str(e)}')
