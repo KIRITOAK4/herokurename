@@ -48,18 +48,18 @@ if BOT_TOKEN is not None:
         LOGS.exception(e)
         sys.exit()
 
-async def create_ubot():
-    try:
-        if SESSION_STRING is not None:
+def create_ubot():
+    global ubot  # Declare ubot as global variable if you intend to use it globally
+    if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
+        try:
             ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
-            await ubot.start()
             LOGS.info("❤️ UBot Connected")
             return ubot
-        else:
-            LOGS.error("SESSION_STRING is not provided or set to 'None'. Please provide a valid session string.")
+        except Exception as e:
+            LOGS.error(f'Error occurred in create_ubot(): {str(e)}')
+            LOGS.exception(e)
             sys.exit()
-    except Exception as e:
-        LOGS.error(f'Error occurred in create_ubot(): {str(e)}')
-        LOGS.exception(e)
+    else:
+        LOGS.error("SESSION_STRING is not provided or set to 'None'. Please provide a valid session string.")
         sys.exit()
-
+        
