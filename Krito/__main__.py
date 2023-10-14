@@ -5,7 +5,7 @@ from pytz import timezone
 from aiohttp import web
 from route import web_server
 from pyrogram import __version__
-from Krito import pbot, create_ubot, WEBHOOK, ADMIN, LOG_CHANNEL
+from Krito import pbot, ubot, WEBHOOK, ADMIN, LOG_CHANNEL
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)  
