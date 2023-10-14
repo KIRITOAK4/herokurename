@@ -15,37 +15,34 @@ async def main():
     try:
         await pbot.start()
 
-        ubot = await create_ubot()  # Await the result of create_ubot() if it's asynchronous
-        if ubot:
+        if ubot is not None:
             try:
                 await ubot.start()  # Start ubot with error handling
-            except Exception as e:
-                logger.error(f"Failed to start ubot: {e}")
-
-            me = await pbot.get_me()
-            logger.info(f"{me.first_name} Is Started.....✨️")
-            if WEBHOOK:
-                app = web.AppRunner(await web_server())
-                await app.setup()       
-                await web.TCPSite(app, "0.0.0.0", 8080).start()     
-
-            for id in ADMIN:
-                try: 
-                    await pbot.send_message(id, f"**__{me.first_name} Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**")                                
-                except Exception as e:
-                    logger.error(f"Failed to send message to admin {id}: {e}")
-
-            if LOG_CHANNEL:
-                try:
-                    curr = datetime.now(timezone("Asia/Kolkata"))
-                    date = curr.strftime('%d %B, %Y')
-                    time = curr.strftime('%I:%M:%S %p')
-                    await pbot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__}`</b>")
-                except Exception as e:
-                    logger.error(f"Failed to send message to log channel: {e}")
-
-    except Exception as e:
-        logger.error(f"An error occurred during startup: {e}")
+                me = await pbot.get_me()
+                logger.info(f"{me.first_name} Is Started.....✨️")
+                if WEBHOOK:
+                    app = web.AppRunner(await web_server())
+                    await app.setup()       
+                    await web.TCPSite(app, "0.0.0.0", 8080).start()     
+                for id in ADMIN:
+                    try: 
+                        await pbot.send_message(id, f"**__{me.first_name} Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**")                                
+                    except Exception as e:
+                        logger.error(f"Failed to send message to admin {id}: {e}")
+                if LOG_CHANNEL:
+                    try:
+                        curr = datetime.now(timezone("Asia/Kolkata"))
+                        date = curr.strftime('%d %B, %Y')
+                        time = curr.strftime('%I:%M:%S %p')
+                        await pbot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__}`</b>")
+                    except Exception as e:
+                        logger.error(f"Failed to send message to log channel: {e}")
+            except Exception as ubot_error:
+                logger.error(f"Failed to start ubot: {ubot_error}")
+        else:
+            logger.error("ubot is not created successfully.")
+    except Exception as pbot_error:
+        logger.error(f"An error occurred during startup: {pbot_error}")
 
 if __name__ == "__main__":
     asyncio.run(main())
