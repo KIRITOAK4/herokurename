@@ -43,23 +43,21 @@ if BOT_TOKEN is not None:
     try:
         pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
         LOGS.info("❤️ PBot Connected")
+        pbot.start()
     except Exception as e:
         LOGS.info('😞 Error While Connecting To Bot')
         LOGS.exception(e)
         sys.exit()
 
-def create_ubot():
-    global ubot  # Declare ubot as global variable if you intend to use it globally
     if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
         try:
-            ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
+            cbot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
             LOGS.info("❤️ UBot Connected")
             return ubot
         except Exception as e:
-            LOGS.error(f'Error occurred in create_ubot(): {str(e)}')
+            LOGS.error(f'Error occurred in connecting UBot: {str(e)}')
             LOGS.exception(e)
             sys.exit()
     else:
         LOGS.error("SESSION_STRING is not provided or set to 'None'. Please provide a valid session string.")
         sys.exit()
-        
