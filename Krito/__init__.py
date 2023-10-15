@@ -7,9 +7,9 @@ from pyrogram import Client
 
 id_pattern = re.compile(r'^.\d+$')
 
-logging.basicConfig(level=logging.INFO, filename='error.log')
+logging.basicConfig(level=logging.DEBUG, filename='init error.log')
 LOGS = logging.getLogger("RenameBot")
-LOGS.setLevel(level=logging.INFO)
+LOGS.setLevel(level=logging.DEBUG)
 
 # -------------------------------VARS-----------------------------------------
 ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
@@ -40,23 +40,23 @@ plugins = dict(root="plugins")
 if BOT_TOKEN is not None:
     try:
         pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
-        LOGS.info("❤️ PBot Connected")
+        LOGS.debug("❤️ PBot Connected")
         pbot.start()
     except Exception as e:
-        LOGS.info('😞 Error While Connecting To Bot')
+        LOGS.debug('😞 Error While Connecting To Bot')
         LOGS.exception(e)
         sys.exit()
 
     if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
         try:
-            LOGS.info("Before creating ubot")
+            LOGS.debug("Before creating ubot")
             ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
-            LOGS.info("After creating ubot")
-            LOGS.info("❤️ UBot Connected")
+            LOGS.debug("After creating ubot")
+            LOGS.debug("❤️ UBot Connected")
         except Exception as e:
-            LOGS.error(f'Error occurred in connecting UBot: {str(e)}')
+            LOGS.debug(f'Error occurred in connecting UBot: {str(e)}')
             LOGS.exception(e)
             sys.exit()
     else:
-        LOGS.error("SESSION_STRING is not provided or set to 'None'. Please provide a valid session string.")
+        LOGS.debug("SESSION_STRING is not provided or set to 'None'. Please provide a valid session string.")
         sys.exit()
