@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 async def main():
     try:
-        # Start the clients
         await pbot.start()
         await ubot.start()
 
@@ -47,5 +46,4 @@ async def main():
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-    loop.close()
+    loop.run_forever()
