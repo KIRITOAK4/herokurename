@@ -17,7 +17,7 @@ async def main():
         await ubot.start()
 
         me = await pbot.get_me()
-        logger.info(f"{me.first_name} Is Started.....✨️")
+        logger.debug(f"{me.first_name} Is Started.....✨️")
         
         if WEBHOOK:
             app = web.AppRunner(await web_server())
