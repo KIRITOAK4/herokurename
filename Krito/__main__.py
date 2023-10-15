@@ -8,7 +8,7 @@ from pyrogram import __version__
 from Krito import pbot, ubot, WEBHOOK, ADMIN, LOG_CHANNEL
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.DEBUG)
+                    level=logging.DEBUG)  # Set the logging level to DEBUG for detailed debug messages
 logger = logging.getLogger(__name__)
 
 async def main():
@@ -17,7 +17,7 @@ async def main():
         await ubot.start()
 
         me = await pbot.get_me()
-        logger.debug(f"{me.first_name} Is Started.....✨️")
+        logger.info(f"{me.first_name} Is Started.....✨️")
         
         if WEBHOOK:
             app = web.AppRunner(await web_server())
@@ -28,7 +28,7 @@ async def main():
             try:
                 await pbot.send_message(id, f"**__{me.first_name} Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**") if pbot else await ubot.send_message(id, f"**__{me.first_name} Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**")
             except Exception as e:
-                logger.debug(f"Failed to send message to admin {id}: {e}")
+                logger.debug(f"Failed to send message to admin {id}: {e}")  # Use logger.debug for debug-level messages
         
         if LOG_CHANNEL:
             try:
@@ -37,13 +37,10 @@ async def main():
                 time = curr.strftime('%I:%M:%S %p')
                 await pbot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__}`</b>") if pbot else await ubot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__}`</b>")
             except Exception as e:
-                logger.debug(f"Failed to send message to log channel: {e}")
+                logger.debug(f"Failed to send message to log channel: {e}")  # Use logger.debug for debug-level messages
 
         await asyncio.sleep(60)  # Sleep for 60 seconds before repeating
 
-    except Exception as error:
-        logger.error(f"An error occurred during startup: {error}")
-
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    loop.run_forever()
+    loop.run_until_complete(main())  # Run the main coroutine until completion
