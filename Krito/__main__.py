@@ -40,10 +40,9 @@ async def main():
                 logger.debug(f"Failed to send message to log channel: {e}")
 
         await asyncio.sleep(60)
-
-if __name__ == "__main__":
-    try:
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(main())
     except Exception as main_error:
         logger.error(f"An error occurred in main(): {main_error}")
+
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
