@@ -7,7 +7,7 @@ from pyrogram import Client
 
 id_pattern = re.compile(r'^.\d+$')
 
-logging.basicConfig(level=logging.DEBUG, filename='init error.log')
+logging.basicConfig(level=logging.DEBUG, filename='error.log')
 LOGS = logging.getLogger("RenameBot")
 LOGS.setLevel(level=logging.DEBUG)
 
@@ -43,20 +43,16 @@ if BOT_TOKEN is not None:
         LOGS.debug("❤️ PBot Connected")
         pbot.start()
     except Exception as e:
-        LOGS.debug('😞 Error While Connecting To Bot')
+        LOGS.debug('😞 Error While Connecting To pBot')
         LOGS.exception(e)
         sys.exit()
 
-    if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
-        try:
-            LOGS.debug("Before creating ubot")
-            ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
-            LOGS.debug("After creating ubot")
-            LOGS.debug("❤️ UBot Connected")
-        except Exception as e:
-            LOGS.debug(f'Error occurred in connecting UBot: {str(e)}')
-            LOGS.exception(e)
-            sys.exit()
-    else:
-        LOGS.debug("SESSION_STRING is not provided or set to 'None'. Please provide a valid session string.")
+if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
+    try:
+        ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
+        LOGS.debug("❤️ UBot Connected")
+    except Exception as e:
+        LOGS.debug('😞 Error While Connecting To uBot')
+        LOGS.exception(e)
         sys.exit()
+            
