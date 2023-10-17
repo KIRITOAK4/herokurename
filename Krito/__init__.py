@@ -30,7 +30,7 @@ Text1 = os.environ.get("Text1", "https://t.me/beluga0_01/1516")
 Text2 = os.environ.get("Text2", "https://t.me/beluga0_01/1518")
 Text3 = os.environ.get("Text3", "https://t.me/beluga0_01/1519")
 # -------------------------------USER----------------------------------------
-SESSION_STRING = os.environ.get("SESSION_STRING","BQGBULgAiW4wQDzETBV_EZLNF_RCeijAf4APdW_HgvvxdKMCEuYVuRTmPlYcor85blc9vcOr3P_8UtLzrSlTe1emlXiyRH7WIPzPJwU5ovFa_WAb_gOrHvmpPG6BJgqIg0BiLcBpkJxLy_1BqW6kv1emin_MFIWEEqPUvY7cdNj2UU07JqP6kcJuwzy41x5Rgtxr12YLWvjdVvS7MeWPDaKjKYmuiFQpEhUMAD4ilklL-PheyIO-Du46ueq-Z5Mqrurx44eLdE5Z0wjr91fMjMz_H5ZjoHoB4W9rWgaxszlBClzkHFVZocB6UwY2-CC6TuYiRdq-q088Mi2nI-cfVSObuOVXDAAAAAFF")
+SESSION_STRING = os.environ.get("SESSION_STRING", "BQGBULgAHPuTHhS9431uNmWB-mmCdnIixN4Yhhsmly07p8PjyG9yyvzd2ooioT97ay7v5soM21Lahgdh2x8qk3FhDSoC2ZhBBp0qMnanneTUhnVdKoBaejwPuMXykZTS0_Tm4LuQDKtXRKBkrrUdCmjKBhaXY9MN1Ah4dAJr01Ed8Im3Ojs3SRprNT6VfJ3B5h1U0cAtah9f4ddcugmwn2V-7iY26nJy8FmlKJJvN2WsXObKwt5i4IYkRsRgP3nnxUsxNXjTBl1RKndBU_hP_TT_pKcrEbMT4lhljQKEc8bLF_qYQ3ceafCHJwqcAmiaiZjHlAq16kUWwq8o_1NdF40kLqh5owAAAAFF4ZRqAA")
 # -------------------------------DEFAULT---------------------------------------
 TRIGGERS = os.environ.get("TRIGGERS", "/ .").split()
 UTRIGGERS = os.environ.get("TRIGGERS", ".").split()
