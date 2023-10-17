@@ -41,7 +41,6 @@ if BOT_TOKEN is not None:
     try:
         pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
         LOGS.debug("❤️ PBot Connected")
-        pbot.start()
     except Exception as e:
         LOGS.debug('😞 Error While Connecting To pBot')
         LOGS.exception(e)
