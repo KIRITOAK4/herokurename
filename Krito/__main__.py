@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 async def main():
     try:
         await pbot.start()
-        await ubot.start()
+        if ubot is not None:
+            await ubot.start()
 
         me = await pbot.get_me()
         logger.info(f"{me.first_name} Is Started.....✨️")
