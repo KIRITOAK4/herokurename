@@ -41,7 +41,7 @@ plugins = dict(root="plugins")
 # ------------------------------CONNECTION------------------------------------
 if BOT_TOKEN is not None:
     try:
-        pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+        pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
         LOGS.info("❤️ PBot Connected")
     except Exception as e:
         LOGS.info('😞 Error While Connecting To pBot')
