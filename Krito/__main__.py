@@ -1,5 +1,4 @@
-import glob
-from pathlib import Path
+
 import logging
 import asyncio
 from datetime import datetime
@@ -9,8 +8,7 @@ from route import web_server
 from pyrogram import __version__
 from Krito import pbot, ubot, WEBHOOK, ADMIN, LOG_CHANNEL
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.DEBUG)
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def main():
@@ -31,7 +29,7 @@ async def main():
             try:
                 await pbot.send_message(id, f"**__{me.first_name} Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**")
             except Exception as e:
-                logger.debug(f"Failed to send message to admin {id}: {e}")
+                logger.info(f"Failed to send message to admin {id}: {e}")
 
         if LOG_CHANNEL:
             try:
@@ -40,7 +38,7 @@ async def main():
                 time = curr.strftime('%I:%M:%S %p')
                 await pbot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__}`</b>")
             except Exception as e:
-                logger.debug(f"Failed to send message to log channel: {e}")
+                logger.info(f"Failed to send message to log channel: {e}")
 
         await asyncio.sleep(60)
     except Exception as main_error:
