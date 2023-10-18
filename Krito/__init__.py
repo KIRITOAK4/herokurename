@@ -7,9 +7,9 @@ from pyrogram import Client
 
 id_pattern = re.compile(r'^.\d+$')
 
-logging.basicConfig(level=logging.DEBUG, filename='error.log')
+logging.basicConfig(level=logging.INFO, filename='error.log')
 LOGS = logging.getLogger("RenameBot")
-LOGS.setLevel(level=logging.DEBUG)
+LOGS.setLevel(level=logging.INFO)
 
 # -------------------------------VARS-----------------------------------------
 ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
@@ -42,18 +42,18 @@ plugins = dict(root="plugins")
 if BOT_TOKEN is not None:
     try:
         pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
-        LOGS.debug("❤️ PBot Connected")
+        LOGS.info("❤️ PBot Connected")
     except Exception as e:
-        LOGS.debug('😞 Error While Connecting To pBot')
+        LOGS.info('😞 Error While Connecting To pBot')
         LOGS.exception(e)
         sys.exit()
 
 if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
     try:
         ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, plugins=plugins)
-        LOGS.debug("❤️ UBot Connected")
+        LOGS.info("❤️ UBot Connected")
     except Exception as e:
-        LOGS.debug('😞 Error While Connecting To uBot')
+        LOGS.info('😞 Error While Connecting To uBot')
         LOGS.exception(e)
         sys.exit()
-            
+        
