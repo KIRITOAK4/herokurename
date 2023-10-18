@@ -32,6 +32,7 @@ Text3 = os.environ.get("Text3", "https://t.me/beluga0_01/1519")
 # -------------------------------USER----------------------------------------
 #SESSION_STRING = os.environ.get("SESSION_STRING", "BQGBULgAHPuTHhS9431uNmWB-mmCdnIixN4Yhhsmly07p8PjyG9yyvzd2ooioT97ay7v5soM21Lahgdh2x8qk3FhDSoC2ZhBBp0qMnanneTUhnVdKoBaejwPuMXykZTS0_Tm4LuQDKtXRKBkrrUdCmjKBhaXY9MN1Ah4dAJr01Ed8Im3Ojs3SRprNT6VfJ3B5h1U0cAtah9f4ddcugmwn2V-7iY26nJy8FmlKJJvN2WsXObKwt5i4IYkRsRgP3nnxUsxNXjTBl1RKndBU_hP_TT_pKcrEbMT4lhljQKEc8bLF_qYQ3ceafCHJwqcAmiaiZjHlAq16kUWwq8o_1NdF40kLqh5owAAAAFF4ZRqAA")
 SESSION_STRING = os.environ.get("SESSION_STRING", "None")
+ubot = None
 # -------------------------------DEFAULT---------------------------------------
 TRIGGERS = os.environ.get("TRIGGERS", "/ .").split()
 UTRIGGERS = os.environ.get("TRIGGERS", ".").split()
