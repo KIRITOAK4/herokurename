@@ -6,7 +6,7 @@ from gif import *
 from helper.extract import extracted_text
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-logging.basicConfig(level=logging.INFO, filename='error.log')
+logging.basicConfig(level=logging.INFO, filename='lameda_error.log')
 logger = logging.getLogger("GifHandler")
 logger.setLevel(level=logging.INFO)
 
