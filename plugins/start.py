@@ -22,7 +22,7 @@ async def start(client, message):
             input_token = message.command[1]
         
         if userid in ADMIN: 
-            caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id)
+            caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id, extracted_text)
             inline_keyboard = get_inline_keyboard(page_number[0])
             reply_markup = InlineKeyboardMarkup(inline_keyboard)
             await message.reply_video(
@@ -48,7 +48,7 @@ async def start(client, message):
         data['time'] = time()
         await db.update_user_data(userid, data)
 
-        caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id)
+        caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id, extracted_text)
         inline_keyboard = get_inline_keyboard(page_number[0])
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await message.reply_video(
