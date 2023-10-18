@@ -3,7 +3,7 @@ import logging
 from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaAnimation, InputMediaVideo, User
 from helper.lameda import get_page_caption, get_inline_keyboard, get_page_gif
 
-logging.basicConfig(level=logging.INFO, filename='error.log')
+logging.basicConfig(level=logging.INFO, filename='knockers_error.log')
 logger = logging.getLogger("CallbackHandler")
 logger.setLevel(level=logging.INFO)
 
