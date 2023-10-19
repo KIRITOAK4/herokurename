@@ -15,20 +15,16 @@ page_number = [0]
 @pbot.on_message(filters.private & filters.command("start"))
 async def start(client, message):
     try:
-        print("Received start command")
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         input_token = None
         if len(message.command) > 1:
             input_token = message.command[1]
-        
-        print(f"User ID: {userid}, Input Token: {input_token}")
 
         if userid in ADMIN: 
             caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id, extracted_text)
             inline_keyboard = get_inline_keyboard(page_number[0])
             reply_markup = InlineKeyboardMarkup(inline_keyboard)
-            print("Admin user, sending video with caption and inline keyboard")
             await message.reply_video(
                 video=get_page_gif(page_number[0]),
                 caption=caption,
@@ -56,7 +52,6 @@ async def start(client, message):
         caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id, extracted_text)
         inline_keyboard = get_inline_keyboard(page_number[0])
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
-        print("Valid user, sending video with caption and inline keyboard")
         await message.reply_video(
             video=get_page_gif(page_number[0]),
             caption=caption,
@@ -72,6 +67,6 @@ async def start(client, message):
 async def callback_query(client, callback_query):
     try:
         print("Received callback query")
-        await handle_callback(callback_query, page_number, callback_query.from_user)
+        await handle_callback(callback_query, page_number, callback_query.from_user, extracted_text)
     except Exception as e:
         print(f"An error occurred while handling callback in start query: {e}")
