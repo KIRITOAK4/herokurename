@@ -3,7 +3,7 @@ import random
 import re
 import logging
 from gif import *
-from helper.extract import extracted_text
+from Krito import Text, Text1, Text2, Text3
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 logging.basicConfig(level=logging.INFO, filename='lameda_error.log')
@@ -20,16 +20,16 @@ def get_page_gif(page_number):
         logger.error(f"An error occurred in get_page_gif: {e}")
         return None
 
-def get_page_caption(page_number, first_name, last_name, mention, username, id, extracted_text):
+def get_page_caption(page_number, first_name, last_name, mention, username, id):
     try:
         if page_number == 0:
-            page_text = extracted_text.get('Text','')
+            page_text = Text
         elif page_number == 1:
-            page_text = extracted_text.get('Text1','')
+            page_text = Text1
         elif page_number == 2:
-            page_text = extracted_text.get('Text2','')
+            page_text = Text2
         elif page_number == 3:
-            page_text = extracted_text.get('Text3','')
+            page_text = Text3
         
         mention = f"[{first_name}](tg://user?id={id})"
         if username:
