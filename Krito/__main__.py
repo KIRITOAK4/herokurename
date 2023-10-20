@@ -10,12 +10,12 @@ from Krito import pbot, ubot, WEBHOOK, ADMIN, LOG_CHANNEL
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+pbot.start()
+if ubot is not None:
+    ubot.start()
+
 async def main():
     try:
-        await pbot.start()
-        if ubot is not None:
-            await ubot.start()
-
         me = await pbot.get_me()
         logger.info(f"{me.first_name} Is Started.....✨️")
         
@@ -39,10 +39,12 @@ async def main():
             except Exception as e:
                 logger.info(f"Failed to send message to log channel: {e}")
 
-        await asyncio.sleep(60)
     except Exception as main_error:
         logger.error(f"An error occurred in main(): {main_error}")
 
+# Create an event loop and run the main coroutine
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
+    loop.run_forever()
+    
