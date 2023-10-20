@@ -36,7 +36,7 @@ async def start(client, message):
         if 'token' not in data or data['token'] != input_token:
             gif_url = 'https://graph.org/file/f6e6beb62a16a46642fb4.mp4'
             caption = '**Token is either used or invalid.**'
-            print("Invalid token, sending error message")
+            #print("Invalid token, sending error message")
             await message.reply_video(
                 video=gif_url,
                 caption=caption,
