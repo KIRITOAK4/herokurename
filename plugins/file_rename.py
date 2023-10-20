@@ -113,7 +113,9 @@ async def doc(bot, update):
     new_filename = new_name.split(":-")[1]
     file_path = f"downloads/{new_filename}"
     file = update.message.reply_to_message
-
+    media = getattr(file, file.media.value)
+    file_size = media.file_size
+    
     ms = await update.message.edit("Trying To Downloading....")
     try:
         path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("Download Started....", ms, time.time()))
@@ -151,7 +153,7 @@ async def doc(bot, update):
         img.save(ph_path, "JPEG")
     
     value = 1.9 * 1024 * 1024 * 1024  # 1.9 GB in bytes
-    if file.file_size > value:
+    if file_size > value:
         # If file size is greater than 1.9 GB, use ubot
         fupload = int(-1001682783965) 
         client = ubot
