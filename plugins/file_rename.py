@@ -43,8 +43,8 @@ async def rename_start(client, message):
                 )
                 await sleep(30)
             else:
-                # Reply with a message if ubot is not active
                 await message.reply_text("Sorry, sir. +4gb not active to process it.")
+                return
         else:
             await message.reply_text(
                 text=f"**__Please Enter New File Name...__**\n\n**Old File Name** :- `{filename}`",
