@@ -121,10 +121,12 @@ async def doc(bot, update):
         return await ms.edit(str(e))
 
     duration = 0
-    metadata = extractMetadata(createParser(file_path))
-    if metadata.has("duration"):
-        duration = metadata.get('duration').seconds
-
+    try:
+        metadata = extractMetadata(createParser(file_path))
+        if metadata.has("duration"):
+            duration = metadata.get('duration').seconds
+    except:
+        pass
     ph_path = None
     media = getattr(file, file.media.value)
     c_caption = await db.get_caption(update.message.chat.id)
@@ -138,7 +140,7 @@ async def doc(bot, update):
     else:
         caption = f"**{new_filename}**"
 
-    if media.thumbs or c_thumb:
+    if (media.thumbs or c_thumb):
         if c_thumb:
             ph_path = await bot.download_media(c_thumb)
         else:
