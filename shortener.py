@@ -4,10 +4,7 @@ from time import sleep
 from urllib.parse import quote
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
-from config import Config
-
-LOGGER = Config.LOGGER
-shorteners_list = Config().shorteners_list
+from Krito import shorteners_list
 
 def shorten_url(longurl):
     if not shorteners_list:
@@ -50,7 +47,6 @@ def shorten_url(longurl):
                 shorted = longurl
             return shorted
     except Exception as e:
-        LOGGER.error(e)
+        print(f"Error occurred in shortener.py: {e}")
         sleep(1)
         return None
-        
