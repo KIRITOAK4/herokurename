@@ -16,6 +16,7 @@ import asyncio
 @pbot.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def rename_start(client, message):
     try:
+        print("rename_start function triggered!")
         none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
@@ -30,9 +31,10 @@ async def rename_start(client, message):
         file = getattr(message, message.media.value)
         filename = file.file_name
 
+        print(f"File Size: {file.file_size}")
+
         if file.file_size > 3.2 * 1024 * 1024 * 1024:
             await message.reply_text("Sorry, this bot doesn't support uploading files bigger than 3.2GB")
-            
         elif file.file_size > 1.9 * 1024 * 1024 * 1024:
             if ubot.is_connected:
                 # Process the file if ubot is active and file size is between 1.9GB and 3.2GB
@@ -43,6 +45,7 @@ async def rename_start(client, message):
                 )
                 await sleep(30)
             else:
+                print("ubot is not connected!")  # Debug statement
                 await message.reply_text("Sorry, sir. +4gb not active to process it.")
                 return
         else:
@@ -60,6 +63,7 @@ async def rename_start(client, message):
             reply_markup=ForceReply(True)
         )
     except Exception as e:
+        print(f"Error in rename_start function: {e}")  # Debug statement
         pass
 
 @pbot.on_message(filters.private & filters.reply)
