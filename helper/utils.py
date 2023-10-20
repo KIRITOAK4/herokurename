@@ -2,8 +2,7 @@ import math
 import time
 from datetime import datetime
 from pytz import timezone
-from config import Txt
-from Krito import LOG_CHANNEL
+from Krito import LOG_CHANNEL, Txt
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
