@@ -8,9 +8,13 @@ from pyrogram import Client
 id_pattern = re.compile(r'^.\d+$')
 
 logging.basicConfig(level=logging.INFO, filename='error.log')
-LOGS = logging.getLogger("RenameBot")
+LOGS = logging.getLogger("Bot by @YUITOAKASH")
 LOGS.setLevel(level=logging.INFO)
 
+# -------------------------------USER----------------------------------------
+#SESSION_STRING = os.environ.get("SESSION_STRING", "BQGBULgAHPuTHhS9431uNmWB-mmCdnIixN4Yhhsmly07p8PjyG9yyvzd2ooioT97ay7v5soM21Lahgdh2x8qk3FhDSoC2ZhBBp0qMnanneTUhnVdKoBaejwPuMXykZTS0_Tm4LuQDKtXRKBkrrUdCmjKBhaXY9MN1Ah4dAJr01Ed8Im3Ojs3SRprNT6VfJ3B5h1U0cAtah9f4ddcugmwn2V-7iY26nJy8FmlKJJvN2WsXObKwt5i4IYkRsRgP3nnxUsxNXjTBl1RKndBU_hP_TT_pKcrEbMT4lhljQKEc8bLF_qYQ3ceafCHJwqcAmiaiZjHlAq16kUWwq8o_1NdF40kLqh5owAAAAFF4ZRqAA")
+SESSION_STRING = os.environ.get("SESSION_STRING", "None")
+ubot = None
 # -------------------------------VARS-----------------------------------------
 ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
 API_ID = int(os.environ.get("API_ID", 14712540))
@@ -87,10 +91,20 @@ Text3 = os.environ.get("Text3", """ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://us
 👨🏻‍💻 𝕆𝕨𝕟𝕖𝕣 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](http://t.me/devil_testing_bot)
 👨🏻‍🔧 𝕄𝕠𝕕𝕚𝕗𝕚𝕖𝕕 𝕓𝕪 [ℕ𝕆𝕆𝔹_𝕂𝔸ℕ𝔾𝔼ℝ](https://t.me/kirigayaakash)""")
 
-# -------------------------------USER----------------------------------------
-#SESSION_STRING = os.environ.get("SESSION_STRING", "BQGBULgAHPuTHhS9431uNmWB-mmCdnIixN4Yhhsmly07p8PjyG9yyvzd2ooioT97ay7v5soM21Lahgdh2x8qk3FhDSoC2ZhBBp0qMnanneTUhnVdKoBaejwPuMXykZTS0_Tm4LuQDKtXRKBkrrUdCmjKBhaXY9MN1Ah4dAJr01Ed8Im3Ojs3SRprNT6VfJ3B5h1U0cAtah9f4ddcugmwn2V-7iY26nJy8FmlKJJvN2WsXObKwt5i4IYkRsRgP3nnxUsxNXjTBl1RKndBU_hP_TT_pKcrEbMT4lhljQKEc8bLF_qYQ3ceafCHJwqcAmiaiZjHlAq16kUWwq8o_1NdF40kLqh5owAAAAFF4ZRqAA")
-SESSION_STRING = os.environ.get("SESSION_STRING", "None")
-ubot = None
+    LOGGER = LOG
+    shorteners_list = []
+
+    def __init__(self):
+        if os.path.exists('shorteners.txt'):
+            with open('shorteners.txt', 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    temp = line.strip().split()
+                    if len(temp) == 2:
+                        self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
+
+LOG.info('Krito loaded successfully')
+
 # -------------------------------DEFAULT---------------------------------------
 TRIGGERS = os.environ.get("TRIGGERS", "/ .").split()
 UTRIGGERS = os.environ.get("TRIGGERS", ".").split()
@@ -114,4 +128,13 @@ if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
         LOGS.info('😞 Error While Connecting To uBot')
         LOGS.exception(e)
         sys.exit()
-        
+
+class Txt(object):
+
+    PROGRESS_BAR = """<b>\n
+╭━━━━❰ᴘʀᴏɢʀᴇss ʙᴀʀ❱━➣
+┣⪼ 🗃️ Sɪᴢᴇ: {1} | {2}
+┣⪼ ⏳️ Dᴏɴᴇ : {0}%
+┣⪼ 🚀 Sᴩᴇᴇᴅ: {3}/s
+┣⪼ ⏰️ Eᴛᴀ: {4}
+╰━━━━━━━━━━━━━━━➣ </b>"""
