@@ -21,7 +21,7 @@
         },
         "BOT_NAME": {
             "description": "Your Bot username without [@]",
-            "value": "ya_renamebot",
+            "value": "ya_bot",
             "required": true
         },
         "TOKEN_TIMEOUT": {
@@ -36,7 +36,7 @@
         },
         "FORCE_SUB": {
             "description": "Your force sub channel username without [@]",
-            "value": "",
+            "value": "kirigayaakash",
             "required": false
         },
         "BOT_TOKEN": {
@@ -56,7 +56,7 @@
         },
         "DB_URL": {
             "description": "Your MongoDB URL obtained from mongodb.com",
-            "value": "",
+            "value": "mongodb+srv://botlover:botlover@cluster0.mt5ww.mongodb.net/test?retryWrites=true&w=majority",
             "required": true
         },
         "DB_NAME": {
