@@ -4,8 +4,9 @@ from datetime import datetime
 from pytz import timezone
 from aiohttp import web
 from route import web_server
+from pyrogram.raw.all import layer
 from pyrogram import __version__
-from Krito import pbot, ubot, WEBHOOK, ADMIN, LOG_CHANNEL
+from Krito import pbot, ubot, WEBHOOK, ADMIN, LOG_CHANNEL, BOT_UPTIME
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -17,6 +18,9 @@ if ubot is not None:
 async def main():
     try:
         me = await pbot.get_me()
+        mention = me.mention
+        username = me.username
+        uptime = BOT_UPTIME
         logger.info(f"{me.first_name} Is Started.....✨️")
         
         if WEBHOOK:
@@ -35,7 +39,7 @@ async def main():
                 curr = datetime.now(timezone("Asia/Kolkata"))
                 date = curr.strftime('%d %B, %Y')
                 time = curr.strftime('%I:%M:%S %p')
-                await pbot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__}`</b>")
+                await pbot.send_message(LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__} (Layer {layer})`</b>")
             except Exception as e:
                 logger.info(f"Failed to send message to log channel: {e}")
 
