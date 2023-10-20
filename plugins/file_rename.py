@@ -102,7 +102,7 @@ async def refunc(client, message):
                 reply_markup=InlineKeyboardMarkup(button)
             )
         else:
-            #print("No ForceReply detected in the reply message.")
+            print("No ForceReply detected in the reply message.")
     except Exception as e:
         print(f"Error in refunc function: {e}")  # Debug statement
         pass
