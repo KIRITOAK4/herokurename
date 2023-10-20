@@ -3,7 +3,7 @@ from pyrogram.types import Message
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked, PeerIdInvalid
 import os, sys, time, asyncio, logging, datetime
-from Krito import pbot, ADMIN, LOG_CHANNEL
+from Krito import pbot, ADMIN, LOG_CHANNEL, BOT_UPTIME
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 @pbot.on_message(filters.command(["stats", "status"]) & filters.user(ADMIN))
 async def get_stats(bot, message):
     total_users = await db.total_users_count()
-    uptime = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - bot.uptime))    
+    uptime = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - BOT_UPTIME))    
     start_t = time.time()
     st = await message.reply('**Aᴄᴄᴇssɪɴɢ Tʜᴇ Dᴇᴛᴀɪʟs.....**')    
     end_t = time.time()
