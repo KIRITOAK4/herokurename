@@ -16,7 +16,7 @@ import asyncio
 @pbot.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def rename_start(client, message):
     try:
-        print("rename_start function triggered!")
+        #print("rename_start function triggered!")
         none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
@@ -31,12 +31,12 @@ async def rename_start(client, message):
         file = getattr(message, message.media.value)
         filename = file.file_name
 
-        print(f"File Size: {file.file_size}")
+        #print(f"File Size: {file.file_size}")
 
         if file.file_size > 3.2 * 1024 * 1024 * 1024:
             await message.reply_text("Sorry, this bot doesn't support uploading files bigger than 3.2GB")
         elif file.file_size > 1.9 * 1024 * 1024 * 1024:
-            if ubot.is_connected:
+            if ubot and ubot.is_connected:
                 # Process the file if ubot is active and file size is between 1.9GB and 3.2GB
                 await message.reply_text(
                     text=f"**__Please Enter New File Name...__**\n\n**Old File Name** :- `{filename}`",
@@ -45,7 +45,7 @@ async def rename_start(client, message):
                 )
                 await sleep(30)
             else:
-                print("ubot is not connected!")  # Debug statement
+                #print("ubot is not connected!")  # Debug statement
                 await message.reply_text("Sorry, sir. +4gb not active to process it.")
                 return
         else:
@@ -68,32 +68,44 @@ async def rename_start(client, message):
 
 @pbot.on_message(filters.private & filters.reply)
 async def refunc(client, message):
-    reply_message = message.reply_to_message
-    if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
-        new_name = message.text
-        await message.delete()
-        msg = await client.get_messages(message.chat.id, reply_message.id)
-        file = msg.reply_to_message
-        media = getattr(file, file.media.value)
+    try:
+        #print("refunc function triggered!")
+        reply_message = message.reply_to_message
+        if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
+            new_name = message.text
+            print(f"New Name entered: {new_name}")
+            await message.delete()
+            msg = await client.get_messages(message.chat.id, reply_message.id)
+            file = msg.reply_to_message
+            media = getattr(file, file.media.value)
 
-        if not "." in new_name:
-            if "." in media.file_name:
-                extn = media.file_name.rsplit('.', 1)[-1]
-            else:
-                extn = "mkv"
-            new_name = new_name + "." + extn
-        await reply_message.delete()
+            if not "." in new_name:
+                if "." in media.file_name:
+                    extn = media.file_name.rsplit('.', 1)[-1]
+                else:
+                    extn = "mkv"
+                new_name = new_name + "." + extn
+            await reply_message.delete()
 
-        button = [[InlineKeyboardButton("📁 Document", callback_data="upload_document")]]
-        if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
-            button.append([InlineKeyboardButton("🎥 Video", callback_data="upload_video")])
-        elif file.media == MessageMediaType.AUDIO:
-            button.append([InlineKeyboardButton("🎵 Audio", callback_data="upload_audio")])
-        await message.reply(
-            text=f"**Select The Output File Type**\n**• File Name :-**```{new_name}```",
-            reply_to_message_id=file.id,
-            reply_markup=InlineKeyboardMarkup(button)
-        )
+            #print(f"Selected File Name: {new_name}")
+
+            button = [[InlineKeyboardButton("📁 Document", callback_data="upload_document")]]
+            if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
+                button.append([InlineKeyboardButton("🎥 Video", callback_data="upload_video")])
+            elif file.media == MessageMediaType.AUDIO:
+                button.append([InlineKeyboardButton("🎵 Audio", callback_data="upload_audio")])
+
+            #print("Sending reply message with file options...")
+            await message.reply(
+                text=f"**Select The Output File Type**\n**• File Name :-**```{new_name}```",
+                reply_to_message_id=file.id,
+                reply_markup=InlineKeyboardMarkup(button)
+            )
+        else:
+            #print("No ForceReply detected in the reply message.")
+    except Exception as e:
+        print(f"Error in refunc function: {e}")  # Debug statement
+        pass
 
 @pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
