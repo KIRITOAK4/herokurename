@@ -12,19 +12,20 @@
 ### Sᴀᴍᴩʟᴇ Bᴏᴛ (Official Pyro Rename Bot)
 
 <p align="center">
-🤖 <a href="https://t.me/Pyro_Rename_Bot"><img title="Telegram" src="https://img.shields.io/static/v1?label=PYRO+RENAME&message=BOT&color=blue-green"></a> 🤖
+🤖 <a href="https://t.me/Ya_renamebot"><img title="Telegram" src="https://img.shields.io/static/v1?label=PRO+RENAME&message=BOT&color=blue-green"></a> 🤖
 </p>
 
 ## Deploy To VPS
 
+* `git clone Repo_Url`
 * `cd Repo_Name`
 * `pip3 install -r requirements.txt`
-* `python3 -m Krito`
+* `python -m Krito`
   
 
 ## Deploy To Koyeb
 
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/TEAM-PYRO-BOTZ/PYRO-RENAME-BOT&env[BOT_TOKEN]&env[API_ID]&env[API_HASH]&env[WEBHOOK]=True&env[ADMIN]&env[DB_URL]&env[DB_NAME]=pyro-botz&env[FORCE_SUB]&env[START_PIC]&env[LOG_CHANNEL]=You%20Dont%20Need%20LogChannel%20To%20Remove%20This%20Variable&run_command=python%20bot.py&branch=main&name=pyro-rename) 
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/KIRITOAK4/ENAME&env[BOT_TOKEN]&env[API_ID]&env[API_HASH]&env[WEBHOOK]=True&env[ADMIN]&env[DB_URL]&env[DB_NAME]=pyro-botz&env[FORCE_SUB]&env[SESSION_STRING]&env[LOG_CHANNEL]=You%20Dont%20Need%20LogChannel%20To%20Remove%20This%20Variable&run_command=python%-m%Krito&branch=main&name=rename) 
 
 ## Deploy To Render
 
@@ -62,7 +63,7 @@
 
 * `LOG_CHANNEL` - Bot Logs Sending Channel. If You Don't Need This To Remove This Variable In Your Server
 
-* `START_PIC` - Start Message Photo. You Don't Need This! Just Skip
+* `SESSION_STRING` - Either string or None
 
 ## Botfather Commands
 ```
@@ -82,18 +83,4 @@ broadcast - Send Message To All Users (Admin Only)
 <a href="https://t.me/ShadowYt77">
    <p> Shadow Yt</p>
   </a>
-<a href="https://t.me/lntechnical">
-   <p> lntechnical TG</p>
-  </a>
-<a href="https://youtube.com/c/LNtechnical">
-   <p> lntechnical YT </p>
-  </a>
-
-## 🤩 INSPIRATION
-
-<a href="https://youtube.com/c/MoTech_YT">
-   <p>❣️ MoTech 🔥</p>
-  </a>
-
-
-
+  
