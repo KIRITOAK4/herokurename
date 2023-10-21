@@ -113,22 +113,22 @@ async def doc(bot, update):
     new_filename = new_name.split(":-")[1]
     file_path = f"downloads/{new_filename}"
     file = update.message.reply_to_message
-    media = getattr(file, file.media.value)
-    file_size = media.file_size
-    
     ms = await update.message.edit("Trying To Downloading....")
+
+    duration = 0
+    file_size = 0
+
     try:
         path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("Download Started....", ms, time.time()))
+        parser = createParser(file_path)
+        if parser:
+            metadata = extractMetadata(parser)
+            if metadata and metadata.has("duration") and metadata.has("filesize"):
+                duration = metadata.get('duration').seconds
+                file_size = metadata.get('filesize')
     except Exception as e:
         return await ms.edit(str(e))
 
-    duration = 0
-    try:
-        metadata = extractMetadata(createParser(file_path))
-        if metadata.has("duration"):
-            duration = metadata.get('duration').seconds
-    except:
-        pass
     ph_path = None
     media = getattr(file, file.media.value)
     c_caption = await db.get_caption(update.message.chat.id)
@@ -136,7 +136,7 @@ async def doc(bot, update):
 
     if c_caption:
         try:
-            caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
+            caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration))
         except Exception as e:
             return await ms.edit(text=f"Your Caption Error Except Keyword Argument ●> ({e})")
     else:
@@ -151,14 +151,12 @@ async def doc(bot, update):
         img = Image.open(ph_path)
         img.resize((320, 320))
         img.save(ph_path, "JPEG")
-    
+
     value = 1.9 * 1024 * 1024 * 1024  # 1.9 GB in bytes
     if file_size > value:
-        # If file size is greater than 1.9 GB, use ubot
         fupload = int(-1001682783965) 
         client = ubot
     else:
-        # If file size is less than or equal to 1.9 GB, use pbot
         fupload = update.message.chat.id
         client = pbot
 
@@ -208,7 +206,7 @@ async def doc(bot, update):
         os.remove(file_path)
         if ph_path:
             os.remove(ph_path)
-        return await ms.edit(f" Error {e}")
+        return await ms.edit(f"Error: {e}")
 
     await ms.delete()
     os.remove(file_path)
