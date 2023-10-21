@@ -30,7 +30,7 @@ async def ping(client, message):
     await asyncio.sleep(5)
     end = time()
     duration = (end - start) * 1000
-    await sent_message.edit(f"Pong! {duration}ms")
+    await sent_message.edit(f"Pong! RTT: {duration:.2f} ms")
 
 @pbot.on_message(filters.private & filters.command('set_caption'))
 async def add_caption(client, message):
