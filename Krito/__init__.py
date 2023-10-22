@@ -102,21 +102,6 @@ Text3 = os.environ.get("Text3", """ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://us
 👨🏻‍💻 𝕆𝕨𝕟𝕖𝕣 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](http://t.me/devil_testing_bot)
 👨🏻‍🔧 𝕄𝕠𝕕𝕚𝕗𝕚𝕖𝕕 𝕓𝕪 [ℕ𝕆𝕆𝔹_𝕂𝔸ℕ𝔾𝔼ℝ](https://t.me/kirigayaakash)""")
 
-LOGGER = LOGS
-shorteners_list = []
-
-def __init__(self):
-    if os.path.exists('shorteners.txt'):
-        with open('shorteners.txt', 'r') as f:
-            lines = f.readlines()
-            for line in lines:
-                temp = line.strip().split()
-                if len(temp) == 2:
-                    self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
-            print("shorteners_list from shorteners.txt:", self.shorteners_list)  # Print statement to check shorteners_list values
-
-LOGS.info('Krito loaded successfully')
-
 # -------------------------------DEFAULT---------------------------------------
 TRIGGERS = os.environ.get("TRIGGERS", "/ .").split()
 UTRIGGERS = os.environ.get("TRIGGERS", ".").split()
