@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 from pytz import timezone
 from Krito import LOG_CHANNEL, Txt
+from pyrogram import Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
@@ -68,7 +69,7 @@ def convert(seconds):
     seconds %= 60
     return "%d:%02d:%02d" % (hour, minutes, seconds)
 
-async def send_log(b, u):
+async def send_log(b: Client, u):
     if LOG_CHANNEL is not None:
         curr = datetime.now(timezone("Asia/Kolkata"))
         date = curr.strftime('%d %B, %Y')
