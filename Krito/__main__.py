@@ -18,8 +18,8 @@ if ubot is not None:
 async def main():
     try:
         me = await pbot.get_me()
-        mention = me.mention
-        username = me.username
+        pbot.mention = me.mention
+        pbot.username = me.username
         uptime = BOT_UPTIME
         logger.info(f"{me.first_name} Is Started.....✨️")
         
