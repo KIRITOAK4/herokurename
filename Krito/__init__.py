@@ -22,12 +22,12 @@ API_HASH = os.environ.get("API_HASH", "e61b996dc037d969a4f8cf6411bb6165")
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "6202042878:AAEyVJeHHOgc5-s6h3IArLUOoS7kIBRl-xU")
 BOT_NAME = os.environ.get("BOT_NAME", "ya_typobot")
 BOT_UPTIME = time.time()
+COOLDOWN_DURATION = int(os.environ.get("COOLDOWN_DURATION", 90))
 DB_NAME = os.environ.get("DB_NAME", "Refun")
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://Movieh:movieh@cluster0.0nyllpw.mongodb.net/?retryWrites=true&w=majority")
 FORCE_SUB = os.environ.get("FORCE_SUB", "kirigayaakash")
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
 MAX_PROCESS = int(os.environ.get("MAX_PROCESS", 5))
-COOLDOWN_DURATION = int(os.environ.get("COOLDOWN_DURATION", 90))
 TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
 WEBHOOK = bool(os.environ.get("WEBHOOK", True))
 #---------------------------Editable part----------------------
@@ -40,6 +40,9 @@ Text = os.environ.get("Text", """●     °    •      ○    ●   •  ●   
 ┃👥 𝙼𝙴𝙽𝚃𝙸𝙾𝙽   ○○○   {mention}●●●
 ┃🆔 𝙸𝙳   ○○○   {id}●●●
 ┗━━━━━━━━ ✦ ✦━━━━━━━━┛""")
+
+#--------------------------------Text1-------------------------
+
 Text1 = os.environ.get("Text1", """☞☞☞ ☞☞ 𝐻𝐸𝐿𝑃 𝑃𝐴𝐺𝐸 ☚☚ ☚☚
 
 ☞ ┃ /ping 𝗙ᴏʀ 𝗖ʜᴇᴄᴋɪɴɢ 𝗕ᴏᴛ 𝗔ʟɪᴠᴇ
@@ -67,6 +70,10 @@ Text1 = os.environ.get("Text1", """☞☞☞ ☞☞ 𝐻𝐸𝐿𝑃 𝑃𝐴�
 ☛┃ [𝗖𝗼𝗻𝘁𝗮𝗰𝘁](https://t.me/devil_testing_bot) 
 ☛┃ [𝗚𝗿𝗼𝘂𝗽](https://t.me/KIRIGAYA_ASUNA)
 ☛┃ [𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/kirigayaakash)""")
+
+
+#-----------------------------Text2-------------------------
+
 Text2 = os.environ.get("Text2", """👋 𝙺𝙾𝙽𝙸𝙲𝙷𝙸𝚆𝙰;  {first_name}
 
 1.》😏𝚃𝙷𝙸𝚂 𝙱𝙾𝚃 𝚁𝙴𝙿𝙾 𝙸𝚂 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 𝙱𝚄𝚃 𝙽𝙾𝚃 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙴𝙻𝚈 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 .....
@@ -76,6 +83,9 @@ Text2 = os.environ.get("Text2", """👋 𝙺𝙾𝙽𝙸𝙲𝙷𝙸𝚆𝙰;  {
 3.》📮𝙱𝙰𝚂𝙸𝙲𝙰𝙻𝙻𝚈 𝙽𝙾𝚃 𝙼𝙸𝙽𝙴 𝙸𝙳𝙴𝙰𝚂 𝙱𝚄𝚃 𝙸 𝙷𝙰𝚅𝙴 𝚃𝙰𝙺𝙴𝙽 𝚃𝙷𝙴 𝙸𝙳𝙴𝙰𝚂 𝙵𝚁𝙾𝙼 𝙾𝚃𝙷𝙴𝚁 𝙱𝙾𝚃𝚂.....
 
 4.》❌𝙸 𝙰𝙼 𝙽𝙾𝚃 𝙰 𝙿𝚁𝙾𝙵𝙴𝚂𝚂𝙸𝙾𝙽𝙰𝙻 𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 𝙱𝚄𝚃 𝙹𝚄𝚂𝚃 𝙻𝙸𝙺𝙴𝙳 𝚃𝙷𝙴 𝙾𝚃𝙷𝙴𝚁 𝙱𝙾𝚃 𝙵𝙴𝙰𝚃𝚄𝚁𝙴𝚂 𝚂𝙾 𝙸 𝙰𝙳𝙳𝙴𝙳 𝙸𝙽 𝙸𝚃...""")
+
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●Text3●●●●●●●●●●●●●●●●●●●●●●●●●
+
 Text3 = os.environ.get("Text3", """ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://user?id={id})
 ㅤㅤㅤ  ●●●●●●●●●●●●●●●●ㅤㅤㅤ
 ㅤㅤㅤ   𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙾𝚏 𝙿𝚢𝚛𝚘-𝙱𝚘𝚝𝚣...
