@@ -6,7 +6,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, convert, humanbytes
 from helper.database import db
-from helper.cooldown import process_and_update_cooldown, update_completed_pocesses
+from helper.cooldown import process_and_update_cooldown, update_completed_processes
 from helper.token import none_admin_utils
 from asyncio import sleep
 from PIL import Image
