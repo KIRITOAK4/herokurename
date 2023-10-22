@@ -39,4 +39,4 @@ async def process_and_update_cooldown(user_id):
         return False, 0
     except Exception as e:
         print(f"Error in processing and updating cooldown: {e}")
-        return True, 0
+        return True, remaining_time
