@@ -18,8 +18,8 @@ class Database:
             token=None,
             time=None,
             page=0,
-            cooldown_time=None,
-            processes_count=0
+            cooldown_start_time=None,
+            completed_processes_count=0
         )
 
     async def add_user(self, b, m):
@@ -77,7 +77,7 @@ class Database:
         # Update cooldown_start_time and increment completed_processes_count
         await self.col.update_one(
             {"_id": int(user_id)},
-            {"$set": {"cooldown_time": current_time}, "$inc": {"processes_count": 1}}
+            {"$set": {"cooldown_start_time": current_time}, "$inc": {"completed_processes_count": 1}}
         )
 
 db = Database(DB_URL, DB_NAME)
