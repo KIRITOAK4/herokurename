@@ -9,9 +9,9 @@ from urllib3 import disable_warnings
 shorteners_list = []
 
 def load_shorteners_from_file():
-    if os.path.exists('shortener.txt'):
+    if os.path.exists('shorteners.txt'):
         try:
-            with open('shortener.txt', 'r') as f:
+            with open('shorteners.txt', 'r') as f:
                 lines = f.readlines()
                 for line in lines:
                     temp = line.strip().split()
