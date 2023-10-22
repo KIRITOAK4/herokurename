@@ -108,11 +108,12 @@ shorteners_list = []
 def __init__(self):
     if os.path.exists('shorteners.txt'):
         with open('shorteners.txt', 'r') as f:
-           lines = f.readlines()
-           for line in lines:
-               temp = line.strip().split()
-               if len(temp) == 2:
-                   self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
+            lines = f.readlines()
+            for line in lines:
+                temp = line.strip().split()
+                if len(temp) == 2:
+                    self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
+            print("shorteners_list from shorteners.txt:", self.shorteners_list)  # Print statement to check shorteners_list values
 
 LOGS.info('Krito loaded successfully')
 
