@@ -1,21 +1,26 @@
+import os
 from base64 import b64encode
 from random import choice, random, randrange
 from time import sleep
 from urllib.parse import quote
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
-import os
 
 shorteners_list = []
 
-def load_shorteners():
-    if os.path.exists('shorteners.txt'):
-        with open('shorteners.txt', 'r') as f:
-            lines = f.readlines()
-            for line in lines:
-                temp = line.strip().split()
-                if len(temp) == 2:
-                    shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
+def load_shorteners_from_file():
+    if os.path.exists('shortener.txt'):
+        try:
+            with open('shortener.txt', 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    temp = line.strip().split()
+                    if len(temp) == 2:
+                        shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
+        except Exception as e:
+            print("Error loading shorteners from shortener.txt:", e)
+
+load_shorteners_from_file()
 
 def shorten_url(longurl):
     if not shorteners_list:
