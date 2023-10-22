@@ -9,13 +9,13 @@ completed_processes = {}
 cooldowns = {}
 
 # Maximum number of processes allowed before cooldown starts
-#MAX_PROCESSES = 5
+# MAX_PROCESS = 5
 
 # Cooldown duration in seconds
-#COOLDOWN_DURATION = 60  # 60 seconds cooldown
+# COOLDOWN_DURATION = 60  # 60 seconds cooldown
 
 
-def update_completed_processes(user_id):
+async def update_completed_processes(user_id):
     # Check if the user is in the completed_processes dictionary
     if user_id in completed_processes:
         completed_processes[user_id] += 1
@@ -23,7 +23,7 @@ def update_completed_processes(user_id):
         completed_processes[user_id] = 1
 
 
-def check_cooldown(user_id):
+async def check_cooldown(user_id):
     # Check if the user has completed the maximum number of processes
     if user_id in completed_processes and completed_processes[user_id] >= MAX_PROCESS:
         # Check if the user is in the cooldown dictionary
@@ -45,21 +45,20 @@ def check_cooldown(user_id):
     return False, 0
 
 
-def process_and_update_cooldown(user_id):
+async def process_and_update_cooldown(user_id):
     try:
-        on_cooldown, remaining_time = check_cooldown(user_id)
+        on_cooldown, remaining_time = await check_cooldown(user_id)
         if on_cooldown:
             return True, remaining_time  # User is on cooldown
-        db.update_user_cooldown_data(user_id)
+        await db.update_user_cooldown_data(user_id)
         return False, 0  # Process completed successfully, not on cooldown
     except Exception as e:
         print(f"Error in processing and updating cooldown: {e}")
         return True, 0  # An error occurred during processing, user is on cooldown
 
-
 # Example usage:
 # user_id = 123  # Replace this with the actual user ID
-# on_cooldown, remaining_time = process_and_update_cooldown(user_id)
+# on_cooldown, remaining_time = await process_and_update_cooldown(user_id)
 # if on_cooldown:
 #     print(f"You are on cooldown. Please wait for {remaining_time} seconds.")
 # else:
