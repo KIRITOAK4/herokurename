@@ -4,9 +4,18 @@ from time import sleep
 from urllib.parse import quote
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
-from Krito import shorteners_list
+import os
 
-print("shorteners_list:", shorteners_list)  # Print statement to check the value of shorteners_list
+shorteners_list = []
+
+def load_shorteners():
+    if os.path.exists('shorteners.txt'):
+        with open('shorteners.txt', 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                temp = line.strip().split()
+                if len(temp) == 2:
+                    shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
 
 def shorten_url(longurl):
     if not shorteners_list:
