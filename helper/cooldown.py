@@ -36,7 +36,7 @@ async def process_and_update_cooldown(user_id):
             return True, remaining_time
         await update_completed_processes(user_id)
         await db.update_user_cooldown_data(user_id)
-        return False, 0
+        return False
     except Exception as e:
         print(f"Error in processing and updating cooldown: {e}")
-        return True, remaining_time
+        return True
