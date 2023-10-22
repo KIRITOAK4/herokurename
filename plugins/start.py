@@ -15,6 +15,8 @@ page_number = [0]
 async def start(client, message):
     try:
         userid = message.from_user.id
+        if not await db.is_user_exist(userid):
+            await db.add_user(client, message)
         data = await db.get_user_data(userid)
         input_token = None
         if len(message.command) > 1:
