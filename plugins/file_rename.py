@@ -52,7 +52,7 @@ async def rename_start(client, message):
                 await sleep(30)
             else:
                 #print("ubot is not connected!")  # Debug statement
-                await message.reply_text("Sorry, sir. +4gb not active to process it.")
+                await message.reply_text("Sorry, sir. +4gb not active to process it.", reply_markup=ForceReply(True))
                 return
         else:
             await message.reply_text(
@@ -103,6 +103,7 @@ async def refunc(client, message):
 @pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
     try:
+        user_id = message.from.user.id
         new_name = update.message.text
         new_filename = new_name.split(":-")[1]
         file_path = f"downloads/{new_filename}"
