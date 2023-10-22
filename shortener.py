@@ -6,6 +6,8 @@ from cloudscraper import create_scraper
 from urllib3 import disable_warnings
 from Krito import shorteners_list
 
+print("shorteners_list:", shorteners_list)  # Print statement to check the value of shorteners_list
+
 def shorten_url(longurl):
     if not shorteners_list:
         return longurl
