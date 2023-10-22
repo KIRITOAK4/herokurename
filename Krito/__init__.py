@@ -26,9 +26,11 @@ DB_NAME = os.environ.get("DB_NAME", "Refun")
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://Movieh:movieh@cluster0.0nyllpw.mongodb.net/?retryWrites=true&w=majority")
 FORCE_SUB = os.environ.get("FORCE_SUB", "kirigayaakash")
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
+MAX_PROCESS = int(os.environ.get("MAX_PROCESS", 5))
+COOLDOWN_DURATION = int(os.environ.get("COOLDOWN_DURATION", 90))
 TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
 WEBHOOK = bool(os.environ.get("WEBHOOK", True))
-
+#---------------------------Editable part----------------------
 Text = os.environ.get("Text", """●     °    •      ○    ●   •  ●    ○   •  ●
 
 ○       ●      °    ●    •     ○   ●   ○  •
