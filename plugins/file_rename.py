@@ -18,7 +18,7 @@ import asyncio
 async def rename_start(client, message):
     try:
         user_id = message.from_user.id  # Extracting user ID 
-        on_cooldown, remaining_time = process_and_update_cooldown(user_id)
+        on_cooldown, remaining_time = await process_and_update_cooldown(user_id)
         if on_cooldown:
             await message.reply_text(f"You are on cooldown. Please wait for {remaining_time} seconds.")
             return
@@ -212,7 +212,7 @@ async def doc(bot, update):
         if ph_path:
             os.remove(ph_path)
 
-        update_completed_processes(user_id)  # Update completed processes after successful upload
+        await update_completed_processes(user_id)  # Update completed processes after successful upload
 
     except Exception as e:
         await update.message.edit_text(f"An error occurred: {e}")
