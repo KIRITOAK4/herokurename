@@ -6,7 +6,6 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, convert, humanbytes
 from helper.database import db
-from helper.cooldown import process_and_update_cooldown, update_completed_processes
 from helper.token import none_admin_utils
 from asyncio import sleep
 from PIL import Image
@@ -17,11 +16,7 @@ import asyncio
 @pbot.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def rename_start(client, message):
     try:
-        user_id = message.from_user.id  # Extracting user ID 
-        on_cooldown, remaining_time = await process_and_update_cooldown(user_id)
-        if on_cooldown:
-            await message.reply_text(f"You are on cooldown. Please wait for {remaining_time} seconds.", reply_to_message_id=message.id)
-            return
+        #print("rename_start function triggered!")
         none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
@@ -35,10 +30,14 @@ async def rename_start(client, message):
 
         file = getattr(message, message.media.value)
         filename = file.file_name
+
+        #print(f"File Size: {file.file_size}")
+
         if file.file_size > 3.2 * 1024 * 1024 * 1024:
             await message.reply_text("Sorry, this bot doesn't support uploading files bigger than 3.2GB")
         elif file.file_size > 1.9 * 1024 * 1024 * 1024:
             if ubot and ubot.is_connected:
+                # Process the file if ubot is active and file size is between 1.9GB and 3.2GB
                 await message.reply_text(
                     text=f"**__Please Enter New File Name...__**\n\n**Old File Name** :- `{filename}`",
                     reply_to_message_id=message.id,
@@ -46,6 +45,7 @@ async def rename_start(client, message):
                 )
                 await sleep(30)
             else:
+                #print("ubot is not connected!")  # Debug statement
                 await message.reply_text("Sorry, sir. +4gb not active to process it.", reply_to_message_id=message.id)
                 return
         else:
@@ -68,35 +68,31 @@ async def rename_start(client, message):
 
 @pbot.on_message(filters.private & filters.reply)
 async def refunc(client, message):
-    try:
-        uesr_id = message.from_user.id
-        reply_message = message.reply_to_message
-        if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
-            new_name = message.text 
-            await message.delete() 
-            msg = await client.get_messages(message.chat.id, reply_message.id)
-            file = msg.reply_to_message
-            media = getattr(file, file.media.value)
-            if not "." in new_name:
-                if "." in media.file_name:
-                    extn = media.file_name.rsplit('.', 1)[-1]
-                else:
-                    extn = "mkv"
-                    new_name = new_name + "." + extn
-                    await reply_message.delete()
-                    button = [[InlineKeyboardButton("📁 Dᴏᴄᴜᴍᴇɴᴛ",callback_data = "upload_document")]]
-                    if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
-                        button.append([InlineKeyboardButton("🎥 Vɪᴅᴇᴏ", callback_data = "upload_video")])
-                    elif file.media == MessageMediaType.AUDIO:
-                        button.append([InlineKeyboardButton("🎵 Aᴜᴅɪᴏ", callback_data = "upload_audio")])
-                    await message.reply(
-                        text=f"**Sᴇʟᴇᴄᴛ Tʜᴇ Oᴜᴛᴩᴜᴛ Fɪʟᴇ Tyᴩᴇ**\n**• Fɪʟᴇ Nᴀᴍᴇ :-** `{new_name}`",
-                        reply_to_message_id=file.id,
-                        reply_markup=InlineKeyboardMarkup(button)
-                    )
-                    await update_completed_pocesses(user_id)
-    except Exception as e:
-        print(f"An error occurred: {e}")  # Print the error for debugging purposes
+    reply_message = message.reply_to_message
+    if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
+        new_name = message.text 
+        await message.delete() 
+        msg = await client.get_messages(message.chat.id, reply_message.id)
+        file = msg.reply_to_message
+        media = getattr(file, file.media.value)
+        if not "." in new_name:
+            if "." in media.file_name:
+                extn = media.file_name.rsplit('.', 1)[-1]
+            else:
+                extn = "mkv"
+            new_name = new_name + "." + extn
+        await reply_message.delete()
+
+        button = [[InlineKeyboardButton("📁 Dᴏᴄᴜᴍᴇɴᴛ",callback_data = "upload_document")]]
+        if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
+            button.append([InlineKeyboardButton("🎥 Vɪᴅᴇᴏ", callback_data = "upload_video")])
+        elif file.media == MessageMediaType.AUDIO:
+            button.append([InlineKeyboardButton("🎵 Aᴜᴅɪᴏ", callback_data = "upload_audio")])
+        await message.reply(
+            text=f"**Sᴇʟᴇᴄᴛ Tʜᴇ Oᴜᴛᴩᴜᴛ Fɪʟᴇ Tyᴩᴇ**\n**• Fɪʟᴇ Nᴀᴍᴇ :-** `{new_name}`",
+            reply_to_message_id=file.id,
+            reply_markup=InlineKeyboardMarkup(button)
+        )
 
 @pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
@@ -143,11 +139,13 @@ async def doc(bot, update):
         img.resize((320, 320))
         img.save(ph_path, "JPEG")
     
-    value = 1.9 * 1024 * 1024 * 1024 
+    value = 1.9 * 1024 * 1024 * 1024  # 1.9 GB in bytes
     if file_size > value:
+        # If file size is greater than 1.9 GB, use ubot
         fupload = int(-1001682783965) 
         client = ubot
     else:
+        # If file size is less than or equal to 1.9 GB, use pbot
         fupload = update.message.chat.id
         client = pbot
 
@@ -192,7 +190,7 @@ async def doc(bot, update):
                 message_id=suc.message_id
             )
     except FloodWait as e:
-        await asyncio.sleep(7)
+        await asyncio.sleep(7)  # Sleep for the required time in seconds
     except Exception as e:
         os.remove(file_path)
         if ph_path:
