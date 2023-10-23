@@ -180,7 +180,7 @@ async def set_chatid_command(client, message):
             print("Invalid chat ID format")
             raise ValueError("Chat ID must start with -100")
         
-        await db.set_chat_id(message.from_user.id, chat_id)
+        await db.add_chat_id(message.from_user.id, chat_id)
         print(f"Chat ID set to: {chat_id}")
 
         bot_member = await client.get_chat_member(chat_id, client.me.id)
