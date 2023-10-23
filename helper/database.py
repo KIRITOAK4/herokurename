@@ -77,7 +77,7 @@ class Database:
         return {user['_id']: user['chat_id'] for user in await users.to_list(length=None)}
 
     async def update_chat_id(self, user_id, chat_id):
-        await self.col.update_one({'_id': user_id, {'$set': {'chat_id': chat_id}}, upsert=True)
+        await self.col.update_one({'_id': user_id, {'$set': {'chat_id': chat_id}}, upsert=True})
 
     async def get_user_data(self, user_id):
         user_data = await self.user_data_col.find_one({"user_id": user_id})
