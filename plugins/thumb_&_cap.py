@@ -207,16 +207,22 @@ async def set_chatid_command(client, message):
 @pbot.on_message(filters.private & filters.command('get_chatid'))
 async def get_chatid_command(client, message):
     chat_id = await db.get_chat_id(message.from_user.id)
-    if chat_id is not None:
+    if chat_id:
         await message.reply_text(f"Your Chat ID: {chat_id}", reply_to_message_id=message.message_id)
     else:
         await message.reply_text("Chat ID not set. Use /set_chatid {chat_id} to set your chat ID.", reply_to_message_id=message.message_id)
 
 @pbot.on_message(filters.private & filters.command('del_chatid'))
 async def delete_chatid_command(client, message):
-    await db.delete_chat_id(message.from_user.id)
-    await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.message_id)
-    
+    try:
+        await db.delete_chat_id(message.from_user.id)
+        print("Chat ID deleted from the database.")
+        await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.message_id)
+        print("Reply sent.")
+    except Exception as e:
+        print(f"Error: {e}")
+        await message.reply_text(f"Error: {e}")
+
 @pbot.on_message(filters.private & filters.command('clear_status'))
 async def clear_status_command(client, message):
     if message.from_user.id not in ADMIN:
