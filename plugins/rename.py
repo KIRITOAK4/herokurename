@@ -145,7 +145,7 @@ async def doc(bot, update):
         fupload = int(-1001682783965) 
         client = ubot
     else:
-        fupload = chat_id if chat_id is not None else message.chat.id
+        fupload = chat_id if chat_id is not None else update.message.chat.id
         client = pbot
 
     await ms.edit("Trying To Uploading....")
@@ -184,7 +184,7 @@ async def doc(bot, update):
 
         if client == ubot:
             await pbot.copy_message(
-                chat_id=chat_id if chat_id is not None else message.chat.id,
+                chat_id=chat_id if chat_id is not None else update.message.chat.id,
                 from_chat_id=suc.chat.id,
                 message_id=suc.message_id
             )
