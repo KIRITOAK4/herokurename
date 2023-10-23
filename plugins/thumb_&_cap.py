@@ -1,5 +1,5 @@
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardMarkup, Chatpermissions
 from helper.database import db
 from helper.token import none_admin_utils
 from Krito import pbot
@@ -170,11 +170,34 @@ async def addthumbs(client, message):
 async def set_chatid_command(client, message):
     if len(message.command) != 2:
         return await message.reply_text("Invalid command. Use /set_chatid {chat_id}", reply_to_message_id=message.message_id)
-
     try:
         chat_id = int(message.text.split(" ", 1)[1])
     except ValueError:
         return await message.reply_text("Invalid chat ID. Please provide a valid integer.", reply_to_message_id=message.message_id)
+    bot_member = await client.get_chat_member(chat_id, client.me.id)
+    if not bot_member.status in ("administrator", "creator"):
+        return await message.reply_text("I need to be an admin in the specified chat to set the chat ID.", reply_to_message_id=message.message_id)
+    user_member = await client.get_chat_member(chat_id, message.from_user.id)
+    if not user_member.status in ("administrator", "creator"):
+        return await message.reply_text("You need to be an admin in the specified chat to set the chat ID.", reply_to_message_id=message.message_id)
+    permissions = ChatPermissions(
+        can_send_messages=True,
+        can_send_media_messages=True,
+        can_send_polls=True,
+        can_send_other_messages=True,
+        can_add_web_page_previews=True,
+        can_change_info=True,
+        can_invite_users=True,
+        can_pin_messages=True
+    )
+    try:
+        await asyncio.wait_for(client.restrict_chat_member(chat_id, client.me.id, permissions), timeout=60)
+    except asyncio.TimeoutError:
+        await client.leave_chat(chat_id)
+        await db.set_chat_id(message.from_user.id, None)
+        return await message.reply_text("❌️ Bot was not made an admin in the specified chat within 1 minute. The bot has left the channel, and the chat ID has been set to None.", reply_to_message_id=message.message_id)
+    except Exception as e:
+        return await message.reply_text(f"Error: {e}", reply_to_message_id=message.message_id)
 
     await db.set_chat_id(message.from_user.id, chat_id)
     await message.reply_text(f"✅ Chat ID set to: {chat_id}", reply_to_message_id=message.message_id)
