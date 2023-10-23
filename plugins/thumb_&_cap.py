@@ -169,7 +169,7 @@ async def addthumbs(client, message):
 @pbot.on_message(filters.private & filters.command('set_chatid'))
 async def set_chatid_command(client, message):
     if len(message.command) != 2:
-        return await message.reply_text("Invalid command. Use /set_chat_id {chat_id}", reply_to_message_id=message.message_id)
+        return await message.reply_text("Invalid command. Use /set_chatid {chat_id}", reply_to_message_id=message.message_id)
 
     try:
         chat_id = int(message.text.split(" ", 1)[1])
@@ -185,10 +185,10 @@ async def get_chat_id_command(client, message):
     if chat_id is not None:
         await message.reply_text(f"Your Chat ID: {chat_id}", reply_to_message_id=message.message_id)
     else:
-        await message.reply_text("Chat ID not set. Use /set_chat_id {chat_id} to set your chat ID.", reply_to_message_id=message.message_id)
+        await message.reply_text("Chat ID not set. Use /set_chatid {chat_id} to set your chat ID.", reply_to_message_id=message.message_id)
 
 @pbot.on_message(filters.private & filters.command('del_chatid'))
 async def delete_chat_id_command(client, message):
     await db.delete_chatid(message.from_user.id)
-    await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chat_id {chat_id}.", reply_to_message_id=message.message_id)
+    await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.message_id)
 
