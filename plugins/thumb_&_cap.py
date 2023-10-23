@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, Chatpermissions
 from helper.database import db
 from helper.token import none_admin_utils
-from Krito import pbot
+from Krito import pbot, ADMIN
 from time import time
 import asyncio
 import traceback
@@ -172,14 +172,16 @@ async def set_chatid_command(client, message):
         return await message.reply_text("Invalid command. Use /set_chatid {chat_id}", reply_to_message_id=message.message_id)
     try:
         chat_id = int(message.text.split(" ", 1)[1])
+        if not str(chat_id).startswith('-100'):
+            raise ValueError("Chat ID must start with -100")
     except ValueError:
-        return await message.reply_text("Invalid chat ID. Please provide a valid integer.", reply_to_message_id=message.message_id)
+        return await message.reply_text("Invalid chat ID. Please provide a valid integer. And it starts with -100", reply_to_message_id=message.message_id)
     bot_member = await client.get_chat_member(chat_id, client.me.id)
     if not bot_member.status in ("administrator", "creator"):
-        return await message.reply_text("I need to be an admin in the specified chat to set the chat ID.", reply_to_message_id=message.message_id)
+        return await message.reply_text("I need to be an admin with all permission in the specified chat to set the chat ID.", reply_to_message_id=message.message_id)
     user_member = await client.get_chat_member(chat_id, message.from_user.id)
     if not user_member.status in ("administrator", "creator"):
-        return await message.reply_text("You need to be an admin in the specified chat to set the chat ID.", reply_to_message_id=message.message_id)
+        return await message.reply_text("You need to be admin in the specified chat to set the chat ID.", reply_to_message_id=message.message_id)
     permissions = ChatPermissions(
         can_send_messages=True,
         can_send_media_messages=True,
@@ -214,4 +216,35 @@ async def get_chat_id_command(client, message):
 async def delete_chat_id_command(client, message):
     await db.delete_chatid(message.from_user.id)
     await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.message_id)
+    
+@pbot.on_message(filters.private & filters.command('clear_status'))
+async def clear_status_command(client, message):
+    if message.from_user.id not in ADMIN:
+        await message.reply_text("You are not authorized to use this command.")
+        return
 
+    given_permissions = ChatPermissions(
+        can_send_messages=True,
+        can_send_media_messages=True,
+        can_send_polls=True,
+        can_send_other_messages=True,
+        can_add_web_page_previews=True,
+        can_change_info=True,
+        can_invite_users=True,
+        can_pin_messages=True
+    )
+
+    users_with_chat_ids = await db.get_users_with_chat_ids()
+    for user_id, chat_id in users_with_chat_ids.items():
+        try:
+            bot_member = await client.get_chat_member(chat_id, client.me.id)
+            user_member = await client.get_chat_member(chat_id, user_id)
+        except Exception as e:
+            await db.delete_admin_status(user_id, chat_id)
+            continue
+        if (bot_member.status not in ("administrator", "creator") or
+           bot_member.permissions != given_permissions or
+           user_member.status not in ("administrator", "creator")):
+            await db.delete_admin_status(user_id, chat_id)
+    response = "Admin statuses cleared from the database."
+    await message.reply_text(response, reply_to_message_id=message.message_id)
