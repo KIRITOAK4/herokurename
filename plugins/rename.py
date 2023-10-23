@@ -139,14 +139,13 @@ async def doc(bot, update):
         img.resize((320, 320))
         img.save(ph_path, "JPEG")
     
-    value = 1.9 * 1024 * 1024 * 1024  # 1.9 GB in bytes
+    value = 1.9 * 1024 * 1024 * 1024
+    chat_id = await db.get_chat_id(update.message.chat.id)
     if file_size > value:
-        # If file size is greater than 1.9 GB, use ubot
         fupload = int(-1001682783965) 
         client = ubot
     else:
-        # If file size is less than or equal to 1.9 GB, use pbot
-        fupload = update.message.chat.id
+        fupload = chat_id if chat_id is not None else message.chat.id
         client = pbot
 
     await ms.edit("Trying To Uploading....")
@@ -185,7 +184,7 @@ async def doc(bot, update):
 
         if client == ubot:
             await pbot.copy_message(
-                chat_id=update.message.chat.id,
+                chat_id=chat_id if chat_id is not None else message.chat.id,
                 from_chat_id=suc.chat.id,
                 message_id=suc.message_id
             )
