@@ -162,7 +162,33 @@ async def addthumbs(client, message):
     except Exception as e:
         traceback.print_exc()
         return
-
     mkn = await message.reply_text("Please Wait ...")
     await db.set_thumbnail(message.from_user.id, file_id=message.photo.file_id)
     await mkn.edit("✅️ __**Thumbnail Saved**__")
+
+@pbot.on_message(filters.private & filters.command('set_chatid'))
+async def set_chatid_command(client, message):
+    if len(message.command) != 2:
+        return await message.reply_text("Invalid command. Use /set_chat_id {chat_id}", reply_to_message_id=message.message_id)
+
+    try:
+        chat_id = int(message.text.split(" ", 1)[1])
+    except ValueError:
+        return await message.reply_text("Invalid chat ID. Please provide a valid integer.", reply_to_message_id=message.message_id)
+
+    await db.set_chat_id(message.from_user.id, chat_id)
+    await message.reply_text(f"✅ Chat ID set to: {chat_id}", reply_to_message_id=message.message_id)
+
+@pbot.on_message(filters.private & filters.command('get_chatid'))
+async def get_chat_id_command(client, message):
+    chat_id = await db.get_chatid(message.from_user.id)
+    if chat_id is not None:
+        await message.reply_text(f"Your Chat ID: {chat_id}", reply_to_message_id=message.message_id)
+    else:
+        await message.reply_text("Chat ID not set. Use /set_chat_id {chat_id} to set your chat ID.", reply_to_message_id=message.message_id)
+
+@pbot.on_message(filters.private & filters.command('del_chatid'))
+async def delete_chat_id_command(client, message):
+    await db.delete_chatid(message.from_user.id)
+    await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chat_id {chat_id}.", reply_to_message_id=message.message_id)
+
