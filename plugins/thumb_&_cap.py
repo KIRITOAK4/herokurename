@@ -168,56 +168,77 @@ async def addthumbs(client, message):
 
 @pbot.on_message(filters.private & filters.command('set_chatid'))
 async def set_chatid_command(client, message):
+    print("Received set_chatid command")
     if len(message.command) != 2:
+        print("Invalid command format")
         return await message.reply_text("Invalid command. Use /set_chatid {chat_id}")
+
     try:
         chat_id = int(message.text.split(" ", 1)[1])
+        print(f"Requested chat ID: {chat_id}")
         if not str(chat_id).startswith('-100'):
+            print("Invalid chat ID format")
             raise ValueError("Chat ID must start with -100")
-    except ValueError:
-        return await message.reply_text("Invalid chat ID. Please provide a valid integer. And it starts with -100")
-    bot_member = await client.get_chat_member(chat_id, client.me.id)
-    if not bot_member.status in ("administrator", "creator"):
-        return await message.reply_text("I need to be an admin with all permission in the specified chat to set the chat ID.")
-    user_member = await client.get_chat_member(chat_id, message.from_user.id)
-    if not user_member.status in ("administrator", "creator"):
-        return await message.reply_text("You need to be admin in the specified chat to set the chat ID.")
-    permissions = ChatPermissions(
-        can_send_messages=True,
-        can_send_media_messages=True,
-        can_send_polls=True,
-        can_send_other_messages=True,
-        can_add_web_page_previews=True,
-        can_change_info=True,
-        can_invite_users=True,
-        can_pin_messages=True
-    )
-    try:
+        
+        await db.set_chat_id(message.from_user.id, chat_id)
+        print(f"Chat ID set to: {chat_id}")
+
+        bot_member = await client.get_chat_member(chat_id, client.me.id)
+        print(f"Bot member status: {bot_member.status}")
+        if not bot_member.status in ("administrator", "creator"):
+            print("Bot is not admin in the specified chat")
+            return await message.reply_text("I need to be an admin with all permissions in the specified chat to set the chat ID.")
+        
+        user_member = await client.get_chat_member(chat_id, message.from_user.id)
+        print(f"User member status: {user_member.status}")
+        if not user_member.status in ("administrator", "creator"):
+            print("User is not admin in the specified chat")
+            return await message.reply_text("You need to be an admin in the specified chat to set the chat ID.")
+        
+        permissions = ChatPermissions(
+            can_send_messages=True,
+            can_send_media_messages=True,
+            can_send_polls=True,
+            can_send_other_messages=True,
+            can_add_web_page_previews=True,
+            can_change_info=True,
+            can_invite_users=True,
+            can_pin_messages=True
+        )
+
         await asyncio.wait_for(client.restrict_chat_member(chat_id, client.me.id, permissions), timeout=60)
+        print("Bot permissions set successfully")
+
+        await message.reply_text("Bot successfully set.")
+
+    except ValueError:
+        print("Invalid chat ID")
+        return await message.reply_text("Invalid chat ID. Please provide a valid integer starting with -100")
+
     except asyncio.TimeoutError:
         await client.leave_chat(chat_id)
         await db.set_chat_id(message.from_user.id, None)
+        print("Bot was not made an admin in the specified chat within 1 minute")
         return await message.reply_text("❌️ Bot was not made an admin in the specified chat within 1 minute. The bot has left the channel, and the chat ID has been set to None.")
-    except Exception as e:
-        return await message.reply_text(f"Error: {e}")
 
-    await db.set_chat_id(message.from_user.id, chat_id)
-    await message.reply_text(f"✅ Chat ID set to: {chat_id}")
+    except Exception as e:
+        print(f"Error: {e}")
+        return await message.reply_text(f"Error: {e}")
 
 @pbot.on_message(filters.private & filters.command('get_chatid'))
 async def get_chatid_command(client, message):
     chat_id = await db.get_chat_id(message.from_user.id)
     if chat_id:
-        await message.reply_text(f"Your Chat ID: {chat_id}")
+        await message.reply_text(f"Your Chat ID: {chat_id}", reply_to_message_id=message.message_id)
     else:
-        await message.reply_text("Chat ID not set. Use /set_chatid {chat_id} to set your chat ID.")
+        await message.reply_text("Chat ID not set. Use /set_chatid {chat_id} to set your chat ID.", reply_to_message_id=message.message_id)
 
 @pbot.on_message(filters.private & filters.command('del_chatid'))
 async def delete_chatid_command(client, message):
     try:
         await db.delete_chat_id(message.from_user.id)
         print("Chat ID deleted from the database.")
-        await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.")
+        await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.message_id)
         print("Reply sent.")
     except Exception as e:
         print(f"Error: {e}")
@@ -255,5 +276,4 @@ async def clear_status_command(client, message):
         else:
            await db.delete_chat_id(user_id, chat_id)
     response = "Admin statuses cleared from the database."
-    await message.reply_text(response)
-
+    await message.reply_text(response, reply_to_message_id=message.message_id)
