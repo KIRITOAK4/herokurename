@@ -10,9 +10,10 @@ class Database:
         self.col = self.db.users
         self.user_data_col = self.db.user_data
 
-    def new_user(self, id):
+    def new_user(self, id, chat_id=None):
         return dict(
             _id=int(id),
+            chat_id=chat_id,
             file_id=None,
             caption=None,
             token=None,
@@ -24,8 +25,9 @@ class Database:
 
     async def add_user(self, b, m):
         u = m.from_user
+        chat_id = m.chat.id
         if not await self.is_user_exist(u.id):
-            user = self.new_user(u.id)
+            user = self.new_user(u.id, chat_id)
             await self.col.insert_one(user)
             await send_log(b, u)
             await self.user_data_col.insert_one({"user_id": u.id, "data": {}})
@@ -59,6 +61,13 @@ class Database:
     async def get_caption(self, id):
         user = await self.col.find_one({"_id": int(id)})
         return user.get("caption", None)
+
+    async def add_chat_id(self, user_id, chat_id):
+        await self.col.update_one({"_id": int(user_id)}, {"$set": {"chat_id": chat_id}})
+
+    async def get_chat_id(self, user_id):
+        user = await self.col.find_one({"_id": int(user_id)})
+        return user.get("chat_id", None)
 
     async def get_user_data(self, user_id):
         user_data = await self.user_data_col.find_one({"user_id": user_id})
