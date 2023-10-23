@@ -1,5 +1,5 @@
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, Chatpermissions
+from pyrogram.types import InlineKeyboardMarkup, ChatPermissions
 from helper.database import db
 from helper.token import none_admin_utils
 from Krito import pbot, ADMIN
@@ -205,16 +205,16 @@ async def set_chatid_command(client, message):
     await message.reply_text(f"✅ Chat ID set to: {chat_id}", reply_to_message_id=message.message_id)
 
 @pbot.on_message(filters.private & filters.command('get_chatid'))
-async def get_chat_id_command(client, message):
-    chat_id = await db.get_chatid(message.from_user.id)
+async def get_chatid_command(client, message):
+    chat_id = await db.get_chat_id(message.from_user.id)
     if chat_id is not None:
         await message.reply_text(f"Your Chat ID: {chat_id}", reply_to_message_id=message.message_id)
     else:
         await message.reply_text("Chat ID not set. Use /set_chatid {chat_id} to set your chat ID.", reply_to_message_id=message.message_id)
 
 @pbot.on_message(filters.private & filters.command('del_chatid'))
-async def delete_chat_id_command(client, message):
-    await db.delete_chatid(message.from_user.id)
+async def delete_chatid_command(client, message):
+    await db.delete_chat_id(message.from_user.id)
     await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.message_id)
     
 @pbot.on_message(filters.private & filters.command('clear_status'))
@@ -240,11 +240,13 @@ async def clear_status_command(client, message):
             bot_member = await client.get_chat_member(chat_id, client.me.id)
             user_member = await client.get_chat_member(chat_id, user_id)
         except Exception as e:
-            await db.delete_admin_status(user_id, chat_id)
+            await db.delete_chat_id(user_id, chat_id)
             continue
         if (bot_member.status not in ("administrator", "creator") or
            bot_member.permissions != given_permissions or
            user_member.status not in ("administrator", "creator")):
-            await db.delete_admin_status(user_id, chat_id)
+           await db.update_chat_id(user_id, chat_id, True)
+        else:
+           await db.delete_chat_id(user_id, chat_id)
     response = "Admin statuses cleared from the database."
     await message.reply_text(response, reply_to_message_id=message.message_id)
