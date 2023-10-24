@@ -85,6 +85,10 @@ class Database:
             return {}
         return user_data.get("data", {})
 
+    async def has_verified_user(self, user_id):
+        user_data = await self.col.find_one({"_id": int(user_id), "verified": True})
+        return bool(user_data)
+    
     async def update_user_data(self, user_id, data):
         await self.user_data_col.update_one(
             {"user_id": user_id}, {"$set": {"data": data, "page": data.get("page", 0)}}, upsert=True
