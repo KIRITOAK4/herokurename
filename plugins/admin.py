@@ -24,8 +24,8 @@ async def get_stats(bot, message):
 
 @pbot.on_message(filters.private & filters.command("restart"))
 async def restart_bot(b, m):
-    if message.from_user.id not in ADMIN:
-        await message.reply_text("You are not authorized to use this command.", reply_to_message_id=message.id)
+    if m.from_user.id not in ADMIN:
+        await message.reply_text("You are not authorized to use this command.", reply_to_message_id=m.id)
         return
     await m.reply_text("🔄__Restarting...__")
     os.execl(sys.executable, sys.executable, *sys.argv)
