@@ -96,8 +96,9 @@ async def clear_status_command(client, message):
             can_pin_messages=True
         )
 
-        users_with_chat_ids = await db.get_users_with_chat_ids()
-        for user_id, chat_id in users_with_chat_ids.items():
+        async for user_data in db.get_users_with_chat_ids():
+            user_id = user_data['_id']
+            chat_id = user_data['chat_id']
             try:
                 bot_member = await client.get_chat_member(chat_id, client.me.id)
                 user_member = await client.get_chat_member(chat_id, user_id)
