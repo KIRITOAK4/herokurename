@@ -4,7 +4,7 @@ from helper.database import db
 from helper.token import none_admin_utils
 from Krito import pbot
 from time import time
-import asyncio
+import asyncio, pyrogram
 import traceback
 import math
 
@@ -217,33 +217,25 @@ async def verify_command(client, message):
                 
                 # Get bot's permissions
                 bot_permissions = bot_member.permissions
-                
-                # Debug information
-                debug_info = f"Bot Status: {bot_member.status}, Can Send Media: {bot_permissions.can_send_media_messages}, Can Send Messages: {bot_permissions.can_send_messages}\n"
-                debug_info += f"User Status: {user_member.status}"
-
+                print(f"Bot permission: {bot_permissions}")
                 if bot_member.status in ("administrator", "creator") and user_member.status in ("administrator", "creator"):
                     if bot_permissions.can_send_media_messages and bot_permissions.can_send_messages:
                         users_data[message.from_user.id]["verified"] = True
                         print("Verification successful! User is now verified.")
                         await message.reply_text("Verification successful! You are now verified.")
                     else:
-                        debug_info += "\nBot does not have permission to send media or captions in the specified channel."
                         print("Verification failed: Bot does not have permission to send media or captions.")
-                        await message.reply_text(debug_info)
+                        await message.reply_text("Missing send media and message Rights")
                 else:
-                    debug_info += "\nBot and user must be admin/creator in the specified channel to verify."
                     print("Verification failed: Bot and user must be admin/creator in the specified channel.")
-                    await message.reply_text(debug_info)
+                    await message.reply_text("verification failed")
             except pyrogram.errors.exceptions.bad_request_400.ChannelInvalid:
-                error_message = "Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid.\n\n" \
-                                "Please add me to the chat with admin permission to send messages and media."
+                error_message = "Please add me to the chat with admin permission to send messages and media."
                 print("Verification failed: Invalid channel parameter.")
                 return await message.reply_text(error_message, reply_to_message_id=message.id)
             except Exception as e:
-                debug_info += f"\nError: {e}"
                 print(f"Verification failed: Error occurred - {e}")
-                await message.reply_text(debug_info)
+                await message.reply_text(f"Error:{e}")
         else:
             print("User is already verified or chat ID is not set.")
             await message.reply_text("You need to set the chat ID using /set_chatid first or you are already verified.")
