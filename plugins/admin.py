@@ -1,21 +1,12 @@
-import os
-import sys
-import time
-import asyncio
-import logging
-import datetime
-import requests
-from pyrogram import Client, filters
-from pyrogram.types import ChatPermissions, Message, InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked, PeerIdInvalid
 from helper.database import db
+from pyrogram.types import Message, ChatPermissions
+from pyrogram import Client, filters
+from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked, PeerIdInvalid
+import os, sys, time, asyncio, logging, datetime
 from Krito import pbot, ADMIN, LOG_CHANNEL, BOT_UPTIME
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-
-ERROR_LOG_PATH = 'error.log'
-NEKOBIN_API_ENDPOINT = 'https://nekobin.com/api/documents'
 
 @pbot.on_message(filters.command(["stats", "status"]))
 async def get_stats(bot, message):
@@ -86,28 +77,6 @@ async def send_msg(user_id, message):
     except Exception as e:
         logger.error(f"{user_id} : {e}")
         return 500
-
-@pbot.on_message(filters.command('paste'))
-async def paste_command(client, m):
-    try:
-        # Read the last 100 lines from the error.log file
-        with open(ERROR_LOG_PATH, 'r', encoding='utf-8') as file:
-            lines = file.readlines()[-100:]
-        log_text = ''.join(lines).strip()
-
-        # Send data to Nekobin API
-        response = requests.post('https://nekobin.com/api/documents', data=log_text.encode('utf-8'))
-        if response.status_code == 201:
-            nekobin_url = f"https://nekobin.com/{response.json()['result']['key']}"
-            message_text = f"Here is your URL:\n{nekobin_url}"
-            await m.reply_text(message_text, reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton("Nekobin URL", url=nekobin_url)]]
-            ))
-        else:
-            await m.reply_text("Failed to paste the text on Nekobin.")
-    except Exception as e:
-        print(f"Error occurred: {e}")
-        await m.reply_text(f"An error occurred: {e}")
 
 @pbot.on_message(filters.private & filters.command('clear_status'))
 async def clear_status_command(client, message):
