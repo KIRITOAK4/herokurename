@@ -174,24 +174,31 @@ async def set_chatid_command(client, message):
         chat_id = int(message.text.split(" ", 1)[1])
         if not str(chat_id).startswith('-100'):
             raise ValueError("Chat ID must start with -100")
-        bot_member = await client.get_chat_member(chat_id, client.me.id)
-        if bot_member.status not in ("administrator", "creator"):
-            return await message.reply_text("Bot must be an admin with required permissions in the specified channel to set the chat ID.")
-        users_data[message.from_user.id] = {
-            "verified": False
-        }
-        await db.add_chat_id(message.from_user.id, chat_id)
-        await message.reply_text("Chat ID has been set successfully. Please use /verify command within 60 seconds.", reply_to_message_id=message.id)
-        await asyncio.sleep(60)
-        if not users_data[message.from_user.id]["verified"]:
-            await client.leave_chat(chat_id)
-            del users_data[message.from_user.id]
-            await db.delete_chat_id(message.from_user.id)
-            await message.reply_text("You didn't use /verify command in time. Chat ID has been unset, and the bot left the channel.", reply_to_message_id=message.id)
+        try:
+            bot_member = await client.get_chat_member(chat_id, client.me.id)
+            if bot_member.status in ("administrator", "creator"):
+                users_data[message.from_user.id] = {
+                    "verified": False
+                }
+                await db.add_chat_id(message.from_user.id, chat_id)
+                await message.reply_text("Chat ID has been set successfully. Please use /verify command within 60 seconds.", reply_to_message_id=message.id)
+                await asyncio.sleep(60)
+                if not users_data[message.from_user.id]["verified"]:
+                    await client.leave_chat(chat_id)
+                    del users_data[message.from_user.id]
+                    await db.delete_chat_id(message.from_user.id)
+                    await message.reply_text("You didn't use /verify command in time. Chat ID has been unset, and the bot left the channel.", reply_to_message_id=message.id)
+            else:
+                raise ValueError("Bot must be an admin with required permissions in the specified channel to set the chat ID.")
+        except Exception as e:
+            error_message = "Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid.\n\n" \
+                            "Please add me to the chat with admin permission to send messages and media."
+            return await message.reply_text(error_message, reply_to_message_id=message.id)
     except (ValueError, IndexError):
         return await message.reply_text("Invalid command. Use /set_chatid {chat_id}", reply_to_message_id=message.id)
     except Exception as e:
-        return await message.reply_text(f"Error: {e} Please forward this message to @devil_testing_bot", reply_to_message_id=message.id)
+        error_message = f"Error: {e}\n\nPlease forward this message to @devil_testing_bot to solve your error."
+        return await message.reply_text(error_message, reply_to_message_id=message.id)
 
 @pbot.on_message(filters.private & filters.command('verify'))
 async def verify_command(client, message):
