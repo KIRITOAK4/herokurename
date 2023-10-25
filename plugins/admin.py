@@ -89,20 +89,29 @@ async def send_msg(user_id, message):
         return 500
 
 @pbot.on_message(filters.command('paste'))
-async def paste_command(client, message):
+async def paste_command(client, m):
     try:
         # Read the last 100 lines from the error.log file
         with open(ERROR_LOG_PATH, 'r', encoding='utf-8') as file:
             lines = file.readlines()[-100:]
         log_text = ''.join(lines)
+        
+        print(f"Log Text: {log_text}")  # Print log text for debugging
+        
         process = subprocess.Popen(['curl', '--data-binary', '@-', 'https://nekobin.com'], 
                                    stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         nekobin_url = process.communicate(input=log_text.encode())[0].decode().strip()
-        await message.reply_text(log_text, reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Nekobin URL", url=nekobin_url)]]
-        ))
+        
+        print(f"Nekobin URL: {nekobin_url}")  # Print Nekobin URL for debugging
+        
+        # Reply with the log text and inline button containing the Nekobin URL
+        await m.reply_text("Here is your log text. Click the button for the Nekobin URL.", 
+                           reply_markup=InlineKeyboardMarkup(
+                               [[InlineKeyboardButton("Nekobin URL", url=nekobin_url)]]
+                           ))
     except Exception as e:
-        await message.reply_text(f"An error occurred: {e}")
+        print(f"Error occurred: {e}")  # Print the error for debugging
+        await m.reply_text(f"An error occurred: {e}")
         
 @pbot.on_message(filters.private & filters.command('clear_status'))
 async def clear_status_command(client, message):
