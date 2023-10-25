@@ -174,30 +174,47 @@ async def set_chatid_command(client, message):
         chat_id = int(message.text.split(" ", 1)[1])
         if not str(chat_id).startswith('-100'):
             raise ValueError("Chat ID must start with -100")
-        
         bot_member = await client.get_chat_member(chat_id, client.me.id)
         if bot_member.status not in ("administrator", "creator"):
             return await message.reply_text("Bot must be an admin with required permissions in the specified channel to set the chat ID.")
-
         users_data[message.from_user.id] = {
             "verified": False
         }
-
         await db.add_chat_id(message.from_user.id, chat_id)
-        await message.reply_text("Chat ID has been set successfully. Please use /verify command within 60 seconds.")
+        await message.reply_text("Chat ID has been set successfully. Please use /verify command within 60 seconds.", reply_to_message_id=message.id)
         await asyncio.sleep(60)
-
         if not users_data[message.from_user.id]["verified"]:
             await client.leave_chat(chat_id)
-            del users_data[message.from_user.id] 
-            await db.delete_chat_id(message.from_user.id) 
-            await message.reply_text("You didn't use /verify command in time. Chat ID has been unset, and the bot left the channel.")
-
+            del users_data[message.from_user.id]
+            await db.delete_chat_id(message.from_user.id)
+            await message.reply_text("You didn't use /verify command in time. Chat ID has been unset, and the bot left the channel.", reply_to_message_id=message.id)
     except (ValueError, IndexError):
         return await message.reply_text("Invalid command. Use /set_chatid {chat_id}", reply_to_message_id=message.id)
-
     except Exception as e:
         return await message.reply_text(f"Error: {e} Please forward this message to @devil_testing_bot", reply_to_message_id=message.id)
+
+@pbot.on_message(filters.private & filters.command('verify'))
+async def verify_command(client, message):
+    try:
+        if message.from_user.id in users_data and not users_data[message.from_user.id]["verified"]:
+            # Get the stored chat ID for the user from the database (assuming db.get_chat_id exists)
+            chat_id = await db.get_chat_id(message.from_user.id)
+
+            # Get bot and user membership status in the specified chat ID
+            bot_member = await client.get_chat_member(chat_id, client.me.id)
+            user_member = await client.get_chat_member(chat_id, message.from_user.id)
+            if bot_member.status in ("administrator", "creator") and user_member.status in ("administrator", "creator"):
+                if bot_member.can_send_media_messages and bot_member.can_send_messages:
+                    users_data[message.from_user.id]["verified"] = True
+                    await message.reply_text("Verification successful! You are now verified.")
+                else:
+                    await message.reply_text("Bot does not have permission to send media or captions in the specified channel.")
+            else:
+                await message.reply_text("Bot and user must be admin/creator in the specified channel to verify.")
+        else:
+            await message.reply_text("You need to set the chat ID using /set_chatid first or you are already verified.")
+    except Exception as e:
+        await message.reply_text(f"An error occurred while using verify command: {e}")
 
 @pbot.on_message(filters.private & filters.command('get_chatid'))
 async def get_chatid_command(client, message):
