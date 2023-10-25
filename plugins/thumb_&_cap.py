@@ -200,18 +200,24 @@ async def set_chatid_command(client, message):
 @pbot.on_message(filters.private & filters.command('verify'))
 async def verify_command(client, message):
     try:
+        print("Starting verification process...")
+        
         if message.from_user.id in users_data and not users_data[message.from_user.id]["verified"]:
+            print("User is not verified yet. Getting stored chat ID...")
             # Get the stored chat ID for the user from the database (assuming db.get_chat_id exists)
             chat_id = await db.get_chat_id(message.from_user.id)
-
+            print(f"Chat ID retrieved: {chat_id}")
+            
             try:
+                print("Getting bot and user membership status in the specified chat ID...")
                 # Get bot and user membership status in the specified chat ID
                 bot_member = await client.get_chat_member(chat_id, client.me.id)
                 user_member = await client.get_chat_member(chat_id, message.from_user.id)
-
+                print("Membership status retrieved.")
+                
                 # Get bot's permissions
                 bot_permissions = bot_member.permissions
-
+                
                 # Debug information
                 debug_info = f"Bot Status: {bot_member.status}, Can Send Media: {bot_permissions.can_send_media_messages}, Can Send Messages: {bot_permissions.can_send_messages}\n"
                 debug_info += f"User Status: {user_member.status}"
@@ -219,23 +225,30 @@ async def verify_command(client, message):
                 if bot_member.status in ("administrator", "creator") and user_member.status in ("administrator", "creator"):
                     if bot_permissions.can_send_media_messages and bot_permissions.can_send_messages:
                         users_data[message.from_user.id]["verified"] = True
+                        print("Verification successful! User is now verified.")
                         await message.reply_text("Verification successful! You are now verified.")
                     else:
                         debug_info += "\nBot does not have permission to send media or captions in the specified channel."
+                        print("Verification failed: Bot does not have permission to send media or captions.")
                         await message.reply_text(debug_info)
                 else:
                     debug_info += "\nBot and user must be admin/creator in the specified channel to verify."
+                    print("Verification failed: Bot and user must be admin/creator in the specified channel.")
                     await message.reply_text(debug_info)
             except pyrogram.errors.exceptions.bad_request_400.ChannelInvalid:
                 error_message = "Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid.\n\n" \
                                 "Please add me to the chat with admin permission to send messages and media."
+                print("Verification failed: Invalid channel parameter.")
                 return await message.reply_text(error_message, reply_to_message_id=message.id)
             except Exception as e:
                 debug_info += f"\nError: {e}"
+                print(f"Verification failed: Error occurred - {e}")
                 await message.reply_text(debug_info)
         else:
+            print("User is already verified or chat ID is not set.")
             await message.reply_text("You need to set the chat ID using /set_chatid first or you are already verified.")
     except Exception as e:
+        print(f"An error occurred while using verify command: {e}")
         await message.reply_text(f"An error occurred while using verify command: {e}")
 
 @pbot.on_message(filters.private & filters.command('get_chatid'))
