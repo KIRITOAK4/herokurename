@@ -1,12 +1,22 @@
-from helper.database import db
-from pyrogram.types import Message, ChatPermissions
+import os
+import sys
+import time
+import asyncio
+import logging
+import datetime
+import requests
+import subprocess
 from pyrogram import Client, filters
+from pyrogram.types import ChatPermissions, Message, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked, PeerIdInvalid
-import os, sys, time, asyncio, logging, datetime
+from helper.database import db
 from Krito import pbot, ADMIN, LOG_CHANNEL, BOT_UPTIME
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+ERROR_LOG_PATH = 'error.log'
+NEKOBIN_API_ENDPOINT = 'https://nekobin.com/api/documents'
 
 @pbot.on_message(filters.command(["stats", "status"]))
 async def get_stats(bot, message):
@@ -78,6 +88,22 @@ async def send_msg(user_id, message):
         logger.error(f"{user_id} : {e}")
         return 500
 
+@pbot.on_message(filters.command('paste'))
+async def paste_command(client, message):
+    try:
+        # Read the last 100 lines from the error.log file
+        with open(ERROR_LOG_PATH, 'r', encoding='utf-8') as file:
+            lines = file.readlines()[-100:]
+        log_text = ''.join(lines)
+        process = subprocess.Popen(['curl', '--data-binary', '@-', 'https://nekobin.com'], 
+                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        nekobin_url = process.communicate(input=log_text.encode())[0].decode().strip()
+        await message.reply_text(log_text, reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Nekobin URL", url=nekobin_url)]]
+        ))
+    except Exception as e:
+        await message.reply_text(f"An error occurred: {e}")
+        
 @pbot.on_message(filters.private & filters.command('clear_status'))
 async def clear_status_command(client, message):
     try:
