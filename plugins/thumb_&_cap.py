@@ -208,12 +208,16 @@ async def verify_command(client, message):
             bot_member = await client.get_chat_member(chat_id, client.me.id)
             user_member = await client.get_chat_member(chat_id, message.from_user.id)
 
+            # Get bot's permissions
+            bot_permissions = bot_member.permissions
+            user_permissions = user_member.permissions
+
             # Debug information
-            debug_info = f"Bot Status: {bot_member.status}, Can Send Media: {bot_member.can_send_media_messages}, Can Send Messages: {bot_member.can_send_messages}\n"
+            debug_info = f"Bot Status: {bot_member.status}, Can Send Media: {bot_permissions.can_send_media_messages}, Can Send Messages: {bot_permissions.can_send_messages}\n"
             debug_info += f"User Status: {user_member.status}"
 
             if bot_member.status in ("administrator", "creator") and user_member.status in ("administrator", "creator"):
-                if bot_member.can_send_media_messages and bot_member.can_send_messages:
+                if bot_permissions.can_send_media_messages and bot_permissions.can_send_messages:
                     users_data[message.from_user.id]["verified"] = True
                     await message.reply_text("Verification successful! You are now verified.")
                 else:
@@ -226,7 +230,7 @@ async def verify_command(client, message):
             await message.reply_text("You need to set the chat ID using /set_chatid first or you are already verified.")
     except Exception as e:
         debug_info = f"Error in verify_command: {e}\n"
-        debug_info += f"Bot Status: {bot_member.status}, Can Send Media: {bot_member.can_send_media_messages}, Can Send Messages: {bot_member.can_send_messages}\n"
+        debug_info += f"Bot Status: {bot_member.status}, Can Send Media: {bot_permissions.can_send_media_messages}, Can Send Messages: {bot_permissions.can_send_messages}\n"
         debug_info += f"User Status: {user_member.status}"
         await message.reply_text(debug_info)
 
