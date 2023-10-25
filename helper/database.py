@@ -72,10 +72,6 @@ class Database:
     async def delete_chat_id(self, user_id, chat_id=None):
         await self.col.update_one({"_id": int(user_id)}, {"$set": {"chat_id": chat_id}})
 
-    async def get_users_with_chat_ids(self):
-        users = await self.col.find({}, {'_id': 1, 'chat_id': 1})
-        return {user['_id']: user['chat_id'] for user in await users.to_list(length=None)}
-
     async def update_chat_id(self, user_id, chat_id):
         await self.col.update_one({'_id': user_id}, {'$set': {'chat_id': chat_id}}, upsert=True)
 
