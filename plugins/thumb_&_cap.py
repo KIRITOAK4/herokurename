@@ -4,11 +4,9 @@ from helper.database import db
 from helper.token import none_admin_utils
 from Krito import pbot
 from time import time
-import asyncio, pyrogram
+import asyncio
 import traceback
 import math
-
-users_data = {}
 
 @pbot.on_message(filters.private & filters.command("ping"))
 async def ping(client, message):
@@ -174,74 +172,17 @@ async def set_chatid_command(client, message):
         chat_id = int(message.text.split(" ", 1)[1])
         if not str(chat_id).startswith('-100'):
             raise ValueError("Chat ID must start with -100")
-
-        users_data[message.from_user.id] = {
-            "verified": False
-        }
-
         await db.add_chat_id(message.from_user.id, chat_id)
-        await message.reply_text("Chat ID has been set successfully. Please use /verify command within 60 seconds.", reply_to_message_id=message.id)
-        await asyncio.sleep(60)
-
-        if not users_data[message.from_user.id]["verified"]:
-            await client.leave_chat(chat_id)
-            del users_data[message.from_user.id]
-            await db.delete_chat_id(message.from_user.id)
-            await message.reply_text("You didn't use /verify command in time. Chat ID has been unset, and the bot left the channel.", reply_to_message_id=message.id)
-
-    except (ValueError, IndexError):
+        await message.reply_text("Chat ID has been set successfully. Make sure to give me send media and message permission.", reply_to_message_id=message.id)
+    except ValueError:
+        error_message = "Invalid command. Chat ID must start with -100."
+        return await message.reply_text(error_message, reply_to_message_id=message.id)
+    except IndexError:
         error_message = "Invalid command. Use /set_chatid {chat_id}"
         return await message.reply_text(error_message, reply_to_message_id=message.id)
-
     except Exception as e:
-        error_message = f"Please add me to the chat with admin permission to send messages and media: {e}."
+        error_message = f"Unexpected error occurred: {type(e).__name__} - {e}"
         return await message.reply_text(error_message, reply_to_message_id=message.id)
-
-@pbot.on_message(filters.private & filters.command('verify'))
-async def verify_command(client, message):
-    try:
-        print("Starting verification process...")
-        
-        if message.from_user.id in users_data and not users_data[message.from_user.id]["verified"]:
-            print("User is not verified yet. Getting stored chat ID...")
-            # Get the stored chat ID for the user from the database (assuming db.get_chat_id exists)
-            chat_id = await db.get_chat_id(message.from_user.id)
-            print(f"Chat ID retrieved: {chat_id}")
-            
-            try:
-                print("Getting bot and user membership status in the specified chat ID...")
-                # Get bot and user membership status in the specified chat ID
-                bot_member = await client.get_chat_member(chat_id, client.me.id)
-                user_member = await client.get_chat_member(chat_id, message.from_user.id)
-                print("Membership status retrieved.")
-                
-                # Get bot's permissions
-                bot_permissions = bot_member.permissions
-                print(f"Bot permission: {bot_permissions}")
-                if bot_member.status in ("administrator", "creator") and user_member.status in ("administrator", "creator"):
-                    if bot_permissions.can_send_media_messages and bot_permissions.can_send_messages:
-                        users_data[message.from_user.id]["verified"] = True
-                        print("Verification successful! User is now verified.")
-                        await message.reply_text("Verification successful! You are now verified.")
-                    else:
-                        print("Verification failed: Bot does not have permission to send media or captions.")
-                        await message.reply_text("Missing send media and message Rights")
-                else:
-                    print("Verification failed: Bot and user must be admin/creator in the specified channel.")
-                    await message.reply_text("verification failed")
-            except pyrogram.errors.exceptions.bad_request_400.ChannelInvalid:
-                error_message = "Please add me to the chat with admin permission to send messages and media."
-                print("Verification failed: Invalid channel parameter.")
-                return await message.reply_text(error_message, reply_to_message_id=message.id)
-            except Exception as e:
-                print(f"Verification failed: Error occurred - {e}")
-                await message.reply_text(f"Error:{e}")
-        else:
-            print("User is already verified or chat ID is not set.")
-            await message.reply_text("You need to set the chat ID using /set_chatid first or you are already verified.")
-    except Exception as e:
-        print(f"An error occurred while using verify command: {e}")
-        await message.reply_text(f"An error occurred while using verify command: {e}")
 
 @pbot.on_message(filters.private & filters.command('get_chatid'))
 async def get_chatid_command(client, message):
