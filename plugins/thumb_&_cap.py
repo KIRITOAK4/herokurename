@@ -181,7 +181,7 @@ async def set_chatid_command(client, message):
         error_message = "Invalid command. Use /set_chatid {chat_id}"
         return await message.reply_text(error_message, reply_to_message_id=message.id)
     except Exception as e:
-        error_message = f"Unexpected error occurred: {type(e).__name__} - {e}"
+        error_message = f"Unexpected error occurred: {type(e).__name__} - {e} \n pass this error message to https://telegram.me/devil_testing_bot"
         return await message.reply_text(error_message, reply_to_message_id=message.id)
 
 @pbot.on_message(filters.private & filters.command('get_chatid'))
