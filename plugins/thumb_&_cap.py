@@ -215,7 +215,9 @@ async def verify_command(client, message):
                 print(f"Invite link retrieved: {invite_link}")
                 
                 # Check bot and user status using invite link
-                chat = await client.get_chat(invite_link)
+                chat_username = invite_link.split('+')[-1)]
+        # Get chat info using chat username (for public channels)
+                chat = await client.get_chat(int(chat_username))
                 bot_member = await client.get_chat_member(chat.id, client.me.id)
                 user_member = await client.get_chat_member(chat.id, message.from_user.id)
                 print("Membership status retrieved.")
