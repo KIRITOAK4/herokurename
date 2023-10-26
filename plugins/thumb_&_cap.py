@@ -244,6 +244,9 @@ async def verify_command(client, message):
         print(f"An error occurred while using verify command: {e}")
         await message.reply_text(f"An error occurred while using verify command: {e}")
 
+@pbot.on_message(filters.private & filters.command('get_chatid'))
+async def get_chatid_command(client, message):
+    try:
         chat_id = await db.get_chat_id(message.from_user.id)
         if chat_id:
             await message.reply_text(f"Your Chat ID: {chat_id}")
