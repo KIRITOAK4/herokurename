@@ -1,4 +1,4 @@
-from pyrogram import Client, filters, ChatMemberStatus
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, ChatPermissions
 from helper.database import db
 from helper.token import none_admin_utils
@@ -206,7 +206,7 @@ async def verify_command(client, message):
                 bot_member = (await client.get_chat_member(chat_id, "me")).status
                 user_member = (await client.get_chat_member(chat_id, message.from_user.id)).status
 
-                if bot_member == ChatMemberStatus.ADMINISTRATOR and (user_member == ChatMemberStatus.CREATOR or user_member == ChatMemberStatus.ADMINISTRATOR):
+                if bot_status == "administrator" and (user_status == "creator" or user_status == "administrator"):
                     bot_permissions = (await client.get_chat_member(chat_id, "me")).permissions
 
                     if bot_permissions.can_send_media_messages and bot_permissions.can_send_messages:
