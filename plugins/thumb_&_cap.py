@@ -203,24 +203,18 @@ async def verify_command(client, message):
         if message.from_user.id in users_data and not users_data[message.from_user.id]["verified"]:
             chat_id = await db.get_chat_id(message.from_user.id)
             try:
-                
                 bot_member = await client.get_chat_member(chat_id, "me")
                 user_member = await client.get_chat_member(chat_id, message.from_user.id)
-            
-                bot_permissions = bot_member.privileges
-                print(f"Bot permission: {bot_permissions}")
-                
-                if bot_member.status in ("administrator", "creator") and user_member.status in ("administrator", "creator"):
-                    if bot_permissions.can_send_media_messages and bot_permissions.can_send_messages:
-                        users_data[message.from_user.id]["verified"] = True
-                        print("Verification successful! User is now verified.")
-                        await message.reply_text("Verification successful! You are now verified.")
-                    else:
-                        print("Verification failed: Bot does not have permission to send media or captions.")
-                        await message.reply_text("Bot does not have necessary permissions to send media or captions.")
+
+                print(f"Bot member status: {bot_member.status}")
+
+                if bot_member.status == "administrator" and (user_member.status == "administrator" or user_member.status == "creator"):
+                    users_data[message.from_user.id]["verified"] = True
+                    print("Verification successful! User is now verified.")
+                    await message.reply_text("Verification successful! You are now verified.")
                 else:
-                    print("Verification failed: Bot must be admin/creator and user must be member/admin/creator in the specified channel.")
-                    await message.reply_text("Verification failed: Bot must be admin/creator and user must be member/admin/creator in the specified channel.")
+                    print("Verification failed: Bot or user does not have appropriate status in the specified chat.")
+                    await message.reply_text("Bot or user does not have appropriate status in the specified chat.")
             except Exception as e:
                 print(f"Verification failed: Error occurred - {e}")
                 await message.reply_text(f"Error: {e}")
