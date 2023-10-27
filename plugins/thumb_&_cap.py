@@ -1,5 +1,5 @@
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, ChatPermissions
+from pyrogram.types import InlineKeyboardMarkup, ChatPermissions, ChatMemberStatus
 from helper.database import db
 from helper.token import none_admin_utils
 from Krito import pbot
