@@ -205,9 +205,7 @@ async def verify_command(client, message):
             try:
                 
                 bot_member = await client.get_chat_member(chat_id, "me")
-                print(f"bot member:{bot_member}")
                 user_member = await client.get_chat_member(chat_id, message.from_user.id)
-                print("Membership status retrieved.")
             
                 bot_permissions = bot_member.permissions
                 print(f"Bot permission: {bot_permissions}")
