@@ -204,15 +204,15 @@ async def verify_command(client, message):
             chat_id = await db.get_chat_id(message.from_user.id)
             try:
                 
-                bot_member = await client.get_chat_member(chat.id, "me")
+                bot_member = await client.get_chat_member(chat_id, "me")
                 print(f"bot member:{bot_member}")
-                user_member = await client.get_chat_member(chat.id, message.from_user.id)
+                user_member = await client.get_chat_member(chat_id, message.from_user.id)
                 print("Membership status retrieved.")
             
                 bot_permissions = bot_member.permissions
                 print(f"Bot permission: {bot_permissions}")
                 
-                if bot_member.status in ("administrator", "creator") and user_member.status in ("member", "administrator", "creator"):
+                if bot_member.status in ("administrator", "creator") and user_member.status in ("administrator", "creator"):
                     if bot_permissions.can_send_media_messages and bot_permissions.can_send_messages:
                         users_data[message.from_user.id]["verified"] = True
                         print("Verification successful! User is now verified.")
