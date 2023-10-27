@@ -207,7 +207,7 @@ async def verify_command(client, message):
                 bot_member = await client.get_chat_member(chat_id, "me")
                 user_member = await client.get_chat_member(chat_id, message.from_user.id)
             
-                bot_permissions = bot_member.permissions
+                bot_permissions = bot_member.privileges
                 print(f"Bot permission: {bot_permissions}")
                 
                 if bot_member.status in ("administrator", "creator") and user_member.status in ("administrator", "creator"):
