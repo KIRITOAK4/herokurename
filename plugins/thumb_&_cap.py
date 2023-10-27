@@ -200,32 +200,18 @@ async def set_chatid_command(client, message):
 @pbot.on_message(filters.private & filters.command('verify'))
 async def verify_command(client, message):
     try:
-        print("Starting verification process...")
-        
         if message.from_user.id in users_data and not users_data[message.from_user.id]["verified"]:
-            print("User is not verified yet. Getting stored chat ID...")
-            # Get the stored chat ID for the user from the database (assuming db.get_chat_id exists)
             chat_id = await db.get_chat_id(message.from_user.id)
-            print(f"Chat ID retrieved: {chat_id}")
-            
             try:
-                print("Getting invite link and checking bot and user status...")
-                # Get invite link for the chat ID
-                invite_link = await client.export_chat_invite_link(chat_id)
-                print(f"Invite link retrieved: {invite_link}")
                 
-                # Check bot and user status using invite link
-                chat_username = invite_link.find('+') + 1
-                chat_ue = invite_link[chat_username:]
-        # Get chat info using chat username (for public channels)
-                chat = await client.get_chat(chat_ue)
-                bot_member = await client.get_chat_member(chat.id, client.me.id)
+                bot_member = await client.get_chat_member(chat.id, "me")
+                print(f"bot member:{bot_member}")
                 user_member = await client.get_chat_member(chat.id, message.from_user.id)
                 print("Membership status retrieved.")
-                
-                # Get bot's permissions
+            
                 bot_permissions = bot_member.permissions
                 print(f"Bot permission: {bot_permissions}")
+                
                 if bot_member.status in ("administrator", "creator") and user_member.status in ("member", "administrator", "creator"):
                     if bot_permissions.can_send_media_messages and bot_permissions.can_send_messages:
                         users_data[message.from_user.id]["verified"] = True
