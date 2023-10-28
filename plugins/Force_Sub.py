@@ -20,8 +20,15 @@ async def not_subscribed(_, client, message):
 
 @pbot.on_message(filters.private & filters.create(not_subscribed))
 async def forces_sub(client, message):
-    buttons = [[InlineKeyboardButton(text="📢 Join Update Channel 📢", url=f"https://t.me/{FORCE_SUB}")]]
+    try:
+        invite_link = await client.export_chat_invite_link(FORCE_SUB)
+    except Exception as e:
+        print(f"Error: {e}")
+        return await message.reply_text("Failed to get the invite link. Please try again later.")
+    
+    buttons = [[InlineKeyboardButton(text="📢 Join Update Channel 📢", url=invite_link)]]
     text = "**Sᴏʀʀʏ Dᴜᴅᴇ Yᴏᴜ'ʀᴇ Nᴏᴛ Jᴏɪɴᴇᴅ My Cʜᴀɴɴᴇʟ 😐. Sᴏ Pʟᴇᴀꜱᴇ Jᴏɪɴ Oᴜʀ Uᴩᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Tᴏ Cᴏɴᴛɪɴᴜᴇ**"
+    
     try:
         user = await client.get_chat_member(FORCE_SUB, message.from_user.id)
         if user.status == enums.ChatMemberStatus.BANNED:
