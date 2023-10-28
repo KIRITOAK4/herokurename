@@ -207,6 +207,7 @@ async def verify_command(client, message):
                 user_member = await client.get_chat_member(chat_id, message.from_user.id)
 
                 print(f"Bot member status: {bot_member.status}")
+                print(f"Data type of bot_member.status: {type(bot_member.status)}")
 
                 if bot_member.status == "administrator" and (user_member.status == "administrator" or user_member.status == "creator"):
                     users_data[message.from_user.id]["verified"] = True
