@@ -207,24 +207,16 @@ async def verify_command(client, message):
                 bot_member = await client.get_chat_member(chat_id, "me")
                 user_member = await client.get_chat_member(chat_id, message.from_user.id)
 
-                print(f"Bot member status: {bot_member.status}")
-                print(f"Data type of bot_member.status: {type(bot_member.status)}")
-
-                if (bot_member.status == ChatMemberStatus.ADMINISTRATOR and user_member.status in {ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.CREATOR}):
+                if bot_member.status == ChatMemberStatus.ADMINISTRATOR and (user_member.status == ChatMemberStatus.ADMINISTRATOR or user_member.status == ChatMemberStatus.CREATOR):
                     users_data[message.from_user.id]["verified"] = True
-                    print("Verification successful! User is now verified.")
                     await message.reply_text("Verification successful! You are now verified.")
                 else:
-                    print("Verification failed: Bot or user does not have appropriate status in the specified chat.")
                     await message.reply_text("Bot or user does not have appropriate status in the specified chat.")
             except Exception as e:
-                print(f"Verification failed: Error occurred - {e}")
                 await message.reply_text(f"Error: {e}")
         else:
-            print("User is already verified or chat ID is not set.")
             await message.reply_text("You need to set the chat ID using /set_chatid first or you are already verified.")
     except Exception as e:
-        print(f"An error occurred while using verify command: {e}")
         await message.reply_text(f"An error occurred while using verify command: {e}")
 
 @pbot.on_message(filters.private & filters.command('get_chatid'))
