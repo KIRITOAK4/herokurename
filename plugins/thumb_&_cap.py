@@ -186,17 +186,21 @@ async def set_chatid_command(client, message):
 
         if not users_data[message.from_user.id]["verified"]:
             await client.leave_chat(chat_id)
-            del users_data[message.from_user.id]
-            await db.delete_chat_id(message.from_user.id)
-            await message.reply_text("You didn't use /verify command in time. Chat ID has been unset, and the bot left the channel.", reply_to_message_id=message.id)
 
-    except (ValueError, IndexError):
-        error_message = "Invalid command. Use /set_chatid {chat_id}"
-        return await message.reply_text(error_message, reply_to_message_id=message.id)
-
+    except (ValueError, IndexError) as e:
+        error_message = f"Error: {e}"
+        await message.reply_text(error_message, reply_to_message_id=message.id)
     except Exception as e:
-        error_message = f"Please add me to the chat with admin permission to send messages and media: {e}."
-        return await message.reply_text(error_message, reply_to_message_id=message.id)
+        error_message = f"Error: {e}"
+        await message.reply_text(error_message, reply_to_message_id=message.id)
+    finally:
+        try:
+            if not users_data[message.from_user.id]["verified"]:
+                del users_data[message.from_user.id]
+                await db.delete_chat_id(message.from_user.id)
+        except Exception as e:
+            error_message = f"Error: {e}"
+            await message.reply_text(error_message, reply_to_message_id=message.id)
 
 @pbot.on_message(filters.private & filters.command('verify'))
 async def verify_command(client, message):
