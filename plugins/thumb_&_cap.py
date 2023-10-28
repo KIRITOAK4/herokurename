@@ -209,7 +209,7 @@ async def verify_command(client, message):
                 print(f"Bot member status: {bot_member.status}")
                 print(f"Data type of bot_member.status: {type(bot_member.status)}")
 
-                if bot_member.status == "administrator" and (user_member.status == "administrator" or user_member.status == "creator"):
+                if bot_member.status.lower() == "administrator" and (user_member.status.lower() == "administrator" or user_member.status.lower() == "creator"):
                     users_data[message.from_user.id]["verified"] = True
                     print("Verification successful! User is now verified.")
                     await message.reply_text("Verification successful! You are now verified.")
