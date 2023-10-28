@@ -31,8 +31,6 @@ async def rename_start(client, message):
         file = getattr(message, message.media.value)
         filename = file.file_name
 
-        #print(f"File Size: {file.file_size}")
-
         if file.file_size > 3.2 * 1024 * 1024 * 1024:
             await message.reply_text("Sorry, this bot doesn't support uploading files bigger than 3.2GB")
         elif file.file_size > 1.9 * 1024 * 1024 * 1024:
@@ -45,8 +43,7 @@ async def rename_start(client, message):
                 )
                 await sleep(30)
             else:
-                #print("ubot is not connected!")  # Debug statement
-                await message.reply_text("Sorry, sir. +4gb not active to process it.", reply_to_message_id=message.id)
+                await message.reply_text("+4gb not active to process it. Anyone wanna donate string to enable 4gb Contact owner @devil_testing_bot", reply_to_message_id=message.id)
                 return
         else:
             await message.reply_text(
@@ -63,7 +60,7 @@ async def rename_start(client, message):
             reply_markup=ForceReply(True)
         )
     except Exception as e:
-        print(f"Error in rename_start function: {e}")  # Debug statement
+        print(f"Error in rename_start function: {e}") 
         pass
 
 @pbot.on_message(filters.private & filters.reply)
