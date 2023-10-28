@@ -207,7 +207,7 @@ async def verify_command(client, message):
                 bot_member = await client.get_chat_member(chat_id, "me")
                 user_member = await client.get_chat_member(chat_id, message.from_user.id)
 
-                if bot_member.status == ChatMemberStatus.ADMINISTRATOR and (user_member.status == ChatMemberStatus.ADMINISTRATOR or user_member.status == ChatMemberStatus.CREATOR):
+                if bot_member.status == ChatMemberStatus.ADMINISTRATOR and (user_member.status == ChatMemberStatus.ADMINISTRATOR or user_member.status == ChatMemberStatus.OWNER):
                     users_data[message.from_user.id]["verified"] = True
                     await message.reply_text("Verification successful! You are now verified.")
                 else:
