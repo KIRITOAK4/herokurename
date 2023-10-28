@@ -12,7 +12,6 @@ LOGS = logging.getLogger("Bot by @YUITOAKASH")
 LOGS.setLevel(level=logging.INFO)
 
 # -------------------------------USER----------------------------------------
-#SESSION_STRING = os.environ.get("SESSION_STRING", "BQGBULgAHPuTHhS9431uNmWB-mmCdnIixN4Yhhsmly07p8PjyG9yyvzd2ooioT97ay7v5soM21Lahgdh2x8qk3FhDSoC2ZhBBp0qMnanneTUhnVdKoBaejwPuMXykZTS0_Tm4LuQDKtXRKBkrrUdCmjKBhaXY9MN1Ah4dAJr01Ed8Im3Ojs3SRprNT6VfJ3B5h1U0cAtah9f4ddcugmwn2V-7iY26nJy8FmlKJJvN2WsXObKwt5i4IYkRsRgP3nnxUsxNXjTBl1RKndBU_hP_TT_pKcrEbMT4lhljQKEc8bLF_qYQ3ceafCHJwqcAmiaiZjHlAq16kUWwq8o_1NdF40kLqh5owAAAAFF4ZRqAA")
 SESSION_STRING = os.environ.get("SESSION_STRING", "None")
 ubot = None
 # -------------------------------VARS-----------------------------------------
@@ -25,7 +24,7 @@ BOT_UPTIME = time.time()
 COOLDOWN_DURATION = int(os.environ.get("COOLDOWN_DURATION", 90))
 DB_NAME = os.environ.get("DB_NAME", "Refun")
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://Movieh:movieh@cluster0.0nyllpw.mongodb.net/?retryWrites=true&w=majority")
-FORCE_SUB = os.environ.get("FORCE_SUB", "kirigayaakash")
+FORCE_SUB = os.environ.get("FORCE_SUB", "-1001582946609")
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
 MAX_PROCESS = int(os.environ.get("MAX_PROCESS", 5))
 TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
@@ -52,6 +51,12 @@ Text1 = os.environ.get("Text1", """☞☞☞ ☞☞ 𝐻𝐸𝐿𝑃 𝑃𝐴�
 ☞ ┃ 📸 𝗦ᴇɴᴅ 𝗔ɴ𝘆 𝗣ʜᴏᴛᴏ 𝗧ᴏ 𝗔ᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟ𝘆 𝗦ᴇᴛ 𝗧ʜᴜᴍʙɴᴀʟᴇ.
 ☞ ┃ 🗑 /del_thumb 𝗧ᴏ 𝗗ᴇʟᴇᴛᴇ 𝗬ᴏᴜʀ 𝗢ʟᴅ 𝗧ʜᴜᴍʙɴɪʟᴇ.
 ☞ ┃ 👁 /view_thumb 𝗧ᴏ 𝗩ɪᴇᴡ 𝗬ᴏᴜʀ 𝗖ᴜʀʀᴇɴᴛ 𝗧ʜᴜᴍʙɴɪʟᴇ.
+     ┏━━━━━━━━━━━━━━┓
+     🖥 𝐇𝐨𝐰 𝐓𝐨 𝐒𝐞𝐭 𝐂𝐡𝐚𝐭𝐈𝐃
+     ┗━━━━━━━━━━━━━━┛
+ ☞ ┃⌨ /set_chatid - 𝐒𝐞𝐭 𝐂𝐡𝐚𝐭𝐈𝐝 𝐎𝐧𝐥𝐲 𝐟𝐨𝐫 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐚𝐧𝐝 𝐚𝐝𝐝 𝐦𝐞 𝐚𝐬 𝐚𝐝𝐦𝐢𝐧 𝐚𝐬 𝐠𝐢𝐯𝐞𝐧 𝐂𝐡𝐚𝐭𝐈𝐝
+ ☞ ┃🗑 /del_chatid - 𝐓𝐨 𝐝𝐞𝐥𝐞𝐭𝐞 𝐲𝐨𝐮𝐫 𝐂𝐡𝐚𝐭𝐈𝐝
+ ☞ ┃🗂 /get_chatid - 𝐓𝐨 𝐕𝐢𝐞𝐰  𝐲𝐨𝐮𝐫 𝐂𝐡𝐚𝐭𝐈𝐝
     ┏━━━━━━━━━━━━━━━━━━━┓ 
      📑 𝗛ᴏᴡ 𝗧ᴏ 𝗦ᴇᴛ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
     ┗━━━━━━━━━━━━━━━━━━━┛
