@@ -33,7 +33,7 @@ async def restart_bot(b, m):
 @pbot.on_message(filters.command("broadcast") & filters.reply)
 async def broadcast_handler(bot: Client, m: Message):
     if m.from_user.id not in ADMIN:
-        await message.reply_text("You are not authorized to use this command.", reply_to_message_id=message.id)
+        await message.reply_text("You are not authorized to use this command.", reply_to_message_id=m.id)
         return
     await bot.send_message(LOG_CHANNEL, f"{m.from_user.mention} or {m.from_user.id} has started the Broadcast......")
     all_users = await db.get_all_users()
