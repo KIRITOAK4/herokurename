@@ -49,7 +49,7 @@ async def edit_media(client, message):
                     chatid = int("-100" + parts[4])
                     msg_id = int(parts[5])
                 else:
-                    chatid = int(parts[3])
+                    chatid = parts[3]
                     msg_id = int(parts[4])
 
         if chatid and msg_id:
