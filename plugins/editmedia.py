@@ -36,7 +36,7 @@ async def edit_media(client, message):
     # Extract the URL from the command
     try:
         url = message.text.split(" ", 1)[1]
-        chat_id = None
+        chatid = None
         msg_id = None
 
         # Parse the URL to extract chat ID and message ID
@@ -44,16 +44,16 @@ async def edit_media(client, message):
             parts = url.split("/")
             if len(parts) >= 5:
                 if "c" in parts[3]:
-                    chat_id = int(parts[4])
+                    chatid = int(parts[4])
                     msg_id = int(parts[5])
                 else:
-                    chat_id = int(parts[3])
+                    chatid = int(parts[3])
                     msg_id = int(parts[4])
 
-        if chat_id and msg_id:
+        if chatid and msg_id:
             try:
                 # Check if the user is an admin in the specified channel
-                is_admin = await client.get_chat_member(chat_id=chat_id, user_id=user_id)
+                is_admin = await client.get_chat_member(chat_id=chatid, user_id=user_id)
             except UserNotParticipant:
                 await message.reply_text("You are not a member of this channel, and hence you can't edit this message.")
                 return
@@ -61,7 +61,7 @@ async def edit_media(client, message):
             if is_admin.can_edit_messages:
                 # Edit the original message with the new media
                 try:
-                    await client.edit_message_media(chat_id=chat_id, message_id=msg_id, media=media)
+                    await client.edit_message_media(chat_id=chatid, message_id=msg_id, media=media)
                     await message.reply_text("Message edited successfully.")
                 except Exception as e:
                     await message.reply_text(f"Failed to edit message: {str(e)}")
