@@ -1,6 +1,8 @@
+
 from Krito import pbot 
 from pyrogram import Client, filters
 from pyrogram.errors import UserNotParticipant
+from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import (
     InputMediaPhoto,
     InputMediaDocument,
@@ -58,7 +60,7 @@ async def edit_media(client, message):
                 await message.reply_text("You are not a member of this channel, and hence you can't edit this message.")
                 return
 
-            if is_admin.can_edit_messages:
+            if is_admin.status in {ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER}:
                 # Edit the original message with the new media
                 try:
                     await client.edit_message_media(chat_id=chatid, message_id=msg_id, media=media)
