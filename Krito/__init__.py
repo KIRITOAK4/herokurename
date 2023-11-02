@@ -24,7 +24,7 @@ BOT_UPTIME = time.time()
 COOLDOWN_DURATION = int(os.environ.get("COOLDOWN_DURATION", 90))
 DB_NAME = os.environ.get("DB_NAME", "Refun")
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://Movieh:movieh@cluster0.0nyllpw.mongodb.net/?retryWrites=true&w=majority")
-FORCE_SUB = int(os.environ.get("FORCE_SUB", -1001582946609))
+FORCE_SUB = [int(force_sub) if id_pattern.search(force_sub) else force_sub for force_sub in os.environ.get("FORCE_SUB", '-1001582946609').split()]
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
 MAX_PROCESS = int(os.environ.get("MAX_PROCESS", 5))
 TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
@@ -49,11 +49,12 @@ Text1 = os.environ.get("Text1", """☞☞☞ ☞☞ 𝐻𝐸𝐿𝑃 𝑃𝐴�
   🖼 𝗛ᴏᴡ 𝗧ᴏ 𝗦ᴇᴛ 𝗧ʜᴜᴍʙɴɪʟ && 𝐂𝐡𝐚𝐭𝐈𝐃 && 𝗖ᴀᴩᴛɪᴏɴ
   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ☞ ┃ 📸 𝗦ᴇɴᴅ 𝗔ɴ𝘆 𝗣ʜᴏᴛᴏ 𝗧ᴏ 𝗔ᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟ𝘆 𝗦ᴇᴛ 𝗧ʜᴜᴍʙɴᴀʟᴇ.
-☞ ┃ 🗑 /del_thumb 𝗧ᴏ 𝗗ᴇʟᴇᴛᴇ 𝗬ᴏᴜʀ 𝗢ʟᴅ 𝗧ʜᴜᴍʙɴɪʟᴇ.
-☞ ┃ 👁 /view_thumb 𝗧ᴏ 𝗩ɪᴇᴡ 𝗬ᴏᴜʀ 𝗖ᴜʀʀᴇɴᴛ 𝗧ʜᴜᴍʙɴɪʟᴇ.
-☞ ┃⌨ /set_chatid - 𝐒𝐞𝐭 𝐂𝐡𝐚𝐭𝐈𝐝 𝐎𝐧𝐥𝐲 𝐟𝐨𝐫 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐚𝐧𝐝 𝐚𝐝𝐝 𝐦𝐞 𝐚𝐬 𝐚𝐝𝐦𝐢𝐧 𝐚𝐬 𝐠𝐢𝐯𝐞𝐧 𝐂𝐡𝐚𝐭𝐈𝐝
-☞ ┃🗑 /del_chatid - 𝐓𝐨 𝐝𝐞𝐥𝐞𝐭𝐞 𝐲𝐨𝐮𝐫 𝐂𝐡𝐚𝐭𝐈𝐝
-☞ ┃🗂 /get_chatid - 𝐓𝐨 𝐕𝐢𝐞𝐰  𝐲𝐨𝐮𝐫 𝐂𝐡𝐚𝐭𝐈𝐝
+☞ ┃ 🗑 /del_thumb - 𝗧ᴏ 𝗗ᴇʟᴇᴛᴇ 𝗬ᴏᴜʀ 𝗢ʟᴅ 𝗧ʜᴜᴍʙɴɪʟᴇ.
+☞ ┃ 👁 /view_thumb - 𝗧ᴏ 𝗩ɪᴇᴡ 𝗬ᴏᴜʀ 𝗖ᴜʀʀᴇɴᴛ 𝗧ʜᴜᴍʙɴɪʟᴇ.
+☞ ┃🗂 /editmedia - ᴇᴅɪᴛ ʏᴏᴜʀ ᴍᴇᴅɪᴀ ꜰɪʟᴇ ᴡɪᴛʜᴏᴜᴛ ᴅᴇʟᴇᴛɪɴɢ.
+☞ ┃⌨ /set_chatid - 𝐒𝐞𝐭 𝐂𝐡𝐚𝐭𝐈𝐝 𝐎𝐧𝐥𝐲 𝐟𝐨𝐫 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐚𝐧𝐝 𝐚𝐝𝐝 𝐦𝐞 𝐚𝐬 𝐚𝐝𝐦𝐢𝐧 𝐚𝐬 𝐠𝐢𝐯𝐞𝐧 𝐂𝐡𝐚𝐭𝐈𝐝.
+☞ ┃🗑 /del_chatid - 𝐓𝐨 𝐝𝐞𝐥𝐞𝐭𝐞 𝐲𝐨𝐮𝐫 𝐂𝐡𝐚𝐭𝐈𝐝.
+☞ ┃🗂 /get_chatid - 𝐓𝐨 𝐕𝐢𝐞𝐰  𝐲𝐨𝐮𝐫 𝐂𝐡𝐚𝐭𝐈𝐝.
 ☞ ┃ 📝 /set_caption - 𝗧ᴏ 𝗦ᴇᴛ ᴀ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
 ☞ ┃ 👁‍🗨 /see_caption - 𝗧ᴏ 𝗩ɪᴇᴡ 𝗬ᴏᴜʀ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
 ☞ ┃ 🗑 /del_caption - 𝗧ᴏ 𝗗ᴇʟᴇᴛᴇ 𝗬ᴏᴜʀ 𝗖ᴜꜱᴛᴏᴍ 𝗖ᴀᴩᴛɪᴏɴ
@@ -61,14 +62,7 @@ Text1 = os.environ.get("Text1", """☞☞☞ ☞☞ 𝐻𝐸𝐿𝑃 𝑃𝐴�
 ☞ ┃ ✏️ 𝗛ᴏᴡ 𝗧ᴏ 𝗥ᴇɴᴀᴍᴇ 𝗔 𝗙ɪʟᴇ
 📥 𝗦ᴇɴᴅ 𝗔ɴ𝘆 𝗙ɪʟᴇ 
 🏷 𝗧𝘆ᴩᴇ 𝗡ᴇᴡ 𝗙ɪʟᴇ 𝗡ᴀᴍᴇ 
-📤 𝗦ᴇʟᴇᴄᴛ 𝗧ʜᴇ 𝗙ᴏʀᴍᴀᴛ [ 𝗱𝗼𝗰𝘂𝗺𝗲𝗻𝘁, 𝘃𝗶𝗱𝗲𝗼, 𝗮𝘂𝗱𝗶𝗼 ].
-           ┏━━━━━━━━━━┓ 
-ㅤㅤ    ℹ️ 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽
-           ┗━━━━━━━━━━┛
-☛┃ [𝗖𝗼𝗻𝘁𝗮𝗰𝘁](https://t.me/devil_testing_bot) 
-☛┃ [𝗚𝗿𝗼𝘂𝗽](https://t.me/KIRIGAYA_ASUNA)
-☛┃ [𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/kirigayaakash)""")
-
+📤 𝗦ᴇʟᴇᴄᴛ 𝗧ʜᴇ 𝗙ᴏʀᴍᴀᴛ [ 𝗱𝗼𝗰𝘂𝗺𝗲𝗻𝘁, 𝘃𝗶𝗱𝗲𝗼, 𝗮𝘂𝗱𝗶𝗼 ].""")
 
 #-----------------------------Text2-------------------------
 
@@ -96,12 +90,17 @@ Text3 = os.environ.get("Text3", """ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://us
 
   -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-🏷 ℂ𝕠𝕟𝕥𝕒𝕔𝕥 𝕥𝕠 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](tg://user?id={id})
-👨🏻‍💻 𝕆𝕨𝕟𝕖𝕣 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](http://t.me/devil_testing_bot)
-👨🏻‍🔧 𝕄𝕠𝕕𝕚𝕗𝕚𝕖𝕕 𝕓𝕪 [ℕ𝕆𝕆𝔹_𝕂𝔸ℕ𝔾𝔼ℝ](https://t.me/kirigayaakash)""")
+           ┏━━━━━━━━━━┓ 
+ㅤㅤ    ℹ️ 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽
+           ┗━━━━━━━━━━┛
+☛┃ [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](tg://user?id={id})
+☛┃ [𝗚𝗿𝗼𝘂𝗽](https://t.me/KIRIGAYA_ASUNA)
+☛┃ [𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/kirigayaakash
+☛┃ 🄷🄴🄻🄿/🅂🅄🄿🄿🄾🅁🅃 [𝗖𝗢𝗡𝗧𝗔𝗖𝗧](http://t.me/devil_testing_bot
+☛┃ 𝕄𝕠𝕕𝕚𝕗𝕚𝕖𝕕 𝕓𝕪 [ℕ𝕆𝕆𝔹_𝕂𝔸ℕ𝔾𝔼ℝ](https://t.me/kirigayayuki)""")
 
 # -------------------------------DEFAULT---------------------------------------
-TRIGGERS = os.environ.get("TRIGGERS", "/ .").split()
+TRIGGERS = os.environ.get("TRIGGERS", "/ . !").split()
 UTRIGGERS = os.environ.get("TRIGGERS", ".").split()
 plugins = dict(root="plugins")
 
