@@ -44,7 +44,7 @@ async def edit_media(client, message):
             parts = url.split("/")
             if len(parts) >= 5:
                 if "c" in parts[3]:
-                    chatid = int(parts[4])
+                    chatid = int("-100" + parts[4])
                     msg_id = int(parts[5])
                 else:
                     chatid = int(parts[3])
