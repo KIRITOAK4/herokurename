@@ -1,6 +1,8 @@
 from helper.database import db
-
-users_data = []
+from Krito import pbot
+from pyrogram.enums import ChatMemberStatus
+from pyrogram import Client, Message
+users_data = {}
 
 @pbot.on_message(filters.private & filters.command('set_chatid'))
 async def set_chatid_command(client, message):
