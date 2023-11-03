@@ -25,9 +25,9 @@ async def forces_sub(client, message):
     text = "**Sᴏʀʀʏ Dᴜᴅᴇ Yᴏᴜ'ʀᴇ Nᴏᴛ Jᴏɪɴᴇᴅ My Cʜᴀɴɴᴇʟ 😐. Sᴏ Pʟᴇᴀꜱᴇ Jᴏɪɴ Oᴜʀ Uᴩᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Tᴏ Cᴏɴᴛɪɴᴜᴇ**"
 
     try:
-        for force_sub in FORCE_SUB:
+        for order, force_sub in enumerate(FORCE_SUB, start=1):
             invite_link = await client.export_chat_invite_link(force_sub)
-            button = [InlineKeyboardButton(text=f"📢 Join Update {force_sub} 📢", url=invite_link)]
+            button = [InlineKeyboardButton(text=f"📢 Join Update {order} 📢", url=invite_link)]
             buttons.extend(button)
     except Exception as e:
         return await message.reply_text(text=f"An error occurred: {e}")
