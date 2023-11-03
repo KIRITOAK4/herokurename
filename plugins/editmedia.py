@@ -24,7 +24,10 @@ async def edit_media(client, message):
                 reply_markup=InlineKeyboardMarkup(error_buttons)
             )
             return
-
+    except Exception as e:
+        error_text = f"An error occurred: {e}"
+        await message.reply_text(error_text)
+        
         user_id = message.from_user.id
         replied_message = message.reply_to_message
 
