@@ -39,4 +39,5 @@ async def forces_sub(client, message):
     except UserNotParticipant:
         return await message.reply_text(text=text, reply_markup=InlineKeyboardMarkup([buttons]))
 
-    return await message.reply_text(text=text, reply_markup=InlineKeyboardMarkup([buttons]))
+    reply_markup = InlineKeyboardMarkup([buttons[i:i + 2] for i in range(0, len(buttons), 2)])
+    return await message.reply_text(text=text, reply_markup=reply_markup)
