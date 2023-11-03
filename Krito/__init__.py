@@ -24,7 +24,7 @@ BOT_UPTIME = time.time()
 COOLDOWN_DURATION = int(os.environ.get("COOLDOWN_DURATION", 90))
 DB_NAME = os.environ.get("DB_NAME", "Refun")
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://Movieh:movieh@cluster0.0nyllpw.mongodb.net/?retryWrites=true&w=majority")
-FORCE_SUB = [int(force_sub) if id_pattern.search(force_sub) else force_sub for force_sub in os.environ.get("FORCE_SUB", '-1001582946609 -1001919989943').split()]
+FORCE_SUB = [int(force_sub) if id_pattern.search(force_sub) else force_sub for force_sub in os.environ.get("FORCE_SUB", '-1001582946609 -1001614596050 -1001887629118 -1001919989943').split()]
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
 MAX_PROCESS = int(os.environ.get("MAX_PROCESS", 5))
 TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
