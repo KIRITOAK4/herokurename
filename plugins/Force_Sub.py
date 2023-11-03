@@ -11,8 +11,10 @@ async def not_subscribed(_, client, message):
     try:
         for force_sub in FORCE_SUB:
             user = await client.get_chat_member(force_sub, message.from_user.id)
-            if user.status != enums.ChatMemberStatus.BANNED:
-                return False
+            if user.status == enums.ChatMemberStatus.BANNED:
+                break
+        else:
+            return False
     except UserNotParticipant:
         pass
     return True
@@ -22,14 +24,13 @@ async def forces_sub(client, message):
     buttons = []
     text = "**Sᴏʀʀʏ Dᴜᴅᴇ Yᴏᴜ'ʀᴇ Nᴏᴛ Jᴏɪɴᴇᴅ My Cʜᴀɴɴᴇʟ 😐. Sᴏ Pʟᴇᴀꜱᴇ Jᴏɪɴ Oᴜʀ Uᴩᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Tᴏ Cᴏɴᴛɪɴᴜᴇ**"
 
-    for force_sub in FORCE_SUB:
-        try:
+    try:
+        for force_sub in FORCE_SUB:
             invite_link = await client.export_chat_invite_link(force_sub)
             button = [InlineKeyboardButton(text=f"📢 Join Update {force_sub} 📢", url=invite_link)]
             buttons.extend(button)
-        except Exception as e:
-            print(f"Error: {e}")
-            return await message.reply_text("Failed to get the invite link. Please try again later.")
+    except Exception as e:
+        return await message.reply_text(text=f"An error occurred: {e}")
 
     try:
         for force_sub in FORCE_SUB:
