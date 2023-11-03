@@ -30,8 +30,9 @@ async def restart_bot(b, m):
     await m.reply_text("🔄__Restarting...__")
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-@pbot.on_message(filters.command("broadcast") & filters.reply)
+@pbot.on_message(filters.reply & filters.command("broadcast"))
 async def broadcast_handler(bot: Client, m: Message):
+    print("Broadcast Command received")
     if m.from_user.id not in ADMIN:
         await m.reply_text("You are not authorized to use this command.", reply_to_message_id=m.id)
         return
