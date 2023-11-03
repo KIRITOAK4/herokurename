@@ -25,7 +25,7 @@ async def forces_sub(client, message):
     for force_sub in FORCE_SUB:
         try:
             invite_link = await client.export_chat_invite_link(force_sub)
-            button = [InlineKeyboardButton(text=f"📢 Join Update Channel {force_sub} 📢", url=invite_link)]
+            button = [InlineKeyboardButton(text=f"📢 Join Update {force_sub} 📢", url=invite_link)]
             buttons.extend(button)
         except Exception as e:
             print(f"Error: {e}")
