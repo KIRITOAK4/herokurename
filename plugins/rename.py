@@ -135,7 +135,7 @@ async def doc(bot, update):
                 duration = metadata.get('duration').seconds
                 file_size = metadata.get('filesize')
         except Exception as e:
-            print(f"Metadata extraction error: {e}"}
+            print(f"Metadata extraction error: {e}")
 
         ph_path = None
         media = getattr(file, file.media.value)
