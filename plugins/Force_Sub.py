@@ -42,5 +42,3 @@ async def forces_sub(client, message):
                 return await client.send_message(message.from_user.id, text="Sᴏʀʀʏ Yᴏᴜ'ʀᴇ Bᴀɴɴᴇᴅ Tᴏ Uꜱᴇ Mᴇ")
     except UserNotParticipant:
         return await message.reply_text(text=text, reply_markup=reply_markup)
-
-    return await message.reply_text(text=text, reply_markup=reply_markup)
