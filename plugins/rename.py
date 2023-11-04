@@ -143,7 +143,6 @@ async def doc(bot, update):
 
         if c_caption:
             try:
-                print(f"Debug - Before formatting: file_size={humanbytes(file_size)}, duration={convert(duration)}")
                 caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration))
             except Exception as e:
                 await ms.edit(text=f"Your Caption Error Except Keyword Argument ●> ({e})")
