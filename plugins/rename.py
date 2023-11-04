@@ -127,15 +127,10 @@ async def doc(bot, update):
             return
 
         duration = 0
-        file_size = 0
         try:
             metadata = extractMetadata(createParser(file_path))
             if metadata.has("duration"):
                 duration = metadata.get('duration').seconds
-            if metadata.has("filesize"):
-                file_size = metadata.get('filesize')
-            else:
-                file_size = os.path.getsize(file_path)
         except Exception as e:
             print(f"Metadata extraction error: {e}")
 
@@ -147,7 +142,7 @@ async def doc(bot, update):
         if c_caption:
             try:
                 print(f"Debug - Before formatting: file_size={humanbytes(file_size)}, duration={convert(duration)}")
-                caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration))
+                caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
             except Exception as e:
                 await ms.edit(text=f"Your Caption Error Except Keyword Argument ●> ({e})")
                 return
@@ -166,7 +161,7 @@ async def doc(bot, update):
 
         value = 1.9 * 1024 * 1024 * 1024
         chat_id = await db.get_chat_id(update.message.chat.id)
-        if file_size > value:
+        if media.file_size > value:
             fupload = int(-1001682783965)
             client = ubot
         else:
