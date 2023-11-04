@@ -130,11 +130,12 @@ async def doc(bot, update):
         file_size = 0
         try:
             metadata = extractMetadata(createParser(file_path))
+            print(metadata)
             if metadata.has("duration") and metadata.has("filesize"):
                 duration = metadata.get('duration').seconds
                 file_size = metadata.get('filesize')
-        except:
-            pass
+        except Exception as e:
+            print(f"Metadata extraction error: {e}"}
 
         ph_path = None
         media = getattr(file, file.media.value)
