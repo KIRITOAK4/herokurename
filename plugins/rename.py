@@ -105,11 +105,15 @@ async def refunc(client, message):
         error_text = f"An error occurred: {e}"
         await message.reply_text(error_text)
 
-
 @pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
     try:
         user_id = update.from_user.id
+        on_cooldown, remaining_time = await process_and_update_cooldown(user_id)
+        if on_cooldown:
+            await update.message.reply_text(f"You are on cooldown. Please wait for {remaining_time} seconds.")
+            return
+
         new_name = update.message.text
         new_filename = new_name.split(":-")[1]
         file_path = f"downloads/{new_filename}"
@@ -139,7 +143,9 @@ async def doc(bot, update):
 
         if c_caption:
             try:
-                caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
+                print(f"Debug - Before formatting: file_size={humanbytes(file_size)}, duration={convert(duration)}")
+                caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration))
+                print(f"Debug - After formatting: caption={caption}")
             except Exception as e:
                 await ms.edit(text=f"Your Caption Error Except Keyword Argument ●> ({e})")
                 return
@@ -206,19 +212,24 @@ async def doc(bot, update):
                     message_id=suc.message_id
                 )
         except FloodWait as e:
-            await asyncio.sleep(7)
+            await asyncio.sleep(e.x)
         except Exception as e:
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
-            await ms.edit(f" Error {e}")
+            await ms.edit(f"Error: {e}")
+            return
 
         await ms.delete()
         os.remove(file_path)
         if ph_path:
             os.remove(ph_path)
 
-        await update_completed_processes(user_id)  # Update completed processes after successful upload
+        await update_completed_processes(user_id)
 
     except Exception as e:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        if ph_path and os.path.exists(ph_path):
+            os.remove(ph_path)
         await update.message.edit_text(f"An error occurred: {e}")
