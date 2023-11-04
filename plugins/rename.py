@@ -131,8 +131,9 @@ async def doc(bot, update):
         try:
             metadata = extractMetadata(createParser(file_path))
             print(metadata)
-            if metadata.has("duration") and metadata.has("filesize"):
+            if metadata.has("duration"):
                 duration = metadata.get('duration').seconds
+            if metadata.has("filesize"):
                 file_size = metadata.get('filesize')
         except Exception as e:
             print(f"Metadata extraction error: {e}")
@@ -144,9 +145,7 @@ async def doc(bot, update):
 
         if c_caption:
             try:
-                print(f"Debug - Before formatting: file_size={humanbytes(file_size)}, duration={convert(duration)}")
                 caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration))
-                print(f"Debug - After formatting: caption={caption}")
             except Exception as e:
                 await ms.edit(text=f"Your Caption Error Except Keyword Argument ●> ({e})")
                 return
