@@ -137,13 +137,14 @@ async def doc(bot, update):
         ph_path = None
         user_id = int(update.message.chat.id)
         media = getattr(file, file.media.value)
+        file_size = media.file_size
         c_caption = await db.get_caption(update.message.chat.id)
         c_thumb = await db.get_thumbnail(update.message.chat.id)
 
         if c_caption:
             try:
                 print(f"Debug - Before formatting: file_size={humanbytes(file_size)}, duration={convert(duration)}")
-                caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
+                caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration))
             except Exception as e:
                 await ms.edit(text=f"Your Caption Error Except Keyword Argument ●> ({e})")
                 return
@@ -162,7 +163,7 @@ async def doc(bot, update):
 
         value = 1.9 * 1024 * 1024 * 1024
         chat_id = await db.get_chat_id(update.message.chat.id)
-        if media.file_size > value:
+        if file_size > value:
             fupload = int(-1001682783965)
             client = ubot
         else:
