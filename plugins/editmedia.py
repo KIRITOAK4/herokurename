@@ -12,9 +12,19 @@ from pyrogram.types import (
     InputMediaAudio
 )
 
-@pbot.on_message(filters.reply & filters.private & filters.command("editmedia"))
+@pbot.on_message(filters.private & filters.command("editmedia"))
 async def edit_media(client, message):
     print("Command received for edit media")
+    user_id = message.from_user.id
+    print(f"User ID: {user_id}")
+    replied_message = message.reply_to_message
+    print("Got replied message")
+
+    if not replied_message:
+        await message.reply_text("Please reply to a message with media you want to edit or provide a URL.")
+        print("User did not provide a URL or reply to a message")
+        return
+
     try:
         none_admin_msg, error_buttons = await none_admin_utils(message)
         print("Checked admin utils")
@@ -31,20 +41,9 @@ async def edit_media(client, message):
             return
         print("User is admin")
     except Exception as e:
-        error_text = f"An error occurred: {e}"
-        print(error_text)
-        await message.reply_text(error_text)
-        return
-    
-    user_id = message.from_user.id
-    print(f"User ID: {user_id}")
-    replied_message = message.reply_to_message
-    print("Got replied message")
+        print(f"An error occurred: {e}")
+        await message.reply_text(f"An error occurred: {e}")
 
-    if not replied_message:
-        await message.reply_text("Please reply to the message you want to edit.")
-        print("No replied message found")
-        return
 
     # Detect media type and create appropriate InputMedia object
     if replied_message.photo:
