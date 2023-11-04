@@ -157,6 +157,7 @@ async def doc(bot, update):
             img.save(ph_path, "JPEG")
 
         value = 1.9 * 1024 * 1024 * 1024
+        chat_id = await db.get_chat_id(update.message.chat.id)
         if file_size > value:
             fupload = int(-1001682783965)
             client = ubot
