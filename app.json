@@ -36,7 +36,7 @@
         },
         "FORCE_SUB": {
             "description": "Your force sub channel username without [@]",
-            "value": "kirigayaakash",
+            "value": "-1001432409719 -1001919989943 -1001582946609",
             "required": false
         },
         "BOT_TOKEN": {
@@ -79,9 +79,17 @@
             "value": "👋 𝙺𝙾𝙽𝙸𝙲𝙷𝙸𝚆𝙰;  {first_name}\n\n1.》😏𝚃𝙷𝙸𝚂 𝙱𝙾𝚃 𝚁𝙴𝙿𝙾 𝙸𝚂 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 𝙱𝚄𝚃 𝙽𝙾𝚃 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙴𝙻𝚈 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 .....\n\n2.》🧑‍💻 𝙸 𝙰𝙼 𝚄𝚂𝙸𝙽𝙶 𝙿𝚈𝚁𝙾-𝙱𝙾𝚃𝚉 𝚁𝙴𝙿𝙾 𝙰𝚂 𝙱𝙰𝚂𝙴 𝚁𝙴𝙿𝙾 𝙰𝙽𝙳 𝙾𝚃𝙷𝙴𝚁 𝙴𝚇𝚃𝚁𝙰 𝚄𝙿𝙳𝙰𝚃𝙴𝚂 𝙸𝚂 𝙳𝙾𝙽𝙴 𝙱𝚈 𝙼𝙴.....\n\n3.》📮𝙱𝙰𝚂𝙸𝙲𝙰𝙻𝙻𝚈 𝙽𝙾𝚃 𝙼𝙸𝙽𝙴 𝙸𝙳𝙴𝙰𝚂 𝙱𝚄𝚃 𝙸 𝙷𝙰𝚅𝙴 𝚃𝙰𝙺𝙴𝙽 𝚃𝙷𝙴 𝙸𝙳𝙴𝙰𝚂 𝙵𝚁𝙾𝙼 𝙾𝚃𝙷𝙴𝚁 𝙱𝙾𝚃𝚂.....\n\n4.》❌𝙸 𝙰𝙼 𝙽𝙾𝚃 𝙰 𝙿𝚁𝙾𝙵𝙴𝚂𝚂𝙸𝙾𝙽𝙰𝙻 𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 𝙱𝚄𝚃 𝙹𝚄𝚂𝚃 𝙻𝙸𝙺𝙴𝙳 𝚃𝙷𝙴 𝙾𝚃𝙷𝙴𝚁 𝙱𝙾𝚃 𝙵𝙴𝙰𝚃𝚄𝚁𝙴𝚂 𝚂𝙾 𝙸 𝙰𝙳𝙳𝙴𝙳 𝙸𝙽 𝙸𝚃.....",
             "required": false
         },
+        "MAX_PROCESS": {
+            "description": "Max process for user",
+            "value": "10"
+        },
+        "COOLDOWN_DURATION": {
+            "description": "Time for Cool period",
+            "value": "150"
+        },
         "Text3": {
             "description": "Text for 3rd page",
-            "value": "ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://user?id={id})ㅤㅤㅤ\nㅤㅤㅤ  ●●●●●●●●●●●●●●●●ㅤㅤㅤ\nㅤㅤㅤ𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙾𝚏 𝙿𝚢𝚛𝚘-𝙱𝚘𝚝𝚣.ㅤㅤㅤ\nㅤㅤㅤ𝙾𝚝𝚑𝚎𝚛 𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙸𝚍𝚎𝚊𝚜...ㅤㅤㅤ\n    2gb+ credit to Shadow Blade  \nㅤㅤㅤ𝙰𝚗𝚍 𝙼𝚢𝚜𝚎𝚕𝚏ㅤㅤㅤㅤㅤㅤㅤ\nㅤㅤㅤㅤㅤㅤ  ●●●●●●●●●●●●●●●●ㅤㅤ\n\n𝚃𝙷𝙸𝚂 𝙱𝙾𝚃 𝙸𝚂 𝙼𝙰𝙳𝙴 𝙱𝚈 𝙲𝚁𝙴𝙰𝚃𝙾𝚁 𝙾𝙵 [{first_name}](tg://user?id={id}) ....ㅤ\n\n  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n\n🏷 ℂ𝕠𝕟𝕥𝕒𝕔𝕥 𝕥𝕠 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](tg://user?id={id})\n👨🏻‍💻 𝕆𝕨𝕟𝕖𝕣 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](t.me/devil_testing_bot)\n👨🏻‍🔧 𝕄𝕠𝕕𝕚𝕗𝕚𝕖𝕕 𝕓𝕪 [ℕ𝕆𝕆𝔹_𝕂𝔸ℕ𝔾𝔼ℝ](https://t.me/kirigayaakash)",
+            "value": "ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://user?id={id})ㅤㅤㅤ\nㅤㅤㅤ  ●●●●●●●●●●●●●●●●ㅤㅤㅤ\nㅤㅤㅤ𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙾𝚏 𝙿𝚢𝚛𝚘-𝙱𝚘𝚝𝚣.ㅤㅤㅤ\nㅤㅤㅤ𝙾𝚝𝚑𝚎𝚛 𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙸𝚍𝚎𝚊𝚜...ㅤㅤㅤ\n       2gb+ credit to Shadow Blade  \nㅤㅤㅤ𝙰𝚗𝚍 𝙼𝚢𝚜𝚎𝚕𝚏ㅤㅤㅤㅤㅤㅤㅤ\nㅤㅤㅤㅤㅤㅤ  ●●●●●●●●●●●●●●●●ㅤㅤ\n\n𝚃𝙷𝙸𝚂 𝙱𝙾𝚃 𝙸𝚂 𝙼𝙰𝙳𝙴 𝙱𝚈 𝙲𝚁𝙴𝙰𝚃𝙾𝚁 𝙾𝙵 [{first_name}](tg://user?id={id}) ....ㅤ\n\n  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n\n🏷 ℂ𝕠𝕟𝕥𝕒𝕔𝕥 𝕥𝕠 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](tg://user?id={id})\n👨🏻‍💻 𝕆𝕨𝕟𝕖𝕣 [ℂ𝕣𝕖𝕒𝕥𝕠𝕣](t.me/devil_testing_bot)\n👨🏻‍🔧 𝕄𝕠𝕕𝕚𝕗𝕚𝕖𝕕 𝕓𝕪 [ℕ𝕆𝕆𝔹_𝕂𝔸ℕ𝔾𝔼ℝ](https://t.me/kirigayaakash)",
             "required": false
         }
     },
