@@ -6,7 +6,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, convert, humanbytes
 from helper.database import db
-from helper.cooldown import process_and_update_cooldown, update_completed_processes
+from helper.cooldown import process_and_update_cooldown, check_cooldown, update_completed_processes
 from helper.token import none_admin_utils
 from asyncio import sleep
 from PIL import Image
@@ -18,9 +18,9 @@ import asyncio
 async def rename_start(client, message):
     try:
         user_id = message.from_user.id
-        on_cooldown, remaining_time = await process_and_update_cooldown(user_id)
+        on_cooldown, time_left = await check_cooldown(user_id)
         if on_cooldown:
-            await message.reply_text(f"You are on cooldown. Please wait for {remaining_time} seconds.")
+            await message.reply_text(f"You are on cooldown. Please wait for {time_left} seconds.")
             return
         none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
@@ -70,10 +70,10 @@ async def rename_start(client, message):
 @pbot.on_message(filters.private & filters.reply)
 async def refunc(client, message):
     try:
-        user_id = message.from_user.id  # Extracting user ID 
-        on_cooldown, remaining_time = await process_and_update_cooldown(user_id)
+        user_id = message.from_user.id
+        on_cooldown, time_left = await check_cooldown(user_id)
         if on_cooldown:
-            await message.reply_text(f"You are on cooldown. Please wait for {remaining_time} seconds.")
+            await message.reply_text(f"You are on cooldown. Please wait for {time_left} seconds.")
             return
 
         reply_message = message.reply_to_message
@@ -109,9 +109,9 @@ async def refunc(client, message):
 async def doc(bot, update):
     try:
         user_id = update.from_user.id
-        on_cooldown, remaining_time = await process_and_update_cooldown(user_id)
+        on_cooldown, time_left = await check_cooldown(user_id)
         if on_cooldown:
-            await update.message.reply_text(f"You are on cooldown. Please wait for {remaining_time} seconds.")
+            await update.message.reply_text(f"You are on cooldown. Please wait for {time_left} seconds.")
             return
 
         new_name = update.message.text
