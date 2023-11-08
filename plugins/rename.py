@@ -195,6 +195,7 @@ async def doc(bot, update):
             client = ubot
         else:
             fupload = chat_id if chat_id is not None else update.message.chat.id
+            client = pbot
 
         await ms.edit("Trying To Uploading....")
         type = update.data.split("_")[1]
