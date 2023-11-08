@@ -155,75 +155,51 @@ async def upload_file(client, type, fupload, file_path, ph_path, caption, durati
 @pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
     try:
-        print("Callback query received for upload")
         new_name = update.message.text
-        print(f"New name from update message: {new_name}")
-        new_filename = new_name.split(":-")[1].strip()
-        print(f"New filename parsed: {new_filename}")
+        new_filename = new_name.split(":-")[1]
         file_path = f"downloads/{new_filename}"
-        print(f"File path set to: {file_path}")
         file = update.message.reply_to_message
-        print("Retrieved reply to message")
 
         ms = await update.message.edit("Trying To Downloading....")
-        print("Message edited to show download status")
         downloaded_path = await download_file(bot, file, file_path, ms)
-        print(f"Download path: {downloaded_path}")
         if not downloaded_path:
-            print("Downloaded path is None, returning")
             return
 
         duration = 0
-        print("Duration set to 0")
         try:
             metadata = extractMetadata(createParser(downloaded_path))
             if metadata and "duration" in metadata:
                 duration = metadata.get('duration').seconds
-                print(f"Duration from metadata: {duration}")
-        except Exception as e:
-            print(f"Error extracting metadata: {e}")
+        except:
+            pass
 
         user_id = int(update.message.chat.id)
-        print(f"User ID: {user_id}")
-        file_size = file.media.file_size
-        print(f"File size: {file_size}")
+        media = getattr(file, file.media.value)
+        file_size = media.file_size
         c_caption = await db.get_caption(user_id)
-        print(f"Custom caption from DB: {c_caption}")
         c_thumb = await db.get_thumbnail(user_id)
-        print(f"Custom thumbnail from DB: {c_thumb}")
 
         caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration)) if c_caption else f"**{new_filename}**"
-        print(f"Caption set to: {caption}")
 
         ph_path = None
-        print("ph_path initialized to None")
         if c_thumb or file.media.thumbs:
             thumb_id = c_thumb or file.media.thumbs[0].file_id
             ph_path = await bot.download_media(thumb_id)
-            print(f"Thumbnail path: {ph_path}")
             img = Image.open(ph_path).convert("RGB").resize((320, 320))
             img.save(ph_path, "JPEG")
-            print("Thumbnail processed")
 
         chat_id = await db.get_chat_id(user_id)
-        print(f"Chat ID from DB: {chat_id}")
         value = 1.9 * 1024 * 1024 * 1024
         if file_size > value:
             fupload = int(-1001682783965)
             client = ubot
-            print("File size is greater than limit, using ubot")
         else:
             fupload = chat_id if chat_id is not None else update.message.chat.id
-            print(f"fupload set to: {fupload}")
 
         await ms.edit("Trying To Uploading....")
-        print("Message edited to show upload status")
         type = update.data.split("_")[1]
-        print(f"Type for upload: {type}")
         suc = await upload_file(client, type, fupload, downloaded_path, ph_path, caption, duration, ms)
-        print(f"Upload success: {suc}")
         if not suc:
-            print("Upload not successful, returning")
             return
 
         if client == ubot:
@@ -232,28 +208,18 @@ async def doc(bot, update):
                 from_chat_id=fupload,
                 message_id=suc.message_id
             )
-            print("Message copied using ubot")
 
         os.remove(downloaded_path)
-        print(f"Downloaded file at {downloaded_path} removed")
         if ph_path:
             os.remove(ph_path)
-            print(f"Thumbnail at {ph_path} removed")
         await ms.delete()
-        print("Status message deleted")
         os.remove(file_path)
-        print(f"File at {file_path} removed")
         if ph_path:
             os.remove(ph_path)
-            print("Thumbnail path removed again if exists")
         await update_completed_pocesses(user_id)
-        print("Completed processes updated")
     except Exception as e:
         await ms.edit(f"An error occurred: {str(e)}")
-        print(f"Exception occurred: {str(e)}")
         if os.path.exists(downloaded_path):
             os.remove(downloaded_path)
-            print(f"Downloaded path {downloaded_path} removed due to exception")
         if ph_path and os.path.exists(ph_path):
             os.remove(ph_path)
-            print(f"Thumbnail path {ph_path} removed due to exception")
