@@ -108,12 +108,6 @@ async def refunc(client, message):
 @pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
     try:
-        user_id = update.from_user.id
-        on_cooldown, time_left = await check_cooldown(user_id)
-        if on_cooldown:
-            await update.message.reply_text(f"You are on cooldown. Please wait for {time_left} seconds.")
-            return
-
         new_name = update.message.text
         new_filename = new_name.split(":-")[1]
         file_path = f"downloads/{new_filename}"
@@ -149,7 +143,7 @@ async def doc(bot, update):
         else:
             caption = f"**{new_filename}**"
 
-        if media.thumbs or c_thumb:
+        if (media.thumbs or c_thumb):
             if c_thumb:
                 ph_path = await bot.download_media(c_thumb)
             else:
