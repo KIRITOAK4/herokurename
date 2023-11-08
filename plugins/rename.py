@@ -168,7 +168,7 @@ async def doc(bot, update):
         duration = 0
         try:
             metadata = extractMetadata(createParser(downloaded_path))
-            if metadata and "duration" in metadata:
+            if metadata.has("duration"):
                 duration = metadata.get('duration').seconds
         except:
             pass
