@@ -105,6 +105,53 @@ async def refunc(client, message):
         error_text = f"An error occurred in refunc: {e}"
         await message.reply_text(error_text)
 
+async def download_file(bot, file, file_path, ms):
+    try:
+        return await bot.download_media(
+            message=file,
+            file_name=file_path,
+            progress=progress_for_pyrogram,
+            progress_args=("Download Started....", ms, time.time())
+        )
+    except Exception as e:
+        await ms.edit(f"Download error: {str(e)}")
+        return None
+
+async def upload_file(client, type, fupload, file_path, ph_path, caption, duration, ms):
+    try:
+        if type == "document":
+            return await client.send_document(
+                chat_id=fupload,
+                document=file_path,
+                thumb=ph_path,
+                caption=caption,
+                progress=progress_for_pyrogram,
+                progress_args=("Upload Started....", ms, time.time())
+            )
+        elif type == "video":
+            return await client.send_video(
+                chat_id=fupload,
+                video=file_path,
+                caption=caption,
+                thumb=ph_path,
+                duration=duration,
+                progress=progress_for_pyrogram,
+                progress_args=("Upload Started....", ms, time.time())
+            )
+        elif type == "audio":
+            return await client.send_audio(
+                chat_id=fupload,
+                audio=file_path,
+                caption=caption,
+                thumb=ph_path,
+                duration=duration,
+                progress=progress_for_pyrogram,
+                progress_args=("Upload Started....", ms, time.time())
+            )
+    except Exception as e:
+        await ms.edit(f"Upload error: {str(e)}")
+        return None
+
 @pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
     try:
@@ -114,111 +161,64 @@ async def doc(bot, update):
         file = update.message.reply_to_message
 
         ms = await update.message.edit("Trying To Downloading....")
-        try:
-            path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("Download Started....", ms, time.time()))
-        except Exception as e:
-            await ms.edit(str(e))
+        downloaded_path = await download_file(bot, file, file_path, ms)
+        if not downloaded_path:
             return
 
         duration = 0
         try:
-            metadata = extractMetadata(createParser(file_path))
-            if metadata.has("duration"):
+            metadata = extractMetadata(createParser(downloaded_path))
+            if metadata and "duration" in metadata:
                 duration = metadata.get('duration').seconds
         except:
             pass
-        ph_path = None
+
         user_id = int(update.message.chat.id)
-        media = getattr(file, file.media.value)
-        file_size = media.file_size
-        c_caption = await db.get_caption(update.message.chat.id)
-        c_thumb = await db.get_thumbnail(update.message.chat.id)
+        file_size = file.media.file_size
+        c_caption = await db.get_caption(user_id)
+        c_thumb = await db.get_thumbnail(user_id)
 
-        if c_caption:
-            try:
-                caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration))
-            except Exception as e:
-                await ms.edit(text=f"Your Caption Error Except Keyword Argument ●> ({e})")
-                return
-        else:
-            caption = f"**{new_filename}**"
+        caption = c_caption.format(filename=new_filename, filesize=humanbytes(file_size), duration=convert(duration)) if c_caption else f"**{new_filename}**"
 
-        if (media.thumbs or c_thumb):
-            if c_thumb:
-                ph_path = await bot.download_media(c_thumb)
-            else:
-                ph_path = await bot.download_media(media.thumbs[0].file_id)
-            Image.open(ph_path).convert("RGB").save(ph_path)
-            img = Image.open(ph_path)
-            img.resize((320, 320))
+        ph_path = None
+        if c_thumb or file.media.thumbs:
+            thumb_id = c_thumb or file.media.thumbs[0].file_id
+            ph_path = await bot.download_media(thumb_id)
+            img = Image.open(ph_path).convert("RGB").resize((320, 320))
             img.save(ph_path, "JPEG")
 
-        await ms.edit("Trying To Uploading....")
-        type = update.data.split("_")[1]
+        chat_id = await db.get_chat_id(user_id)
         value = 1.9 * 1024 * 1024 * 1024
-        chat_id = await db.get_chat_id(update.message.chat.id)
         if file_size > value:
             fupload = int(-1001682783965)
             client = ubot
         else:
             fupload = chat_id if chat_id is not None else update.message.chat.id
-            client = pbot
-        try:
-            if type == "document":
-                suc = await client.send_document(
-                    chat_id=fupload,
-                    document=file_path,
-                    thumb=ph_path,
-                    caption=caption,
-                    progress=progress_for_pyrogram,
-                    progress_args=("Upload Started....", ms, time.time())
-                )
-            elif type == "video":
-                suc = await client.send_video(
-                    chat_id=fupload,
-                    video=file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    duration=duration,
-                    progress=progress_for_pyrogram,
-                    progress_args=("Upload Started....", ms, time.time())
-                )
-            elif type == "audio":
-                suc = await client.send_audio(
-                    chat_id=fupload,
-                    audio=file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    duration=duration,
-                    progress=progress_for_pyrogram,
-                    progress_args=("Upload Started....", ms, time.time())
-                )
 
-            if client == ubot:
-                await pbot.copy_message(
-                    chat_id=chat_id if chat_id is not None else update.message.chat.id,
-                    from_chat_id=suc.chat.id,
-                    message_id=suc.message_id
-                )
-        except FloodWait as e:
-            await asyncio.sleep(e.x)
-        except Exception as e:
-            os.remove(file_path)
-            if ph_path:
-                os.remove(ph_path)
-            await ms.edit(f"Error: {e}")
+        await ms.edit("Trying To Uploading....")
+        type = update.data.split("_")[1]
+        suc = await upload_file(client, type, fupload, downloaded_path, ph_path, caption, duration, ms)
+        if not suc:
             return
 
+        if client == ubot:
+            await pbot.copy_message(
+                chat_id=chat_id if chat_id is not None else update.message.chat.id,
+                from_chat_id=fupload,
+                message_id=suc.message_id
+            )
+
+        os.remove(downloaded_path)
+        if ph_path:
+            os.remove(ph_path)
         await ms.delete()
         os.remove(file_path)
         if ph_path:
             os.remove(ph_path)
-
-        await update_completed_processes(user_id)
-
+        await update_completed_pocesses(user_id)
     except Exception as e:
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        await ms.edit(f"An error occurred: {str(e)}")
+        if os.path.exists(downloaded_path):
+            os.remove(downloaded_path)
         if ph_path and os.path.exists(ph_path):
             os.remove(ph_path)
-        await update.message.edit_text(f"An error occurred: {e}")
