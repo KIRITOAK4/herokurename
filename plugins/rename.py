@@ -161,7 +161,8 @@ async def doc(bot, update):
         file = update.message.reply_to_message
 
         ms = await update.message.edit("Trying To Downloading....")
-        downloaded_path = await download_file(bot, file, file_path, ms)
+        download_task = asyncio.create_task(download_file(bot, file, file_path, ms))
+        downloaded_path = await download_task
         if not downloaded_path:
             return
 
@@ -196,13 +197,12 @@ async def doc(bot, update):
         else:
             fupload = chat_id if chat_id is not None else update.message.chat.id
             client = pbot
-
+            
         await ms.edit("Trying To Uploading....")
         type = update.data.split("_")[1]
-        suc = await upload_file(client, type, fupload, downloaded_path, ph_path, caption, duration, ms)
-        if not suc:
-            return
-
+        suc = asyncio.create_task(upload_file(client, type, fupload, downloaded_path, ph_path, caption, duration, ms))
+        await suc
+        
         if client == ubot:
             await pbot.copy_message(
                 chat_id=chat_id if chat_id is not None else update.message.chat.id,
