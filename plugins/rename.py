@@ -102,7 +102,7 @@ async def refunc(client, message):
                 reply_markup=InlineKeyboardMarkup(button)
             )
     except Exception as e:
-        error_text = f"An error occurred: {e}"
+        error_text = f"An error occurred in refunc: {e}"
         await message.reply_text(error_text)
 
 @pbot.on_callback_query(filters.regex("upload"))
@@ -131,9 +131,8 @@ async def doc(bot, update):
             metadata = extractMetadata(createParser(file_path))
             if metadata.has("duration"):
                 duration = metadata.get('duration').seconds
-        except Exception as e:
-            print(f"Metadata extraction error: {e}")
-
+        except:
+            pass
         ph_path = None
         user_id = int(update.message.chat.id)
         media = getattr(file, file.media.value)
@@ -160,6 +159,8 @@ async def doc(bot, update):
             img.resize((320, 320))
             img.save(ph_path, "JPEG")
 
+        await ms.edit("Trying To Uploading....")
+        type = update.data.split("_")[1]
         value = 1.9 * 1024 * 1024 * 1024
         chat_id = await db.get_chat_id(update.message.chat.id)
         if file_size > value:
@@ -168,10 +169,6 @@ async def doc(bot, update):
         else:
             fupload = chat_id if chat_id is not None else update.message.chat.id
             client = pbot
-
-        await ms.edit("Trying To Uploading....")
-        type = update.data.split("_")[1]
-
         try:
             if type == "document":
                 suc = await client.send_document(
