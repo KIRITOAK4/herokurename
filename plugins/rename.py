@@ -6,7 +6,6 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, convert, humanbytes
 from helper.database import db
-from helper.cooldown import process_and_update_cooldown, check_cooldown, update_completed_processes
 from helper.token import none_admin_utils
 from asyncio import sleep
 from PIL import Image
@@ -18,10 +17,6 @@ import asyncio
 async def rename_start(client, message):
     try:
         user_id = message.from_user.id
-        on_cooldown, time_left = await check_cooldown(user_id)
-        if on_cooldown:
-            await message.reply_text(f"You are on cooldown. Please wait for {time_left} seconds.")
-            return
         none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
@@ -70,12 +65,6 @@ async def rename_start(client, message):
 @pbot.on_message(filters.private & filters.reply)
 async def refunc(client, message):
     try:
-        user_id = message.from_user.id
-        on_cooldown, time_left = await check_cooldown(user_id)
-        if on_cooldown:
-            await message.reply_text(f"You are on cooldown. Please wait for {time_left} seconds.")
-            return
-
         reply_message = message.reply_to_message
         if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
             new_name = message.text 
@@ -108,12 +97,6 @@ async def refunc(client, message):
 @pbot.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
     try:
-        user_id = update.from_user.id
-        on_cooldown, time_left = await check_cooldown(user_id)
-        if on_cooldown:
-            await update.message.reply_text(f"You are on cooldown. Please wait for {time_left} seconds.")
-            return
-
         new_name = update.message.text
         new_filename = new_name.split(":-")[1]
         file_path = f"downloads/{new_filename}"
@@ -223,11 +206,9 @@ async def doc(bot, update):
         if ph_path:
             os.remove(ph_path)
 
-        await update_completed_processes(user_id)
-
     except Exception as e:
+        await update.message.edit_text(f"An error occurred: {e}")
         if os.path.exists(file_path):
             os.remove(file_path)
         if ph_path and os.path.exists(ph_path):
             os.remove(ph_path)
-        await update.message.edit_text(f"An error occurred: {e}")
