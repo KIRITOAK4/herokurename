@@ -1,7 +1,7 @@
 {
     "name": "Rename",
     "description": "Telegram File Renamer Bot",
-    "logo": "https://telegra.ph/file/f1002c14490aeecfa1915.jpg",
+    "logo": "https://graph.org//file/91b281b4fb4e5d233f325.jpg",
     "keywords": ["Rename", "Mongo DB"],
     "repository": "https://github.com/KIRITOAK4/ename",
     "env": {
@@ -21,7 +21,7 @@
         },
         "BOT_NAME": {
             "description": "Your Bot username without [@]",
-            "value": "ya_bot",
+            "value": "ya_typobot",
             "required": true
         },
         "TOKEN_TIMEOUT": {
@@ -41,7 +41,7 @@
         },
         "BOT_TOKEN": {
             "description": "Your Bot Token From @BotFather",
-            "value": "",
+            "value": "6202042878:AAEyVJeHHOgc5-s6h3IArLUOoS7kIBRl-xU",
             "required": true
         },
         "ADMIN": {
