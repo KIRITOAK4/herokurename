@@ -46,9 +46,10 @@ async def main():
     except Exception as main_error:
         logger.error(f"An error occurred in main(): {main_error}")
 
-# Create an event loop and run the main coroutine
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-    loop.run_forever()
-    
+    asyncio.run(main())
+
+#if __name__ == "__main__":
+#    loop = asyncio.get_event_loop()
+#    loop.run_until_complete(main())
+#    loop.run_forever()
