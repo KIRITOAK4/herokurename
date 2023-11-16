@@ -47,7 +47,11 @@ async def main():
         logger.error(f"An error occurred in main(): {main_error}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+
 
 #if __name__ == "__main__":
 #    loop = asyncio.get_event_loop()
