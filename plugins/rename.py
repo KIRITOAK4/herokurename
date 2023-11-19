@@ -116,7 +116,7 @@ async def doc(bot, update):
                 duration = metadata.get('duration').seconds
         except:
             pass
-            
+
         ph_path = None
         user_id = int(update.message.chat.id)
         media = getattr(file, file.media.value)
