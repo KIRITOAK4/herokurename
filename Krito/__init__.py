@@ -44,7 +44,6 @@ Text = os.environ.get("Text", """●     °    •      ○    ●   •  ●   
 
 Text1 = os.environ.get("Text1", """☞☞☞ ☞☞ 𝐻𝐸𝐿𝑃 𝑃𝐴𝐺𝐸 ☚☚ ☚☚
 
-☞ ┃ /ping 𝗙ᴏʀ 𝗖ʜᴇᴄᴋɪɴɢ 𝗕ᴏᴛ 𝗔ʟɪᴠᴇ
 ☞ ┃ 📸 𝗦ᴇɴᴅ 𝗔ɴ𝘆 𝗣ʜᴏᴛᴏ 𝗧ᴏ 𝗔ᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟ𝘆 𝗦ᴇᴛ 𝗧ʜᴜᴍʙɴᴀʟᴇ.
 ☞ ┃ 🗑 /del_thumb - 𝗧ᴏ 𝗗ᴇʟᴇᴛᴇ 𝗬ᴏᴜʀ 𝗢ʟᴅ 𝗧ʜᴜᴍʙɴɪʟᴇ.
 ☞ ┃ 👁 /view_thumb - 𝗧ᴏ 𝗩ɪᴇᴡ 𝗬ᴏᴜʀ 𝗖ᴜʀʀᴇɴᴛ 𝗧ʜᴜᴍʙɴɪʟᴇ.
@@ -104,7 +103,7 @@ plugins = dict(root="plugins")
 # ------------------------------CONNECTION------------------------------------
 if BOT_TOKEN is not None:
     try:
-        pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH, max_concurrent_transmissions=10, workers=50, plugins=plugins)
+        pbot = Client("Renamer", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH, max_concurrent_transmissions=25, workers=50, plugins=plugins)
         LOGS.info("❤️ PBot Connected")
     except Exception as e:
         LOGS.info('😞 Error While Connecting To pBot')
@@ -113,7 +112,7 @@ if BOT_TOKEN is not None:
 
 if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
     try:
-        ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, workers=50, plugins=plugins)
+        ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, max_concurrent_transmissions=25, workers=50, plugins=plugins)
         LOGS.info("❤️ UBot Connected")
     except Exception as e:
         LOGS.info('😞 Error While Connecting To uBot')
