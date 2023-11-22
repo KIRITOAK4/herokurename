@@ -9,30 +9,6 @@ import asyncio
 import traceback
 import math
 
-@pbot.on_message(filters.private & filters.command("ping"))
-async def ping(client, message):
-    try:
-        none_admin_msg, error_buttons = await none_admin_utils(message)
-        error_msg = []
-        if none_admin_msg:
-            error_msg.extend(none_admin_msg)
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup(error_buttons)
-            )
-            return
-    except Exception as e:
-        traceback.print_exc()
-        return
-
-    start = time()
-    sent_message = await message.reply("Pinging...")
-    await asyncio.sleep(5)
-    end = time()
-    duration = (end - start) * 1000
-    await sent_message.edit(f"Pong! RTT: {duration:.2f} ms")
-
 @pbot.on_message(filters.private & filters.command('set_caption'))
 async def add_caption(client, message):
     try:
