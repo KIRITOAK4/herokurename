@@ -1,5 +1,5 @@
 pyrogram
-TgCrypto
+tgcrypto
 motor
 dnspython
 hachoir
