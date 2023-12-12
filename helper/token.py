@@ -39,11 +39,11 @@ async def validate_user(message, button=None):
             if button is None:
                 buttons = [
                     [
-                        InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{BOT_NAME}?start={token}')),
-                        InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_caps/3')
+                        InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://telegram.me/{BOT_NAME}?start={token}')),
+                        InlineKeyboardButton(text='Tutorial', url='https://telegram.me/hentai_caps/42')
                     ],
                     [
-                        InlineKeyboardButton(text='Short Method', url='https://shrtco.de/%F0%9F%91%AD%F0%9F%8C%B2')
+                        InlineKeyboardButton(text='Short Method', url='https://telegram.me/forward_holder_bot?start=Z2V0LTYxMDk4NDkwMzU5MDUwMA')
                     ]
                 ]
                 button = buttons
