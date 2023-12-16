@@ -1,8 +1,8 @@
-pyrogram==2.0.66
-tgcrypto
+Pyrogram==2.0.66
+TgCrypto
 motor
 dnspython
-hachoir
+hachoir==3.2.0
 Pillow
 aiohttp
 pytz
