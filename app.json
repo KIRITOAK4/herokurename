@@ -21,7 +21,7 @@
         },
         "BOT_NAME": {
             "description": "Your Bot username without [@]",
-            "value": "ya_typobot",
+            "value": "ya_renamebot",
             "required": true
         },
         "TOKEN_TIMEOUT": {
@@ -41,7 +41,7 @@
         },
         "BOT_TOKEN": {
             "description": "Your Bot Token From @BotFather",
-            "value": "6202042878:AAEyVJeHHOgc5-s6h3IArLUOoS7kIBRl-xU",
+            "value": "6280721521:AAGvEXRn-4tZD28vooWBiDZJuBxSErn4Xx0",
             "required": true
         },
         "ADMIN": {
@@ -56,7 +56,7 @@
         },
         "DB_URL": {
             "description": "Your MongoDB URL obtained from mongodb.com",
-            "value": "mongodb+srv://botlover:botlover@cluster0.mt5ww.mongodb.net/test?retryWrites=true&w=majority",
+            "value": "mongodb+srv://RENAME:RENAME@cluster0.hqab4rw.mongodb.net/?retryWrites=true&w=majority",
             "required": true
         },
         "DB_NAME": {
