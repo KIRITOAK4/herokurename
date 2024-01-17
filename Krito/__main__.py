@@ -24,12 +24,9 @@ async def main():
         logger.info(f"{me.first_name} Is Started.....✨️")
         
         if WEBHOOK:
-            app = web.Application()
-            app.add_routes([web_server()])
-            runner = web.AppRunner(app)
-            await runner.setup()
-            site = web.TCPSite(runner, "0.0.0.0", 8080)
-            await site.start()
+            app = web.AppRunner(await web_server())
+            await app.setup()
+            await web.TCPSite(app, "0.0.0.0", 8080).start()
 
         for id in ADMIN:
             try:
@@ -50,4 +47,6 @@ async def main():
         logger.error(f"An error occurred in main(): {main_error}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+    loop.run_forever()
