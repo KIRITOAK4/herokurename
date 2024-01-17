@@ -11,12 +11,15 @@ from Krito import pbot, ubot, WEBHOOK, ADMIN, LOG_CHANNEL, BOT_UPTIME
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-pbot.start()
-if ubot is not None:
-    ubot.start()
+async def start_bot():
+    await pbot.start()
+    if ubot is not None:
+        await ubot.start()
 
 async def main():
     try:
+        await start_bot()
+        
         me = await pbot.get_me()
         pbot.mention = me.mention
         pbot.username = me.username
@@ -24,9 +27,12 @@ async def main():
         logger.info(f"{me.first_name} Is Started.....✨️")
         
         if WEBHOOK:
-            app = web.AppRunner(await web_server())
-            await app.setup()
-            await web.TCPSite(app, "0.0.0.0", 8080).start()
+            app = web.Application()
+            app.add_routes([web_server()])
+            runner = web.AppRunner(app)
+            await runner.setup()
+            site = web.TCPSite(runner, "0.0.0.0", 8080)
+            await site.start()
 
         for id in ADMIN:
             try:
