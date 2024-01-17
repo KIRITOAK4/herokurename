@@ -11,15 +11,12 @@ from Krito import pbot, ubot, WEBHOOK, ADMIN, LOG_CHANNEL, BOT_UPTIME
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-async def start_bot():
-    await pbot.start()
-    if ubot is not None:
-        await ubot.start()
+pbot.start()
+if ubot is not None:
+    ubot.start()
 
 async def main():
     try:
-        await start_bot()
-        
         me = await pbot.get_me()
         pbot.mention = me.mention
         pbot.username = me.username
@@ -53,6 +50,4 @@ async def main():
         logger.error(f"An error occurred in main(): {main_error}")
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-    loop.run_forever()
+    asyncio.run(main())
