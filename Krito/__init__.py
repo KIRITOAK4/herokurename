@@ -109,7 +109,7 @@ if BOT_TOKEN is not None:
 
 if isinstance(SESSION_STRING, str) and SESSION_STRING != "None":
     try:
-        ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, workers=50, plugins=plugins)
+        ubot = Client("Chizuru", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH, max_concurrent_transmissions=200, workers=50, plugins=plugins)
         LOGS.info("❤️ UBot Connected")
     except Exception as e:
         LOGS.info('😞 Error While Connecting To uBot')
