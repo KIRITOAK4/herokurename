@@ -28,8 +28,8 @@ async def removethumb(client, message):
     await db.set_thumbnail(message.from_user.id, file_id=None)
     await message.reply_text("❌️ __**Thumbnail Deleted**__")
 
-@pbot.on_message(filters.private & filters.command('del_chat'))
-async def delete_caption(client, message):
+@pbot.on_message(filters.private & filters.command('del_chatid'))
+async def delete_chatid(client, message):
 
     chat_id = await db.get_chat_id(message.from_user.id)
     if not chat_id:
@@ -37,3 +37,14 @@ async def delete_caption(client, message):
 
     await db.set_chat_id(message.from_user.id, chat_id=None)
     await message.reply_text("__**❌️ Chatid Deleted**__")
+
+@pbot.on_message(filters.private & filters.command('del_exten'))
+async def delete_exten(client, message):
+
+    chat_id = await db.get_exten(message.from_user.id)
+    if not chat_id:
+        return await message.reply_text("__**😔 You Don't Have Any Extension**__")
+
+    await db.set_exten(message.from_user.id, exten=None)
+    await message.reply_text("__**❌️ Extension Deleted**__")
+
