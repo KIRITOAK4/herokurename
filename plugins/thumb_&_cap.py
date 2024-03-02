@@ -80,28 +80,28 @@ async def see_caption(client, message):
     else:
         await message.reply_text("__**😔 You Don't Have Any Caption**__")
 
-@pbot.on_message(filters.private & filters.command(['view_thumb', 'viewthumb']))
-async def viewthumb(client, message):
-    try:
-        none_admin_msg, error_buttons = await none_admin_utils(message)
-        error_msg = []
-        if none_admin_msg:
-            error_msg.extend(none_admin_msg)
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup(error_buttons)
-            )
-            return
-    except Exception as e:
-        traceback.print_exc()
-        return
+#@pbot.on_message(filters.private & filters.command(['view_thumb', 'viewthumb']))
+#async def viewthumb(client, message):
+#    try:
+#        none_admin_msg, error_buttons = await none_admin_utils(message)
+#        error_msg = []
+#        if none_admin_msg:
+#            error_msg.extend(none_admin_msg)
+#            await client.send_message(
+#                chat_id=message.chat.id,
+#                text='\n'.join(error_msg),
+#                reply_markup=InlineKeyboardMarkup(error_buttons)
+#            )
+#            return
+#    except Exception as e:
+#        traceback.print_exc()
+#        return
 
-    thumb = await db.get_thumbnail(message.from_user.id)
-    if thumb:
-        await client.send_photo(chat_id=message.chat.id, photo=thumb)
-    else:
-        await message.reply_text("😔 __**You Don't Have Any Thumbnail**__")
+#    thumb = await db.get_thumbnail(message.from_user.id)
+#    if thumb:
+#        await client.send_photo(chat_id=message.chat.id, photo=thumb)
+#    else:
+#        await message.reply_text("😔 __**You Don't Have Any Thumbnail**__")
 
 @pbot.on_message(filters.private & filters.command(['del_thumb', 'delthumb']))
 async def removethumb(client, message):
@@ -141,4 +141,4 @@ async def addthumbs(client, message):
         return
     mkn = await message.reply_text("Please Wait ...")
     await db.set_thumbnail(message.from_user.id, file_id=message.photo.file_id)
-    await mkn.edit("✅️ __**Thumbnail Saved**__", reply_to_message_id=message.id)
+    await mkn.edit("✅️ __**Thumbnail Saved**__")
