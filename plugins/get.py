@@ -24,14 +24,18 @@ async def get_info_command(client, message):
     chat_id = await db.get_chat_id(user_id)
     thumbnail = await db.get_thumbnail(user_id)
 
-    response_message = f"👩‍💻User ID: {user_id}\n🗺Template: {template}\n🎬Upload Type: {upload_type}\n🏡Chat ID: {chat_id}"
+    response_message = f"👩‍💻User ID: {user_id}\n🗺Template: {template}\n🎬Upload Type: {upload_type}"
+
+    if chat_id:
+        response_message += f"\n🏡Chat ID: {chat_id}"
+    else:
+        response_message += "\n__**You Don't have Chat ID**__"
 
     if thumbnail:
-        # Upload thumbnail to Telegraph (graph.org)
         graph_url = await image_paste(thumbnail)
         response_message += f"\n🗳Thumbnail: [View Thumbnail]({graph_url})"
+    else:
+        response_message += "\n__**You Don't have Thumbnail**__"
 
     response_message += "\n\n**For changes use /set_temp, /set_upload, /set_chatid"
-
-    # Send the response message
     await message.reply(response_message)
