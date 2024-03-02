@@ -18,9 +18,9 @@ class Database:
             caption=None,
             token=None,
             time=None,
-            page=0,
-            cooldown_start_time=None,
-            completed_processes_count=0
+            template=None,
+            uploadtype=None,
+            page=0
         )
 
     async def add_user(self, b, m):
@@ -62,7 +62,21 @@ class Database:
         user = await self.col.find_one({"_id": int(id)})
         return user.get("caption", None)
 
-    async def add_chat_id(self, user_id, chat_id):
+    async def set_template(self, id, template):
+        await self.col.update_one({"_id": int(id)}, {"$set": {"template": template}})
+
+    async def get_template(self, id):
+        user = await self.col.find_one({"_id": int(id)})
+        return user.get("template", None)
+
+    async def set_uploadtype(self, id, uploadtype):
+        await self.col.update_one({"_id": int(id)}, {"$set": {"uploadtype": uploadtype}})
+
+    async def get_uploadtype(self, id):
+        user = await self.col.find_one({"_id": int(id)})
+        return user.get("uploadtype", None)
+
+    async def set_chat_id(self, user_id, chat_id):
         await self.col.update_one({"_id": int(user_id)}, {"$set": {"chat_id": chat_id}})
 
     async def get_chat_id(self, user_id):
@@ -71,9 +85,6 @@ class Database:
 
     async def delete_chat_id(self, user_id, chat_id=None):
         await self.col.update_one({"_id": int(user_id)}, {"$set": {"chat_id": chat_id}})
-
-    async def update_chat_id(self, user_id, chat_id):
-        await self.col.update_one({'_id': user_id}, {'$set': {'chat_id': chat_id}}, upsert=True)
 
     async def get_user_data(self, user_id):
         user_data = await self.user_data_col.find_one({"user_id": user_id})
@@ -84,15 +95,6 @@ class Database:
     async def update_user_data(self, user_id, data):
         await self.user_data_col.update_one(
             {"user_id": user_id}, {"$set": {"data": data, "page": data.get("page", 0)}}, upsert=True
-        )
-
-    async def update_user_cooldown_data(self, user_id):
-        # Get current timestamp
-        current_time = time.time()
-        # Update cooldown_start_time and increment completed_processes_count
-        await self.col.update_one(
-            {"_id": int(user_id)},
-            {"$set": {"cooldown_start_time": current_time}, "$inc": {"completed_processes_count": 1}}
         )
 
 db = Database(DB_URL, DB_NAME)
