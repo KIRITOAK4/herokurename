@@ -18,6 +18,7 @@ class Database:
             caption=None,
             token=None,
             time=None,
+            exten=None,
             template=None,
             uploadtype=None,
             page=0
@@ -76,6 +77,13 @@ class Database:
         user = await self.col.find_one({"_id": int(id)})
         return user.get("uploadtype", None)
 
+    async def set_exten(self, id, exten):
+        await self.col.update_one({"_id": int(id)}, {"$set": {"exten": exten}})
+
+    async def get_exten(self, id):
+        user = await self.col.find_one({"_id": int(id)})
+        return user.get("exten", None)
+        
     async def set_chat_id(self, user_id, chat_id):
         await self.col.update_one({"_id": int(user_id)}, {"$set": {"chat_id": chat_id}})
 
