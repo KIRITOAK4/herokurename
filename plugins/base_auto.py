@@ -88,3 +88,29 @@ async def set_upload_command(client, message):
     except ValueError as e:
         logger.error(f"Error setting upload mode for user {user_id}: {e}")
         await message.reply("An error occurred. Please try again.")
+
+@pbot.on_message(filters.command("set_exten") & filters.private)
+async def set_exten_command(client, message):
+    user_id = message.from_user.id
+
+    command_parts = message.text.split(maxsplit=1)
+    if len(command_parts) < 2:
+        await message.reply("Available modes:\n1. mkv\n2. mp4\n3. mp3\n4. apk\n5. txt\n\nUsage: /set_upload <mode_number>")
+        return
+
+    try:
+        selected_mode_number = int(command_parts[1])
+
+        if selected_mode_number not in [1, 2, 3, 4, 5]:
+            raise ValueError("Invalid mode number. Please select a valid mode.")
+
+        exten_modes = {1: "mkv", 2: "mp4", 3: "mp3", 4: "apk", 5: "txt"}
+        selected_mode = exten_modes[selected_mode_number]
+
+        await db.set_exten(user_id, selected_mode)
+        await message.reply(f"Extension mode set to: {selected_mode}")
+
+    except ValueError as e:
+        logger.error(f"Error setting exten mode for user {user_id}: {e}")
+        await message.reply("An error occurred. Please try again.")
+
