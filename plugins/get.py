@@ -23,8 +23,9 @@ async def get_info_command(client, message):
     upload_type = await db.get_uploadtype(user_id)
     chat_id = await db.get_chat_id(user_id)
     thumbnail = await db.get_thumbnail(user_id)
+    exten = await db.get_exten(user_id)
 
-    response_message = f"👩‍💻User ID: {user_id}\n🗺Template: {template}\n🎬Upload Type: {upload_type}"
+    response_message = f"👩‍💻User ID: {user_id}\n🗺Template: {template}\n🎬Upload Type: {upload_type}\n🎛Extension: {exten}"
 
     if chat_id:
         response_message += f"\n🏡Chat ID: {chat_id}"
