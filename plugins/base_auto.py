@@ -64,7 +64,7 @@ async def set_upload_command(client, message):
     command_parts = message.text.split(maxsplit=1)
     if len(command_parts) < 2:
         # If no mode is provided, show available modes
-        await message.reply("Available modes:\n1. Document\n2. Video\n\nUsage: /set_upload <mode_number>")
+        await message.reply("Available modes:\n1. document\n2. video\n\nUsage: /set_upload <mode_number>")
         return
 
     try:
@@ -76,7 +76,7 @@ async def set_upload_command(client, message):
             raise ValueError("Invalid mode number. Please select a valid mode.")
 
         # Map mode number to mode name
-        upload_modes = {1: "Document", 2: "Video"}
+        upload_modes = {1: "document", 2: "video"}
         selected_mode = upload_modes[selected_mode_number]
 
         # Update the user's upload mode in the database
