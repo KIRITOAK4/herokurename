@@ -62,17 +62,6 @@ async def verify_command(client, message):
     except Exception as e:
         await message.reply_text(f"An error occurred while using verify command: {e}")
 
-@pbot.on_message(filters.private & filters.command('get_chatid'))
-async def get_chatid_command(client, message):
-    try:
-        chat_id = await db.get_chat_id(message.from_user.id)
-        if chat_id:
-            await message.reply_text(f"Your Chat ID: {chat_id}")
-        else:
-            await message.reply_text("Chat ID not set. Use /set_chatid {chat_id} to set your chat ID.", reply_to_message_id=message.id)
-    except Exception as e:
-        await message.reply_text(f"Error: {e}")
-
 @pbot.on_message(filters.private & filters.command('del_chatid'))
 async def delete_chatid_command(client, message):
     try:
