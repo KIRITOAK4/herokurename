@@ -1,6 +1,13 @@
+import logging
 from pyrogram import filters
 from Krito import pbot
 from helper.database import db
+
+logging.basicConfig(
+    level=logging.ERROR,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 available_templates = [
     "[S{season} Ep{episode}] {capitalized_filename}",
@@ -23,20 +30,20 @@ async def set_template_command(client, message):
         await message.reply(f"Available templates:\n{templates_list}\n\nUsage: /set_temp <template_number>")
         return
 
-    # Extract the selected template number
     try:
+        # Extract the selected template number
         selected_template_number = int(command_parts[1]) - 1
         selected_template = available_templates[selected_template_number]
-    except (ValueError, IndexError):
-        await message.reply("Invalid template number. Please select a valid template.")
-        return
 
-    # Update the user's template in the database
-    await db.set_template(user_id, selected_template)
+        # Update the user's template in the database
+        await db.set_template(user_id, selected_template)
 
-    # Notify the user about the template update
-    await message.reply(f"Template set to:\n{selected_template}")
+        # Notify the user about the template update
+        await message.reply(f"Template set to:\n{selected_template}")
 
+    except (ValueError, IndexError) as e:
+        logger.error(f"Error setting template for user {user_id}: {e}")
+        await message.reply("An error occurred. Please try again.")
 
 @pbot.on_message(filters.command("set_upload") & filters.private)
 async def set_upload_command(client, message):
@@ -49,24 +56,24 @@ async def set_upload_command(client, message):
         await message.reply("Available modes:\n1. Document\n2. Video\n\nUsage: /set_upload <mode_number>")
         return
 
-    # Extract the selected mode number
     try:
+        # Extract the selected mode number
         selected_mode_number = int(command_parts[1])
-    except ValueError:
-        await message.reply("Invalid mode number. Please select a valid mode.")
-        return
 
-    # Validate the selected mode number
-    if selected_mode_number not in [1, 2]:
-        await message.reply("Invalid mode number. Please select a valid mode.")
-        return
+        # Validate the selected mode number
+        if selected_mode_number not in [1, 2]:
+            raise ValueError("Invalid mode number. Please select a valid mode.")
 
-    # Map mode number to mode name
-    upload_modes = {1: "Document", 2: "Video"}
-    selected_mode = upload_modes[selected_mode_number]
+        # Map mode number to mode name
+        upload_modes = {1: "Document", 2: "Video"}
+        selected_mode = upload_modes[selected_mode_number]
 
-    # Update the user's upload mode in the database
-    await db.set_uploadtype(user_id, selected_mode)
+        # Update the user's upload mode in the database
+        await db.set_uploadtype(user_id, selected_mode)
 
-    # Notify the user about the upload mode update
-    await message.reply(f"Upload mode set to: {selected_mode}")
+        # Notify the user about the upload mode update
+        await message.reply(f"Upload mode set to: {selected_mode}")
+
+    except ValueError as e:
+        logger.error(f"Error setting upload mode for user {user_id}: {e}")
+        await message.reply("An error occurred. Please try again.")
