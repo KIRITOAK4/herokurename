@@ -2,13 +2,24 @@ import logging
 from pyrogram import filters
 from Krito import pbot
 from helper.database import db
+from pyrogram.types import InlineKeyboardMarkup
 
-logging.basicConfig(
-    level=logging.ERROR,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+@pbot.on_message(filters.private & filters.command('set_caption'))
+async def add_caption(client, message):
+    if len(message.command) == 1:
+        return await message.reply_text("**__Give The Caption__**")
 
+    caption = message.text.split(" ", 1)[1]
+    await db.set_caption(message.from_user.id, caption=caption)
+    await message.reply_text("__**✅ Caption Saved**__")
+
+@pbot.on_message(filters.private & filters.photo)
+async def addthumbs(client, message):
+
+    mkn = await message.reply_text("Please Wait ...")
+    await db.set_thumbnail(message.from_user.id, file_id=message.photo.file_id)
+    await mkn.edit("✅️ __**Thumbnail Saved**__")
+    
 available_templates = [
     "[S{season} Ep{episode}] {capitalized_filename}",
     "[s{season} ep{episode}] {capitalized_filename}",
