@@ -6,7 +6,6 @@ from pyrogram import Client, filters
 import math
 import asyncio
 
-
 users_data = {}
 
 @pbot.on_message(filters.private & filters.command('set_chatid'))
@@ -20,7 +19,7 @@ async def set_chatid_command(client, message):
             "verified": False
         }
 
-        await db.add_chat_id(message.from_user.id, chat_id)
+        await db.set_chat_id(message.from_user.id, chat_id)
         await message.reply_text("Chat ID has been set successfully. Please use /verify command within 60 seconds.", reply_to_message_id=message.id)
         await asyncio.sleep(60)
 
