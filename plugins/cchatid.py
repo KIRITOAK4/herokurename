@@ -1,10 +1,7 @@
 from helper.database import db
 from Krito import pbot
-from time import time
 from pyrogram.enums import ChatMemberStatus
 from pyrogram import Client, filters
-import math
-import asyncio
 
 users_data = {}
 
@@ -62,10 +59,3 @@ async def verify_command(client, message):
     except Exception as e:
         await message.reply_text(f"An error occurred while using verify command: {e}")
 
-@pbot.on_message(filters.private & filters.command('del_chatid'))
-async def delete_chatid_command(client, message):
-    try:
-        await db.delete_chat_id(message.from_user.id)
-        await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.id)
-    except Exception as e:
-        await message.reply_text(f"Error: {e}")
