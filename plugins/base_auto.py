@@ -95,7 +95,7 @@ async def set_exten_command(client, message):
 
     command_parts = message.text.split(maxsplit=1)
     if len(command_parts) < 2:
-        await message.reply("Available modes:\n1. mkv\n2. mp4\n3. mp3\n4. apk\n5. txt\n\nUsage: /set_upload <mode_number>")
+        await message.reply("Available modes:\n1. mkv\n2. mp4\n3. mp3\n4. apk\n5. txt\n\nUsage: /set_exten <mode_number>")
         return
 
     try:
