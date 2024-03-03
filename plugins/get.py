@@ -1,5 +1,4 @@
 from pyrogram import filters
-from pyrogram.types import InputMediaPhoto
 from Krito import pbot
 from helper.database import db
 
@@ -38,5 +37,8 @@ async def get_info_command(client, message):
             await placeholder.edit_text(response_message, parse_mode="Markdown")
 
     except Exception as e:
+        # Print the error to the console for debugging
+        print(f"An error occurred: {str(e)}")
+
         # Handle any errors that occur during the database fetch or message sending
         await message.reply(f"An error occurred: {str(e)}", parse_mode="Markdown")
