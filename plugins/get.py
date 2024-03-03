@@ -1,6 +1,6 @@
+from pyrogram import filters
 from pyrogram.types import InputMediaPhoto
 from Krito import pbot
-from pyrogram import filters
 from helper.database import db
 
 @pbot.on_message(filters.command("get_info") & filters.private)
