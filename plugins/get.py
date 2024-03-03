@@ -27,14 +27,14 @@ async def get_info_command(client, message):
 
         if thumbnail:
             # If thumbnail exists, prepare the message with the thumbnail in bold within the caption
-            response_message += "\n\n**For changes use /set_temp, /set_upload, /set_chatid"
-            await message.reply_photo(photo=thumbnail, caption=response_message, parse_mode="markdown")
+            response_message += "\n\n**For changes use /set_temp, /set_upload, /set_chatid, /set_exten"
+            await message.reply_photo(photo=thumbnail, caption=response_message, parse_mode="Markdown")
         else:
             # If no thumbnail, send a placeholder message first
             placeholder = await message.reply("Fetching...")
             # Then edit the placeholder message with the detailed information
-            response_message += "\n\n__**You Don't have Thumbnail**__\n\n**For changes use /set_temp, /set_upload, /set_chatid"
-            await placeholder.edit_text(response_message, parse_mode="markdown")
+            response_message += "\n\n__**You Don't have Thumbnail**__\n\n**For changes use /set_temp, /set_upload, /set_chatid, /set_exten"
+            await placeholder.edit_text(response_message, parse_mode="Markdown")
 
     except Exception as e:
         # Handle any errors that occur during the database fetch or message sending
