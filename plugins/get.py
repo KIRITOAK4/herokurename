@@ -34,7 +34,7 @@ async def get_info_command(client, message):
             # If no thumbnail, send a placeholder message first
             placeholder = await message.reply("Fetching...")
             # Then edit the placeholder message with the detailed information
-            response_message += "\n\n__**You Don't have Thumbnail**__\n\n**__For changes use /set_temp, /set_upload, /set_chatid, /set_exten**__"
+            response_message += "\n\n__**You Don't have Thumbnail**__\n\n__**For changes use /set_temp, /set_upload, /set_chatid, /set_exten**__"
             await placeholder.edit_text(response_message, parse_mode="Markdown")
 
     except Exception as e:
