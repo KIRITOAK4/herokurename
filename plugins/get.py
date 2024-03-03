@@ -1,31 +1,38 @@
-from pyrogram import filters
-from pyrogram import Client
-from Krito import pbot
-from helper.database import db
+from pyrogram.types import InputMediaPhoto
 
 @pbot.on_message(filters.command("get_info") & filters.private)
 async def get_info_command(client, message):
     user_id = message.from_user.id
 
-    # Get user-specific information from the database
-    template = await db.get_template(user_id)
-    upload_type = await db.get_uploadtype(user_id)
-    chat_id = await db.get_chat_id(user_id)
-    thumbnail = await db.get_thumbnail(user_id)
-    exten = await db.get_exten(user_id)
+    # Initialize response message base
+    response_message_base = f"👩‍💻User ID: {user_id}\n\n"
 
-    response_message = f"👩‍💻User ID: {user_id}\n\n🗺Template: {template}\n\n🎬Upload Type: {upload_type}\n\n🎛Extension: {exten}"
+    # Attempt to fetch user-specific information from the database
+    try:
+        template = await db.get_template(user_id)
+        upload_type = await db.get_uploadtype(user_id)
+        chat_id = await db.get_chat_id(user_id)
+        thumbnail = await db.get_thumbnail(user_id)
+        exten = await db.get_exten(user_id)
 
-    if chat_id:
-        response_message += f"\n\n🏡Chat ID: {chat_id}"
-    else:
-        response_message += "\n\n__**You Don't have Chat ID**__"
+        response_message = f"{response_message_base}🗺Template: {template}\n\n🎬Upload Type: {upload_type}\n\n🎛Extension: {exten}"
 
-    if thumbnail:
-        graph_url = await image_paste(thumbnail)
-        response_message += f"\n\n🗳Thumbnail: [View Thumbnail]({graph_url})"
-    else:
-        response_message += "\n\n__**You Don't have Thumbnail**__"
+        if chat_id:
+            response_message += f"\n\n🏡Chat ID: {chat_id}"
+        else:
+            response_message += "\n\n__**You Don't have Chat ID**__"
 
-    response_message += "\n\n**For changes use /set_temp, /set_upload, /set_chatid"
-    await message.reply(response_message)
+        if thumbnail:
+            # If thumbnail exists, prepare the message with the thumbnail in bold within the caption
+            response_message += "\n\n**For changes use /set_temp, /set_upload, /set_chatid"
+            await message.reply_photo(photo=thumbnail, caption=response_message, parse_mode="markdown")
+        else:
+            # If no thumbnail, send a placeholder message first
+            placeholder = await message.reply("Fetching...")
+            # Then edit the placeholder message with the detailed information
+            response_message += "\n\n__**You Don't have Thumbnail**__\n\n**For changes use /set_temp, /set_upload, /set_chatid"
+            await placeholder.edit_text(response_message, parse_mode="markdown")
+
+    except Exception as e:
+        # Handle any errors that occur during the database fetch or message sending
+        await message.reply(f"An error occurred: {str(e)}")
