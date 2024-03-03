@@ -6,13 +6,13 @@ from helper.database import db
 
 format_str = '''
 ||➖➖➖➖➖➖➖➖➖➖➖➖
-┃   **👩‍💻User ID**: {response_message_base}
+┃   **--👩‍💻User ID--**: {response_message_base}
 ┃
-┃**🗺Template**: {template}                                        
-┃**🎬Upload Type**: {upload_type}                                          
-┃** 🎛Extension**: {exten}                                                
-┃**📮Chat ID**: {chat_id}                                               
-┃**🏡Thumbnail**: {thumbnail_status}      
+┃**--🗺Template--**: {template}                                        
+┃**--🎬Upload Type--**: {upload_type}                                          
+┃**--🎛Extension--**: {exten}                                                
+┃**--📮Chat ID--**: {chat_id}                                               
+┃**--🏡Thumbnail--**: {thumbnail_status}      
 ┃                                      
 ┃For changes use /set_temp, /set_upload, /set_chatid, /set_exten 
 ┃                                      
