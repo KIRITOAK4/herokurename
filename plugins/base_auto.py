@@ -21,12 +21,12 @@ async def addthumbs(client, message):
     await mkn.edit("✅️ __**Thumbnail Saved**__")
     
 available_templates = [
-    "[S{season} Ep{episode}] {capitalized_filename}",
-    "[s{season} ep{episode}] {capitalized_filename}",
-    "[S{season} EP{episode}] {capitalized_filename}",
-    "[Season{season} Episode{episode}] {capitalized_filename}",
-    "[Ep{episode}] {capitalized_filename}",
-    "[SEASON{season} EPISODE{episode}] {capitalized_filename}"
+    "[S{season} Ep{episode}] {cz_name}",
+    "[s{season} ep{episode}] {cz_name}",
+    "[S{season} EP{episode}] {cz_name}",
+    "[Season{season} Episode{episode}] {cz_name}",
+    "[Ep{episode}] {cz_name}",
+    "[SEASON{season} EPISODE{episode}] {cz_name}"
 ]
 
 @pbot.on_message(filters.command("set_temp") & filters.private)
