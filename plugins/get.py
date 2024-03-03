@@ -5,22 +5,18 @@ from Krito import pbot
 from helper.database import db
 
 format_str = '''
-➖➖➖➖➖➖➖➖➖➖➖➖
-┃   **👩‍💻User ID**: {response_message_base}         ┃
-┃                                      ┃
-┃   **🗺Template**: {template}   ┃
-┃                                      ┃
-┃   **🎬Upload Type**: {upload_type}    ┃
-┃                                      ┃
-┃   ** 🎛Extension**: {exten}          ┃
-┃                                      ┃
-┃   **📮Chat ID**: {chat_id}          ┃
-┃                                      ┃
-┃   **🏡Thumbnail**: {thumbnail_status}      ┃
-┃                                      ┃
-┃ For changes use /set_temp, /set_upload, /set_chatid, /set_exten ┃
-┃                                      ┃
-➖➖➖➖➖➖➖➖➖➖➖➖
+||➖➖➖➖➖➖➖➖➖➖➖➖
+┃   **👩‍💻User ID**: {response_message_base}
+┃
+┃**🗺Template**: {template}                                        
+┃**🎬Upload Type**: {upload_type}                                          
+┃** 🎛Extension**: {exten}                                                
+┃**📮Chat ID**: {chat_id}                                               
+┃**🏡Thumbnail**: {thumbnail_status}      
+┃                                      
+┃For changes use /set_temp, /set_upload, /set_chatid, /set_exten 
+┃                                      
+➖➖➖➖➖➖➖➖➖➖➖➖||
 '''
 
 @pbot.on_message(filters.command("get_info") & filters.private)
@@ -36,7 +32,7 @@ async def get_info_command(client, message):
         exten = await db.get_exten(user_id)
 
         # Building the response message with Markdown formatting
-        response_message_base = {user_id}
+        response_message_base = user_id
         thumbnail_status = '✅' if thumbnail else '❌'
         formatted_message = format_str.format(response_message_base=response_message_base, template=template, upload_type=upload_type, exten=exten, chat_id=chat_id, thumbnail_status=thumbnail_status)
 
