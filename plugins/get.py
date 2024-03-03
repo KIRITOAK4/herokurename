@@ -1,4 +1,5 @@
 from pyrogram import filters
+from pyrogram.enums import ParseMode
 from Krito import pbot
 from helper.database import db
 
@@ -34,11 +35,11 @@ async def get_info_command(client, message):
             placeholder = await message.reply("Fetching...")
             # Then edit the placeholder message with the detailed information
             response_message += "\n\n__**You Don't have Thumbnail**__\n\n__**For changes use /set_temp, /set_upload, /set_chatid, /set_exten**__"
-            await placeholder.edit_text(response_message, parse_mode="Markdown")
+            await placeholder.edit_text(response_message, parse_mode=ParseMode.Markdown)
 
     except Exception as e:
         # Print the error to the console for debugging
         print(f"An error occurred: {str(e)}")
 
         # Handle any errors that occur during the database fetch or message sending
-        await message.reply(f"An error occurred: {str(e)}", parse_mode="Markdown")
+        await message.reply(f"An error occurred: {str(e)}", parse_mode=ParseMode.Markdown)
