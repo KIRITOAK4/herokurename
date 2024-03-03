@@ -32,7 +32,6 @@ async def get_info_command(client, message):
         thumbnail = await db.get_thumbnail(user_id)
         exten = await db.get_exten(user_id)
 
-        # Building the response message with Markdown formatting
         response_message_base = user_id
         thumbnail_status = '✅' if thumbnail else '❌'
         formatted_message = format_str.format(response_message_base=response_message_base, template=template, upload_type=upload_type, exten=exten, chat_id=chat_id, thumbnail_status=thumbnail_status)
@@ -41,8 +40,7 @@ async def get_info_command(client, message):
             formatted_message = formatted_message.replace('**📮Chat ID**: ', '**📮Chat ID**: ❌__**Chat id is missing**__')
 
         if thumbnail:
-            # If thumbnail exists, upload it with has_spoiler=True
-            await message.reply_photo(photo=thumbnail, caption=formatted_message, parse_mode=ParseMode.MARKDOWN, has_spoiler=True)
+            await message.reply_photo(photo=thumbnail, caption=formatted_message, parse_mode=ParseMode.MARKDOWN)
         else:
             placeholder = await message.reply("Fetching...")
             await asyncio.sleep(2.5)
