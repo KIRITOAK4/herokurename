@@ -29,11 +29,9 @@ async def removethumb(client, message):
     await message.reply_text("❌️ __**Thumbnail Deleted**__")
 
 @pbot.on_message(filters.private & filters.command('del_chatid'))
-async def delete_chatid(client, message):
-
-    chat_id = await db.get_chat_id(message.from_user.id)
-    if not chat_id:
-        return await message.reply_text("__**😔 You Don't Have Any Chat_id**__")
-
-    await db.set_chat_id(message.from_user.id, chat_id=None)
-    await message.reply_text("__**❌️ Chatid Deleted**__")
+async def delete_chatid_command(client, message):
+    try:
+        await db.delete_chat_id(message.from_user.id)
+        await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.id)
+    except Exception as e:
+        await message.reply_text(f"Error: {e}")
