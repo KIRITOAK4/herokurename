@@ -1,4 +1,6 @@
 from pyrogram.types import InputMediaPhoto
+from Krito import pbot 
+from helper.database import db
 
 @pbot.on_message(filters.command("get_info") & filters.private)
 async def get_info_command(client, message):
