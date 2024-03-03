@@ -6,7 +6,7 @@ from Krito import pbot
 from helper.database import db
 
 format_str = '''
-```➖➖➖➖➖➖➖➖➖➖➖➖
+➖➖➖➖➖➖➖➖➖➖➖➖
 ┃   **--👩‍💻User ID--**: {response_message_base}
 ┃
 ┃**--🗺Template--**: {template}                                        
@@ -17,7 +17,7 @@ format_str = '''
 ┃                                      
 ┃For changes use /set_temp, /set_upload, /set_chatid, /set_exten 
 ┃                                      
-➖➖➖➖➖➖➖➖➖➖➖➖```
+➖➖➖➖➖➖➖➖➖➖➖➖
 '''
 
 @pbot.on_message(filters.command("get_info") & filters.private)
