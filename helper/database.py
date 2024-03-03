@@ -90,6 +90,9 @@ class Database:
     async def get_chat_id(self, user_id):
         user = await self.col.find_one({"_id": int(user_id)})
         return user.get("chat_id", None)
+        
+    async def delete_chat_id(self, user_id, chat_id=None):
+        await self.col.update_one({"_id": int(user_id)}, {"$set": {"chat_id": chat_id}})
 
     async def get_user_data(self, user_id):
         user_data = await self.user_data_col.find_one({"user_id": user_id})
