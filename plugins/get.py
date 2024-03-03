@@ -1,11 +1,12 @@
 import asyncio
 from pyrogram import filters
 from pyrogram.enums import ParseMode
+from pyrogram.types import InputMediaPhoto
 from Krito import pbot
 from helper.database import db
 
 format_str = '''
-||➖➖➖➖➖➖➖➖➖➖➖➖
+```➖➖➖➖➖➖➖➖➖➖➖➖
 ┃   **--👩‍💻User ID--**: {response_message_base}
 ┃
 ┃**--🗺Template--**: {template}                                        
@@ -16,7 +17,7 @@ format_str = '''
 ┃                                      
 ┃For changes use /set_temp, /set_upload, /set_chatid, /set_exten 
 ┃                                      
-➖➖➖➖➖➖➖➖➖➖➖➖||
+➖➖➖➖➖➖➖➖➖➖➖➖```
 '''
 
 @pbot.on_message(filters.command("get_info") & filters.private)
@@ -40,8 +41,8 @@ async def get_info_command(client, message):
             formatted_message = formatted_message.replace('**📮Chat ID**: ', '**📮Chat ID**: ❌__**Chat id is missing**__')
 
         if thumbnail:
-            # If thumbnail exists, send the message with the thumbnail and formatted caption in Markdown
-            await message.reply_photo(photo=thumbnail, caption=formatted_message, parse_mode=ParseMode.MARKDOWN)
+            # If thumbnail exists, upload it with has_spoiler=True
+            await message.reply_photo(photo=thumbnail, caption=formatted_message, parse_mode=ParseMode.MARKDOWN, has_spoiler=True)
         else:
             placeholder = await message.reply("Fetching...")
             await asyncio.sleep(2.5)
