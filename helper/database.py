@@ -18,9 +18,6 @@ class Database:
             caption=None,
             token=None,
             time=None,
-            exten=None,
-            template=None,
-            uploadtype=None,
             page=0
         )
 
@@ -63,36 +60,18 @@ class Database:
         user = await self.col.find_one({"_id": int(id)})
         return user.get("caption", None)
 
-    async def set_template(self, id, template):
-        await self.col.update_one({"_id": int(id)}, {"$set": {"template": template}})
-
-    async def get_template(self, id):
-        user = await self.col.find_one({"_id": int(id)})
-        return user.get("template", None)
-
-    async def set_uploadtype(self, id, uploadtype):
-        await self.col.update_one({"_id": int(id)}, {"$set": {"uploadtype": uploadtype}})
-
-    async def get_uploadtype(self, id):
-        user = await self.col.find_one({"_id": int(id)})
-        return user.get("uploadtype", None)
-
-    async def set_exten(self, id, exten):
-        await self.col.update_one({"_id": int(id)}, {"$set": {"exten": exten}})
-
-    async def get_exten(self, id):
-        user = await self.col.find_one({"_id": int(id)})
-        return user.get("exten", None)
-        
-    async def set_chat_id(self, user_id, chat_id):
+    async def add_chat_id(self, user_id, chat_id):
         await self.col.update_one({"_id": int(user_id)}, {"$set": {"chat_id": chat_id}})
 
     async def get_chat_id(self, user_id):
         user = await self.col.find_one({"_id": int(user_id)})
         return user.get("chat_id", None)
-        
+
     async def delete_chat_id(self, user_id, chat_id=None):
         await self.col.update_one({"_id": int(user_id)}, {"$set": {"chat_id": chat_id}})
+
+    async def update_chat_id(self, user_id, chat_id):
+        await self.col.update_one({'_id': user_id}, {'$set': {'chat_id': chat_id}}, upsert=True)
 
     async def get_user_data(self, user_id):
         user_data = await self.user_data_col.find_one({"user_id": user_id})
