@@ -1,8 +1,11 @@
 from helper.database import db
 from Krito import pbot
+from time import time
 from pyrogram.enums import ChatMemberStatus
 from pyrogram import Client, filters
+import math
 import asyncio
+
 
 users_data = {}
 
@@ -17,7 +20,7 @@ async def set_chatid_command(client, message):
             "verified": False
         }
 
-        await db.set_chat_id(message.from_user.id, chat_id)
+        await db.add_chat_id(message.from_user.id, chat_id)
         await message.reply_text("Chat ID has been set successfully. Please use /verify command within 60 seconds.", reply_to_message_id=message.id)
         await asyncio.sleep(60)
 
@@ -60,3 +63,21 @@ async def verify_command(client, message):
     except Exception as e:
         await message.reply_text(f"An error occurred while using verify command: {e}")
 
+@pbot.on_message(filters.private & filters.command('get_chatid'))
+async def get_chatid_command(client, message):
+    try:
+        chat_id = await db.get_chat_id(message.from_user.id)
+        if chat_id:
+            await message.reply_text(f"Your Chat ID: {chat_id}")
+        else:
+            await message.reply_text("Chat ID not set. Use /set_chatid {chat_id} to set your chat ID.", reply_to_message_id=message.id)
+    except Exception as e:
+        await message.reply_text(f"Error: {e}")
+
+@pbot.on_message(filters.private & filters.command('del_chatid'))
+async def delete_chatid_command(client, message):
+    try:
+        await db.delete_chat_id(message.from_user.id)
+        await message.reply_text("❌️ Chat ID deleted. You can set it again using /set_chatid {chat_id}.", reply_to_message_id=message.id)
+    except Exception as e:
+        await message.reply_text(f"Error: {e}")
